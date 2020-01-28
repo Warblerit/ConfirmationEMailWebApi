@@ -24,6 +24,7 @@ namespace ConfirmationEMailWebApi.Controllers
 
             try
             {
+
                 string Response = "";
                 string Response1 = "Failure";
                 string Response2 = "Failure";
