@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConfirmationEMailWebApi", "ConfirmationEMailWebApi\ConfirmationEMailWebApi.csproj", "{123475B0-76A8-470E-83E7-C8DB633D3DEB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{123475B0-76A8-470E-83E7-C8DB633D3DEB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{123475B0-76A8-470E-83E7-C8DB633D3DEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{123475B0-76A8-470E-83E7-C8DB633D3DEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{123475B0-76A8-470E-83E7-C8DB633D3DEB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
