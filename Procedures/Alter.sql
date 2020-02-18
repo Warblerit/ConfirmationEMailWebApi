@@ -1,0 +1,1 @@
+ ALTER TABLE WRBHBClientManagement ADD ProofOfStay BIT

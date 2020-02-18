@@ -3,7 +3,7 @@ AS
 BEGIN                              
 SET NOCOUNT ON                              
 SET ANSI_WARNINGS OFF                              
-DECLARE @PName NVARCHAR(100), @MobileNo NVARCHAR(100), @SecurityPolicy NVARCHAR(1000), @CancelationPolicy NVARCHAR(1000);                              
+DECLARE @PName NVARCHAR(100), @MobileNo NVARCHAR(MAX), @SecurityPolicy NVARCHAR(1000), @CancelationPolicy NVARCHAR(1000);                              
 DECLARE @BookingPropertyId BIGINT, @ClientId1 BIGINT, @PropertyEmail NVARCHAR(100) = '', @CLogo NVARCHAR(1000) = '', @CLogoAlt NVARCHAR(100) = '', @Cnt INT = 0;                              
 --                              
 SET @CLogo = (SELECT TOP 1 Logo FROM WRBHBCompanyMaster WHERE IsActive = 1 AND IsDeleted = 0);                              
@@ -83,7 +83,7 @@ GROUP BY BG.BookingId,BG.RoomId,BG.ChkInDt,BG.ExpectChkInTime,BG.AMPM,
   INSERT INTO #QAZ(Name,ChkInDt,ChkOutDt,Tariff,Occupancy,TariffPaymentMode,                              
   ServicePaymentMode,RoomNo,BookingLevel,ChkInDt1,ChkOutDt1,ExpectChkInTime,NameWthTitle)                              
                     
-  SELECT STUFF((SELECT ', '+BA.FirstName                              
+  SELECT STUFF((SELECT ', '+BA.Title+'. '+BA.FirstName                              
 FROM WRBHBBookingPropertyAssingedGuest BA                          
   WHERE BA.BookingId=B.BookingId AND BA.RoomCaptured=B.RoomCaptured AND BA.Isactive=1 AND BA.IsDeleted=0 AND                             
   ISNULL(BA.RoomShiftingFlag,0) = 0                              
@@ -126,20 +126,24 @@ FROM WRBHBBookingPropertyAssingedGuest BA
    BEGIN                        
     IF @PType='CPP' AND @TAX=0 AND  @LTAgreed=0 AND @STAgreed=0 AND @LTRack=0                    
      BEGIN                             
-      SELECT Name,ChkInDt,ChkOutDt,CAST(Tariff AS VARCHAR)+' /-<br>(Excluding Taxes)',Occupancy,TariffPaymentMode,ServicePaymentMode,RoomNo,
+      SELECT Name,ChkInDt,ChkOutDt,CAST(Tariff AS VARCHAR)+' /-<br> + Taxes',Occupancy,TariffPaymentMode,ServicePaymentMode,RoomNo,
 	  BookingLevel,ChkInDt1,ChkOutDt1,ExpectChkInTime FROM #QAZ;                    
   END                    
  ELSE IF @PType = 'BOK'                    
      BEGIN                             
-      SELECT Name, ChkInDt, ChkOutDt, CAST(Tariff AS VARCHAR)+' /-<br>(Excluding Taxes)', Occupancy, TariffPaymentMode, ServicePaymentMode, RoomNo,
+      SELECT Name, ChkInDt, ChkOutDt, CAST(Tariff AS VARCHAR)+' /-<br> + Taxes', Occupancy, TariffPaymentMode, ServicePaymentMode, RoomNo,
 	  BookingLevel,ChkInDt1,ChkOutDt1,ExpectChkInTime FROM #QAZ;               
   END                    
  ELSE                    
   BEGIN                    
    SELECT Name,ChkInDt,ChkOutDt,                    
    /*--CASE WHEN Tariff != 0 AND @TXADED = 'N' THEN CAST(Tariff AS VARCHAR)+'/-<br>(Nett Tariff)'*/                    
-   CASE WHEN Tariff != 0 AND @TXADED = 'N' THEN CAST(Tariff AS VARCHAR)+'/-<br>(Including Taxes)'                    
-   ELSE CAST(Tariff AS VARCHAR)+'/-' END, Occupancy,TariffPaymentMode,ServicePaymentMode,RoomNo,
+   CASE WHEN Tariff != 0 AND @TXADED = 'N' THEN CAST(Tariff AS VARCHAR)+'/-<br>(Nett Tariff)'                    
+   ELSE 
+    CASE WHEN Tariff >= 500 THEN CAST(Tariff AS VARCHAR)+'/-' + '<br>  + Taxes' ELSE
+    CAST(Tariff AS VARCHAR)+'/-' END 
+   
+   END, Occupancy,TariffPaymentMode,ServicePaymentMode,RoomNo,
    BookingLevel,ChkInDt1,ChkOutDt1,ExpectChkInTime FROM #QAZ;                    
   END                          
    END                    
@@ -241,8 +245,9 @@ FROM WRBHBBookingPropertyAssingedGuest BA
     B.BookingCode,U.FirstName,U.Email,ISNULL(U.Mobile,''),B.ClientBookerName,                              
     /*--REPLACE(CONVERT(VARCHAR(11), B.CreatedDate, 106), ' ', '-'),*/                    
     REPLACE(CONVERT(VARCHAR(11), B.BookedDt, 106), ' ', '-'),                              
-    B.SpecialRequirements,B.ClientBookerEmail,B.ExtraCCEmail,B.ClientId,B.RowId,B.Client_RequestNo,'080-33013103' AS Deskno,
-	ISNULL(B.PropertyRefNo,'') AS PropertyRefNo                             
+    B.SpecialRequirements,B.ClientBookerEmail,B.ExtraCCEmail,B.ClientId,B.RowId,B.Client_RequestNo,ISNULL(C.SupportCPhoneNo,'') AS Deskno,
+	ISNULL(B.PropertyRefNo,'') AS PropertyRefNo,
+	ISNULL(C.SupportEmail,'stay@hummingbirdindia.com') AS SupportEmail	                             
     FROM WRBHBBooking B                              
     LEFT OUTER JOIN WRBHBClientManagement C WITH(NOLOCK) ON  C.Id=B.ClientId                              
     LEFT OUTER JOIN WrbhbTravelDesk U  WITH(NOLOCK) ON  U.Id=B.BookedUsrId                              
@@ -254,8 +259,9 @@ FROM WRBHBBookingPropertyAssingedGuest BA
     B.BookingCode,U.FirstName +' ('+ISNULL(U.UserCode,'')+''+')' AS FirstName,U.Email,ISNULL(U.PhoneNumber,''),B.ClientBookerName,                              
     /*--REPLACE(CONVERT(VARCHAR(11), B.CreatedDate, 106), ' ', '-'),*/                    
  REPLACE(CONVERT(VARCHAR(11), B.BookedDt, 106), ' ', '-'),                              
-    B.SpecialRequirements,B.ClientBookerEmail,B.ExtraCCEmail,B.ClientId,B.RowId,B.Client_RequestNo,ISNULL(U.Deskno,'080-33013103') AS Deskno,
-	ISNULL(B.PropertyRefNo,'') AS PropertyRefNo                               
+    B.SpecialRequirements,B.ClientBookerEmail,B.ExtraCCEmail,B.ClientId,B.RowId,B.Client_RequestNo,ISNULL(C.SupportCPhoneNo,'') AS Deskno,
+	ISNULL(B.PropertyRefNo,'') AS PropertyRefNo,
+	ISNULL(C.SupportEmail,'stay@hummingbirdindia.com') AS SupportEmail                             
     FROM WRBHBBooking B                       
     LEFT OUTER JOIN WRBHBClientManagement C WITH(NOLOCK) ON  C.Id=B.ClientId                              
     LEFT OUTER JOIN WRBHBUser U  WITH(NOLOCK) ON  U.Id=B.BookedUsrId                              
@@ -657,12 +663,24 @@ FROM WRBHBBookingProperty BP
     LEFT OUTER JOIN WRBHBBookingPropertyAssingedGuest BG WITH(NOLOCK)ON                              
     BP.BookingId=BG.BookingId AND BP.Id=BG.BookingPropertyTableId AND                              
     BP.PropertyId=BG.BookingPropertyId                              
-    WHERE BG.BookingId=@Id;     
+    WHERE BG.BookingId=@Id; 
+	
+	    
     SELECT Name,ChkInDt,ChkOutDt,                              
-         CASE WHEN Occupancy = 'Single' THEN @Single                              
+		CASE WHEN
+		CASE WHEN Occupancy = 'Single' THEN @Single                              
          WHEN Occupancy = 'Double' THEN @Double                              
          WHEN Occupancy = 'Triple' THEN @Triple                              
-         ELSE Tariff END,Occupancy,TariffPaymentMode,                              
+         ELSE Tariff END  >= 500 THEN
+         CAST(CASE WHEN Occupancy = 'Single' THEN @Single                              
+         WHEN Occupancy = 'Double' THEN @Double                              
+         WHEN Occupancy = 'Triple' THEN @Triple                              
+         ELSE Tariff END AS VARCHAR)+'/-' + '<br>  + Taxes' ELSE
+        CAST(CASE WHEN Occupancy = 'Single' THEN @Single                              
+         WHEN Occupancy = 'Double' THEN @Double                              
+         WHEN Occupancy = 'Triple' THEN @Triple                              
+         ELSE Tariff END AS VARCHAR)+'/-' END 
+		 ,Occupancy,TariffPaymentMode,                              
     ServicePaymentMode,'BTC',@AgreedTariff,@BelowTACcontent,RoomNo                      
     FROM #PropertyMailBTCChecking;                              
    END                        
@@ -701,22 +719,25 @@ ELSE IF @CPPOccupancy = 'Double'
    SET @AgreedTariff = '';                        
   END                        
     SELECT Name,ChkInDt,ChkOutDt,                              
-    CASE WHEN @TXADED = 'T' THEN Tariff+'/-'                              
-         /*--WHEN @TXADED = 'N' AND Tariff != '0.00' THEN Tariff+'/- <br>(Nett Tariff) '*/                    
-   WHEN @TXADED = 'N' AND Tariff != '0.00' THEN Tariff+'/- <br>(Including Taxes) '                              
-         WHEN @TXADED = 'N' AND Tariff = '0.00' THEN Tariff                                
-         ELSE Tariff END,Occupancy,TariffPaymentMode,                              
+    CASE WHEN @TXADED = 'T' THEN 
+	CASE WHEN CAST(Tariff AS DECIMAL(27,2)) >= 500 THEN Tariff +'/-' + '<br>  + Taxes' ELSE
+    Tariff +'/-' END 
+    WHEN @TXADED = 'N' AND Tariff != '0.00' THEN Tariff+'/- <br>(Nett Tariff) '                              
+    WHEN @TXADED = 'N' AND Tariff = '0.00' THEN Tariff                                
+         ELSE CASE WHEN CAST(Tariff AS DECIMAL(27,2)) >= 500 THEN Tariff +'/-' + '<br>  + Taxes' ELSE
+    CAST(Tariff AS VARCHAR)+'/-' END  END,Occupancy,TariffPaymentMode,                              
     ServicePaymentMode,'NOTBTC',@AgreedTariff,@BelowTACcontent,RoomNo                              
     FROM #PropertyMailBTCChecking;                              
    END                              
   ELSE                              
    BEGIN                              
     SELECT Name,ChkInDt,ChkOutDt,                              
-    CASE WHEN @TXADED = 'T' THEN Tariff+'/-'                              
-         /*--WHEN @TXADED = 'N' AND Tariff != '0.00' THEN Tariff+'/- <br>(Nett Tariff) '*/                          
-   WHEN @TXADED = 'N' AND Tariff != '0.00' THEN Tariff+'/- <br>(Including Taxes) '                              
+    CASE WHEN @TXADED = 'T' THEN CASE WHEN CAST(Tariff AS DECIMAL(27,2)) >= 500 THEN Tariff +'/-' + '<br>  + Taxes' ELSE
+     Tariff +'/-' END                                 
+   WHEN @TXADED = 'N' AND Tariff != '0.00' THEN Tariff+'/- <br>(Nett Tariff) '                              
          WHEN @TXADED = 'N' AND Tariff = '0.00' THEN Tariff                               
-         ELSE Tariff END,Occupancy,TariffPaymentMode,                              
+         ELSE CASE WHEN Tariff >= 500 THEN  Tariff +'/-' + '<br>  + Taxes' ELSE
+    Tariff +'/-' END  END,Occupancy,TariffPaymentMode,                              
     ServicePaymentMode,'NOTBTC',@AgreedTariff,@BelowTACcontent,RoomNo                               
     FROM #PropertyMailBTCChecking;                              
    END                              
@@ -764,7 +785,7 @@ IF @Action = 'BedBookingConfirmed'
   REPLACE(CONVERT(VARCHAR(11),BA.ChkInDt, 106), ' ', '-') +' / '+                               
   LEFT(ExpectedChkInTime, 5)+' '+BA.AMPM,                              
   REPLACE(CONVERT(VARCHAR(11), BA.ChkOutDt, 106), ' ', '-'),                              
-  BA.Tariff,                              
+  CAST(BA.Tariff AS VARCHAR)+'/-',                              
   CASE WHEN BA.TariffPaymentMode = 'Direct' THEN 'Direct<br>(Cash/Card)'                      
        WHEN BA.TariffPaymentMode = 'Bill to Client' THEN 'Bill to '+@ClientName1                        
        ELSE BA.TariffPaymentMode END AS TariffPaymentMode,                        
@@ -791,7 +812,7 @@ IF @Action = 'BedBookingConfirmed'
   BP.Category,ISNULL(BP.CheckOutType,'') CheckOutType,                              
   ISNULL(CheckIn,'') CheckIn,ISNULL(CheckInType,'') CheckInType,                              
   ISNULL(CheckOut,'') CheckOut,T.PropertyType,                    
-  Phone,REPLACE(BP.PropertyName, ' ', '+')+'/@'+REPLACE(BP.LatitudeLongitude, ' ', '')+',15z' AS Map,ExtraNote                    
+  Phone,REPLACE(BP.PropertyName, ' ', '+')+'/@'+REPLACE(BP.LatitudeLongitude, ' ', '')+',15z' AS Map,ExtraNote                      
   FROM dbo.WRBHBProperty BP                              
   LEFT OUTER JOIN WRBHBLocality L WITH(NOLOCK) ON L.Id=BP.LocalityId                              
   LEFT OUTER JOIN WRBHBCity C WITH(NOLOCK) ON L.CityId=C.Id               
@@ -806,7 +827,8 @@ IF @Action = 'BedBookingConfirmed'
     SELECT ISNULL(ClientLogo,'') AS ClientLogo,C.ClientName,                              
     B.BookingCode,U.FirstName,U.Email,U.Mobile,B.ClientBookerName,            
     REPLACE(CONVERT(VARCHAR(11), B.BookedDt, 106), ' ', '-'),                              
-    B.SpecialRequirements,B.ClientBookerEmail,B.ClientId,B.RowId,B.Client_RequestNo,'080-33013103' AS Deskno FROM WRBHBBooking B                              
+    B.SpecialRequirements,B.ClientBookerEmail,B.ClientId,B.RowId,B.Client_RequestNo,ISNULL(C.SupportCPhoneNo,'') AS Deskno, 
+	ISNULL(C.SupportEmail,'stay@hummingbirdindia.com') AS SupportEmail FROM WRBHBBooking B                              
     LEFT OUTER JOIN WRBHBClientManagement C WITH(NOLOCK) ON  C.Id=B.ClientId                              
     LEFT OUTER JOIN WrbhbTravelDesk U  WITH(NOLOCK) ON  U.Id=B.BookedUsrId                              
     WHERE B.Id=@Id;                              
@@ -816,7 +838,8 @@ IF @Action = 'BedBookingConfirmed'
     SELECT ISNULL(ClientLogo,'') AS ClientLogo,C.ClientName,                              
     B.BookingCode,U.FirstName+' ('+ISNULL(U.UserCode,'')+''+')' AS FirstName,U.Email,U.PhoneNumber,B.ClientBookerName,            
     REPLACE(CONVERT(VARCHAR(11), B.BookedDt, 106), ' ', '-'),                              
-    B.SpecialRequirements,B.ClientBookerEmail,B.ClientId,B.RowId,B.Client_RequestNo,ISNULL(U.Deskno,'080-33013103') AS Deskno FROM WRBHBBooking B                              
+    B.SpecialRequirements,B.ClientBookerEmail,B.ClientId,B.RowId,B.Client_RequestNo,ISNULL(C.SupportCPhoneNo,'') AS Deskno, 
+	ISNULL(C.SupportEmail,'stay@hummingbirdindia.com') AS SupportEmail FROM WRBHBBooking B                              
     LEFT OUTER JOIN WRBHBClientManagement C WITH(NOLOCK) ON  C.Id=B.ClientId                              
     LEFT OUTER JOIN WRBHBUser U  WITH(NOLOCK) ON  U.Id=B.BookedUsrId                              
     WHERE B.Id=@Id;                              

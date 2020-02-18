@@ -73,97 +73,138 @@ namespace ConfirmationEMailWebApi.Controllers
                         {
                             message.From = new System.Net.Mail.MailAddress("stay@hummingbirdindia.com", "", System.Text.Encoding.UTF8);
                         }
-                        if (ds.Tables[4].Rows[0][0].ToString() == "0")
+
+                        if (All.ResendFlag==true)
                         {
-                            if (ds.Tables[8].Rows[0][0].ToString() != "")
+                            var Mail = All.PropertyGusetEmail.Split(',');
+                            for (int i = 0; i < Mail.Length; i++)
                             {
-                                message.To.Add(new System.Net.Mail.MailAddress(ds.Tables[8].Rows[0][0].ToString()));
+                                try
+                                {
+                                    message.To.Add(new System.Net.Mail.MailAddress(Mail[i].ToString()));
+                                }
+                                catch (Exception ex)
+                                {
+                                    CreateLogFiles log = new CreateLogFiles();
+                                    log.ErrorLog("=> Confirmation Email API => Resend Guest Email => BookingId => " + All.BookingId + " => Invaild Email => To =>" + Mail[i].ToString());
+                                }
                             }
+                            if (All.UserEmail != "")
+                            {
+                                try
+                                {
+                                    message.CC.Add(new System.Net.Mail.MailAddress(All.UserEmail));
+                                }
+                                catch (Exception ex)
+                                {
+                                    CreateLogFiles log = new CreateLogFiles();
+                                    log.ErrorLog("=> Confirmation Email API => Resend Guest Email => BookingId => " + All.BookingId + " => Invaild Email => To =>" + All.UserEmail);
+                                }
+                             }
+                            message.Bcc.Add(new System.Net.Mail.MailAddress("hbconf17@gmail.com"));
                         }
                         else
                         {
-                            for (int i = 0; i < ds.Tables[5].Rows.Count; i++)
+                            if (ds.Tables[4].Rows[0][0].ToString() == "0")
                             {
-                                if (ds.Tables[5].Rows[i][0].ToString() != "")
+                                if (ds.Tables[8].Rows[0][0].ToString() != "")
+                                {
+                                    message.To.Add(new System.Net.Mail.MailAddress(ds.Tables[8].Rows[0][0].ToString()));
+                                }
+                            }
+                            else
+                            {
+                                for (int i = 0; i < ds.Tables[5].Rows.Count; i++)
+                                {
+                                    if (i <= 40)
+                                    {
+                                        if (ds.Tables[5].Rows[i][0].ToString() != "")
+                                        {
+                                            try
+                                            {
+                                                message.To.Add(new System.Net.Mail.MailAddress(ds.Tables[5].Rows[i][0].ToString()));
+                                            }
+                                            catch (Exception ex)
+                                            {
+                                                CreateLogFiles log = new CreateLogFiles();
+                                                log.ErrorLog("=> Confirmation Email API => Bed Email => BookingId => " + All.BookingId + " => Invaild Email => To =>" + ds.Tables[5].Rows[i][0].ToString());
+                                            }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        break;
+                                    }
+                                }
+                                if (ds.Tables[8].Rows[0][0].ToString() != "")
                                 {
                                     try
                                     {
-                                        message.To.Add(new System.Net.Mail.MailAddress(ds.Tables[5].Rows[i][0].ToString()));
+                                        message.CC.Add(new System.Net.Mail.MailAddress(ds.Tables[8].Rows[0][0].ToString()));
                                     }
                                     catch (Exception ex)
                                     {
                                         CreateLogFiles log = new CreateLogFiles();
-                                        log.ErrorLog("=> Confirmation Email API => Bed Email => BookingId => " + All.BookingId + " => Invaild Email => To =>" + ds.Tables[5].Rows[i][0].ToString());
+                                        log.ErrorLog("=> Confirmation Email API => Bed Email => BookingId => " + All.BookingId + " => Invaild Email => CC =>" + ds.Tables[8].Rows[0][0].ToString());
                                     }
                                 }
                             }
-                            if (ds.Tables[8].Rows[0][0].ToString() != "")
-                            {
-                                try
-                                {
-                                    message.CC.Add(new System.Net.Mail.MailAddress(ds.Tables[8].Rows[0][0].ToString()));
-                                }
-                                catch (Exception ex)
-                                {
-                                    CreateLogFiles log = new CreateLogFiles();
-                                    log.ErrorLog("=> Confirmation Email API => Bed Email => BookingId => " + All.BookingId + " => Invaild Email => CC =>" + ds.Tables[8].Rows[0][0].ToString());
-                                }
-                            }
+                            //////Extra CC
+                            ////for (int i = 0; i < ds.Tables[7].Rows.Count; i++)
+                            ////{
+                            ////    if (ds.Tables[7].Rows[i][0].ToString() != "")
+                            ////    {
+                            ////        try
+                            ////        {
+                            ////            message.CC.Add(new System.Net.Mail.MailAddress(ds.Tables[7].Rows[i][0].ToString()));
+                            ////        }
+                            ////        catch (Exception ex)
+                            ////        {
+                            ////            CreateLogFiles log = new CreateLogFiles();
+                            ////            log.ErrorLog("=> Confirmation Email API => Bed Email => BookingId => " + All.BookingId + " => Invaild Email => Extra CC =>" + ds.Tables[7].Rows[i][0].ToString());
+                            ////        }
+                            ////    }
+                            ////}
+                            ////// Extra CC email from Front end
+                            ////if (ds.Tables[8].Rows[0][1].ToString() != "")
+                            ////{
+                            ////    string ExtraCC = ds.Tables[8].Rows[0][1].ToString();
+                            ////    var ExtraCCEmail = ExtraCC.Split(',');
+                            ////    int cnt = ExtraCCEmail.Length;
+                            ////    for (int i = 0; i < cnt; i++)
+                            ////    {
+                            ////        if (ExtraCCEmail[i].ToString() != "")
+                            ////        {
+                            ////            try
+                            ////            {
+                            ////                message.CC.Add(new System.Net.Mail.MailAddress(ExtraCCEmail[i].ToString()));
+                            ////            }
+                            ////            catch (Exception ex)
+                            ////            {
+                            ////                CreateLogFiles log = new CreateLogFiles();
+                            ////                log.ErrorLog("=> Confirmation Email API => Bed Email => BookingId => " + All.BookingId + " => Invaild Email => Extra CC From Front End =>" + ExtraCCEmail[i].ToString());
+                            ////            }
+                            ////        }
+                            ////    }
+                            ////}
+                            ////if (ds.Tables[2].Rows[0][4].ToString() != "")
+                            ////{
+                            ////    try
+                            ////    {
+                            ////        message.Bcc.Add(new System.Net.Mail.MailAddress(ds.Tables[2].Rows[0][4].ToString()));
+                            ////    }
+                            ////    catch (Exception ex)
+                            ////    {
+                            ////        CreateLogFiles log = new CreateLogFiles();
+                            ////        log.ErrorLog("=> Confirmation Email API => Bed Email => BookingId => " + All.BookingId + " => Invaild Email => BCc =>" + ds.Tables[2].Rows[0][4].ToString());
+                            ////    }
+                            ////}
+                            ////message.Bcc.Add(new System.Net.Mail.MailAddress("booking_confirmation@staysimplyfied.com"));
+                            ////message.Bcc.Add(new System.Net.Mail.MailAddress("bookingbcc@staysimplyfied.com"));
+                            ////message.Bcc.Add(new System.Net.Mail.MailAddress("hbconf17@gmail.com"));
                         }
-                        //Extra CC
-                        for (int i = 0; i < ds.Tables[7].Rows.Count; i++)
-                        {
-                            if (ds.Tables[7].Rows[i][0].ToString() != "")
-                            {
-                                try
-                                {
-                                    message.CC.Add(new System.Net.Mail.MailAddress(ds.Tables[7].Rows[i][0].ToString()));
-                                }
-                                catch (Exception ex)
-                                {
-                                    CreateLogFiles log = new CreateLogFiles();
-                                    log.ErrorLog("=> Confirmation Email API => Bed Email => BookingId => " + All.BookingId + " => Invaild Email => Extra CC =>" + ds.Tables[7].Rows[i][0].ToString());
-                                }
-                            }
-                        }
-                        // Extra CC email from Front end
-                        if (ds.Tables[8].Rows[0][1].ToString() != "")
-                        {
-                            string ExtraCC = ds.Tables[8].Rows[0][1].ToString();
-                            var ExtraCCEmail = ExtraCC.Split(',');
-                            int cnt = ExtraCCEmail.Length;
-                            for (int i = 0; i < cnt; i++)
-                            {
-                                if (ExtraCCEmail[i].ToString() != "")
-                                {
-                                    try
-                                    {
-                                        message.CC.Add(new System.Net.Mail.MailAddress(ExtraCCEmail[i].ToString()));
-                                    }
-                                    catch (Exception ex)
-                                    {
-                                        CreateLogFiles log = new CreateLogFiles();
-                                        log.ErrorLog("=> Confirmation Email API => Bed Email => BookingId => " + All.BookingId + " => Invaild Email => Extra CC From Front End =>" + ExtraCCEmail[i].ToString());
-                                    }
-                                }
-                            }
-                        }
-                        if (ds.Tables[2].Rows[0][4].ToString() != "")
-                        {
-                            try
-                            {
-                                message.Bcc.Add(new System.Net.Mail.MailAddress(ds.Tables[2].Rows[0][4].ToString()));
-                            }
-                            catch (Exception ex)
-                            {
-                                CreateLogFiles log = new CreateLogFiles();
-                                log.ErrorLog("=> Confirmation Email API => Bed Email => BookingId => " + All.BookingId + " => Invaild Email => BCc =>" + ds.Tables[2].Rows[0][4].ToString());
-                            }
-                        }
-                        ////message.Bcc.Add(new System.Net.Mail.MailAddress("booking_confirmation@staysimplyfied.com"));
-                        ////message.Bcc.Add(new System.Net.Mail.MailAddress("bookingbcc@staysimplyfied.com"));
-                        message.Bcc.Add(new System.Net.Mail.MailAddress("hbconf17@gmail.com"));
-                         
+                        message.Bcc.Add(new System.Net.Mail.MailAddress("prabakaran@warblerit.com"));
+
                         message.Subject = "Booking Confirmation - " + ds.Tables[2].Rows[0][2].ToString();
 
                         // Client Logo
@@ -189,22 +230,9 @@ namespace ConfirmationEMailWebApi.Controllers
                         // Contact Email And Phone
                         string ContactEmail = "";
                         string DeskNo = "";
-                        if (Convert.ToInt64(ds.Tables[2].Rows[0][10].ToString()) == 2281)
-                        {
-                            DeskNo = "+91-7349250264";
-                            ContactEmail = "DL_Traveldesk@teamhgs.com";
-                        }
-                        else if (Convert.ToInt64(ds.Tables[2].Rows[0][10].ToString()) == 2383)
-                        {
-                            DeskNo = "+91 8879974666";
-                            ContactEmail = "hotel.bookings@cipla.com";
-                        }
-                        else
-                        {
-                            DeskNo = ds.Tables[2].Rows[0][13].ToString();
-                            ContactEmail = ds.Tables[10].Rows[0][0].ToString();
-                        }
-
+                        DeskNo = ds.Tables[2].Rows[0][13].ToString();
+                        ContactEmail = ds.Tables[2].Rows[0][14].ToString();
+                       
                         // Map Link
                         string MapLink = "";
                         if (ds.Tables[1].Rows[0][13].ToString() != "")
@@ -619,14 +647,14 @@ namespace ConfirmationEMailWebApi.Controllers
                                     "<tr style=\"padding:0;vertical-align:top;text-align:left\">" +
                                     "<th class=\"small-5 large-5 columns first\" style=\"font-size:16px;text-align:left;line-height:1.3;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;color:#0a0a0a;padding-right:8px;margin:0 auto;padding-bottom:16px;width:225.66667px;padding-left:16px\">" +
                                     "<p class=\"body-text-lg light\" style=\"margin:0;text-align:left;padding:0;font-weight:300;font-family:'Circular', 'Cabin', Helvetica, Arial, sans-serif;color:#484848;word-break:normal;line-height:1.2;font-size:17px;margin-bottom:0px !important;\">" + ds.Tables[0].Rows[0][10].ToString() + "</p>" +
-                                    "<p class=\"body-text light\" style=\"margin:0;text-align:left;padding:0;font-weight:300;font-family:'Circular', 'Cabin', Helvetica, Arial, sans-serif;color:#484848;word-break:normal;line-height:1.4;font-size:16px;margin-bottom:0px !important;\">Check in " + ds.Tables[0].Rows[0][9].ToString() + "</p>" +
+                                    "<p class=\"body-text light\" style=\"margin:0;text-align:left;padding:0;font-weight:300;font-family:'Circular', 'Cabin', Helvetica, Arial, sans-serif;color:#484848;word-break:normal;line-height:1.4;font-size:16px;margin-bottom:0px !important;\">Check-in " + ds.Tables[0].Rows[0][9].ToString() + "</p>" +
                                     "</th>" +
                                     "<th class=\"small-2 large-2 columns\" style=\"font-size:16px;color:#0a0a0a;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;text-align:left;line-height:1.3;padding-right:8px;width:80.66667px;padding-bottom:16px;padding-left:16px;margin:0 auto\">" +
                                     "<img alt=\"\" class=\"slash text-center\" src=\"https://endpoint887127.azureedge.net/img/slash.png\" style=\"outline:none;text-decoration:none;-ms-interpolation-mode:bicubic;display:block;clear:both;max-width:40px;width:40px;text-align:center;float:none;margin:0 auto\">" +
                                     "</th>" +
                                     "<th class=\"small-5 large-5 columns last\" style=\"font-size:16px;text-align:left;color:#0a0a0a;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;line-height:1.3;width:225.66667px;padding-left:16px;margin:0 auto;padding-bottom:16px;padding-right:16px\">" +
                                     "<p class=\"body-text-lg light text-right\" style=\"padding:0;margin:0;font-size:17px;font-weight:300;font-family:'Circular', 'Helvetica', Helvetica, Arial, sans-serif;color:#484848;word-break:normal;line-height:1.2;text-align:right;margin-bottom:0px !important;\">" + ds.Tables[0].Rows[0][11].ToString() + "</p>" +
-                                    "<p class=\"body-text light text-right\"  style=\"padding:0;margin:0;font-size:16px;font-weight:300;font-family:'Circular', 'Helvetica', Helvetica, Arial, sans-serif;color:#484848;word-break:normal;line-height:1.4;text-align:right;margin-bottom:0px !important;\">Check out</p>" +
+                                    "<p class=\"body-text light text-right\"  style=\"padding:0;margin:0;font-size:16px;font-weight:300;font-family:'Circular', 'Helvetica', Helvetica, Arial, sans-serif;color:#484848;word-break:normal;line-height:1.4;text-align:right;margin-bottom:0px !important;\">Check-out</p>" +
                                     "</th></tr></table></div>" +
 
                                     "<div><table class=\"row\" style=\"border-spacing:0;border-collapse:collapse;text-align:left;vertical-align:top;padding:0;width:100%;position:relative;display:table\">" +
@@ -654,7 +682,7 @@ namespace ConfirmationEMailWebApi.Controllers
                         {
                             TablHdr +=
                                 "<tr style=\"font-style:normal;font-weight:normal;\" class=\"ng-scope\">" +
-                                "<td class=\"padd ng-binding\" style=\"vertical-align:middle;text-align:center \">" + ds.Tables[0].Rows[i][0].ToString() + " </td>" +
+                                "<td class=\"padd ng-binding\" style=\"vertical-align:middle;text-align:center \">" + ds.Tables[0].Rows[i][12].ToString() + ". "  + ds.Tables[0].Rows[i][0].ToString() + " </td>" +
                                 "<td class=\"padd ng-binding\" style=\"vertical-align: middle; text-align: center;\">" + ds.Tables[0].Rows[i][6].ToString() + "</td>" +
                                 "<td class=\"padd ng-binding\" style=\"vertical-align: middle; text-align: center;\">" + ds.Tables[0].Rows[i][7].ToString() + "</td>" +
                                 "<td class=\"padd ng-binding\" style=\"vertical-align: middle; text-align: center;\">INR " + ds.Tables[0].Rows[i][3].ToString() + "</td>" +
@@ -672,6 +700,18 @@ namespace ConfirmationEMailWebApi.Controllers
                                     "<p class=\"body-text light text-right\" style='padding:0;margin:0;font-size:18px;font-weight:300;font-family:\"Circular\", \"Helvetica\", Helvetica, Arial, sans-serif;color:#484848;word-break:normal;line-height:1.4;text-align:right;margin-bottom:0px !important;'>Service Payment: " + ds.Tables[0].Rows[0][5].ToString() + "</p>" +
                                     "</th></tr></table></div></div>";
 
+                        ////string Inclusions = "<div><table class=\"row\" style=\"border-spacing:0;border-collapse:collapse;text-align:left;vertical-align:top;padding:0;width:100%;position:relative;display:table\">" +
+                        ////            "<tr class=\"\" style=\"padding:0;vertical-align:top;text-align:left\">" +
+                        ////            "<th class=\"small-12 large-12 columns first last\" style=\"font-size:16px;padding:0;text-align:left;color:#0a0a0a;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;line-height:1.3;margin:0 auto;padding-bottom:16px;width:564px;padding-left:16px;padding-right:16px\">" +
+                        ////            "<hr class=\"full-divider\" style=\"clear:both;max-width:580px;border-right:0;border-top:0;border-left:0;margin:20px auto;border-bottom:1px solid #cacaca;background-color:#dbdbdb;height:1px;border:none;width:100%;margin-top:0;margin-bottom:0\">" +
+                        ////            "</th></tr></table></div>" +
+                        ////            "<table class=\"row\" style=\"border-spacing:0;border-collapse:collapse;text-align:left;vertical-align:top;padding:0;width:100%;position:relative;display:table\">" +
+                        ////            "<tr style=\"padding:0;vertical-align:top;text-align:left\">" +
+                        ////            "<th class=\"small-5 large-5 columns first\" style=\"font-size:16px;text-align:left;line-height:1.3;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;color:#0a0a0a;padding-right:8px;margin:0 auto;padding-bottom:16px;padding-left:16px\">" +
+                        ////            "<p class=\"body-text-lg light row-pad-bot-1\" style=\"padding:0;margin:0 0 5px 0;text-align:center;font-size:18px;font-weight:300;font-family:'Cabin',Helvetica, Arial, sans-serif;color:#484848;word-break:normal;line-height:1.2;\">Inclusions : " + ds.Tables[1].Rows[0][12].ToString() + " </p>" +
+
+                        ////            "</th></tr></table>";
+
                         string Address = "<div><table class=\"row\" style=\"border-spacing:0;border-collapse:collapse;text-align:left;vertical-align:top;padding:0;width:100%;position:relative;display:table\">" +
                                            "<tr class=\"\" style=\"padding:0;vertical-align:top;text-align:left\">" +
                                             "<th class=\"small-12 large-12 columns first last\" style=\"font-size:16px;padding:0;text-align:left;color:#0a0a0a;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;line-height:1.3;margin:0 auto;padding-bottom:16px;width:564px;padding-left:16px;padding-right:16px\">" +
@@ -680,12 +720,12 @@ namespace ConfirmationEMailWebApi.Controllers
                                             "<div style =\"padding-top:8px;padding-bottom:8px\">" +
                                             "<table class=\"row\" style=\"border-spacing:0;border-collapse:collapse;text-align:left;vertical-align:top;padding:0;width:100%;position:relative;display:table\">" +
                                             "<th class=\"small-7 large-7 columns first\" style=\"font-size:16px;text-align:left;line-height:1.3;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;color:#0a0a0a;padding-right:8px;margin:0 auto;width:322.33333px;padding-left:16px;vertical-align: top;\">" +
-                                            "<p class=\"body-text-lg light row-pad-bot-1\" style=\"padding:0;margin:0;text-align:center;font-size:24px;font-weight:300;font-family:'Cabin',Helvetica, Arial, sans-serif;color:#484848;word-break:normal;line-height:1.2;\">Address</p>" +
+                                            "<p class=\"body-text-lg light row-pad-bot-1\" style=\"padding:0;margin:0 0 5px 0;text-align:center;font-size:24px;font-weight:300;font-family:'Cabin',Helvetica, Arial, sans-serif;color:#484848;word-break:normal;line-height:1.2;\">Address</p>" +
                                             "<p class=\"body-text light\" style='margin:0;text-align:left;padding:0;font-weight:300;font-family:\"Cabin\", \"Helvetica\", Helvetica, Arial, sans-serif;color:#484848;word-break:normal;line-height:1.4;font-size:18px;margin-bottom:0px !important'>" + ds.Tables[1].Rows[0][0].ToString() + "</p>" +
                                             "<p class=\"body-text light\">" + ds.Tables[1].Rows[0][1].ToString() + "</p></th>" +
                                             "<th class=\"small-5 large-5 columns last valign-top\" style=\"font-size:16px;text-align:left;line-height:1.3;color:#0a0a0a;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;vertical-align:top;width:225.66667px;padding-left:16px;margin:0 auto;padding-right:16px\">" +
                                             "<a href=\"" + MapLink + "\" style =\"font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;margin:0;text-align:left;line-height:1.3;color:#2199e8;text-decoration:none\">" +
-                                            "<p class=\"body-text-lg light color-rausch text-right\" style='padding:0;margin:0;word-break:normal;font-weight:300;font-family:\"Cabin\", \"Helvetica\", Helvetica, Arial, sans-serif;line-height:1.2;font-size:24px;text-align:center;color:#d9242c !important;margin-bottom:0px !important'>Get Directions</p>" +
+                                            "<p class=\"body-text-lg light color-rausch text-right\" style='padding:0;margin:0 0 5px 0;word-break:normal;font-weight:300;font-family:\"Cabin\", \"Helvetica\", Helvetica, Arial, sans-serif;line-height:1.2;font-size:24px;text-align:center;color:#d9242c !important;margin-bottom:0px !important'>Get Directions</p>" +
                                             "<p class=\"body-text light\" style='margin:0;text-align:left;padding:0;font-weight:300;font-family:\"Cabin\", \"Helvetica\", Helvetica, Arial, sans-serif;color:#484848;word-break:normal;line-height:1.4;font-size:18px;margin-bottom:0px !important'>" +
                                             ds.Tables[1].Rows[0][2].ToString() + "</p></a></th></table></div><div>" +
                                             "<table class=\"row\" style=\"border-spacing:0;border-collapse:collapse;text-align:left;vertical-align:top;padding:0;width:100%;position:relative;display:table\">" +
@@ -717,26 +757,26 @@ namespace ConfirmationEMailWebApi.Controllers
                                             "<p> Powered by Staysimplyfied.com</p></th></tr></table></div></tr></table></div></td></tr></table></center></td></tr></table>";
                         string EndData = "</body></html>";
 
-                        MailContent = style + header + header_cnt1 + HotelName + ChkInOutDate + TablHdr + Address + BookerDtls + EndData;
-                        ////var PdfContent = header + header_cnt1 + HotelName + ChkInOutDate + TablHdr + Address + BookerDtls;
+                        MailContent = style + header + header_cnt1 + HotelName + ChkInOutDate + TablHdr +  Address + BookerDtls + EndData;
+                        var PdfContent = header + header_cnt1 + HotelName + ChkInOutDate + TablHdr +  Address + BookerDtls;
 
-                        ////var htmlContent = String.Format(PdfContent, DateTime.Now);
-                        ////var htmlToPdf = new NReco.PdfGenerator.HtmlToPdfConverter();
-                        ////var pdfBytes = htmlToPdf.GeneratePdf(htmlContent); 
-                        ////string path = @"D:\home\site\wwwroot\Confirmations\";
+                        var htmlContent = String.Format(PdfContent, DateTime.Now);
+                        var htmlToPdf = new NReco.PdfGenerator.HtmlToPdfConverter();
+                        var pdfBytes = htmlToPdf.GeneratePdf(htmlContent);
+                        string path = @"D:\home\site\wwwroot\Confirmations\";
 
-                        ////if (Directory.Exists(path))
-                        ////{
-                        ////    File.WriteAllBytes(path + "Booking Confirmation - " + ds.Tables[2].Rows[0][2].ToString() + ".pdf", pdfBytes);
-                        ////}
-                        ////else
-                        ////{
-                        ////    DirectoryInfo di = Directory.CreateDirectory(path);
-                        ////    File.WriteAllBytes(path + "Booking Confirmation - " + ds.Tables[2].Rows[0][2].ToString() + ".pdf", pdfBytes);
-                        ////}
+                        if (Directory.Exists(path))
+                        {
+                            File.WriteAllBytes(path + "Booking Confirmation - " + ds.Tables[2].Rows[0][2].ToString() + ".pdf", pdfBytes);
+                        }
+                        else
+                        {
+                            DirectoryInfo di = Directory.CreateDirectory(path);
+                            File.WriteAllBytes(path + "Booking Confirmation - " + ds.Tables[2].Rows[0][2].ToString() + ".pdf", pdfBytes);
+                        }
                         message.Body = MailContent;
                         message.IsBodyHtml = true;
-                        ////message.Attachments.Add(new Attachment(@"D:\home\site\wwwroot\Confirmations\" + "Booking Confirmation - " + ds.Tables[2].Rows[0][2].ToString() + ".pdf"));
+                        message.Attachments.Add(new Attachment(@"D:\home\site\wwwroot\Confirmations\" + "Booking Confirmation - " + ds.Tables[2].Rows[0][2].ToString() + ".pdf"));
 
                     }
                     #endregion
@@ -751,96 +791,136 @@ namespace ConfirmationEMailWebApi.Controllers
                         {
                             message.From = new System.Net.Mail.MailAddress("stay@hummingbirdindia.com", "", System.Text.Encoding.UTF8);
                         }
-                        if (ds.Tables[4].Rows[0][0].ToString() == "0")
+                        if (All.ResendFlag == true)
                         {
-                            if (ds.Tables[8].Rows[0][0].ToString() != "")
+                            var Mail = All.PropertyGusetEmail.Split(',');
+                            for (int i = 0; i < Mail.Length; i++)
                             {
-                                message.To.Add(new System.Net.Mail.MailAddress(ds.Tables[8].Rows[0][0].ToString()));
+                                try
+                                {
+                                    message.To.Add(new System.Net.Mail.MailAddress(Mail[i].ToString()));
+                                }
+                                catch (Exception ex)
+                                {
+                                    CreateLogFiles log = new CreateLogFiles();
+                                    log.ErrorLog("=> Confirmation Email API => Resend Guest Email => BookingId => " + All.BookingId + " => Invaild Email => To =>" + Mail[i].ToString());
+                                }
                             }
+                            if (All.UserEmail != "")
+                            {
+                                try
+                                {
+                                    message.CC.Add(new System.Net.Mail.MailAddress(All.UserEmail));
+                                }
+                                catch (Exception ex)
+                                {
+                                    CreateLogFiles log = new CreateLogFiles();
+                                    log.ErrorLog("=> Confirmation Email API => Resend Guest Email => BookingId => " + All.BookingId + " => Invaild Email => To =>" + All.UserEmail);
+                                }
+                            }
+                            message.Bcc.Add(new System.Net.Mail.MailAddress("hbconf17@gmail.com"));
                         }
                         else
                         {
-                            for (int i = 0; i < ds.Tables[5].Rows.Count; i++)
+                            if (ds.Tables[4].Rows[0][0].ToString() == "0")
                             {
-                                if (ds.Tables[5].Rows[i][0].ToString() != "")
+                                if (ds.Tables[8].Rows[0][0].ToString() != "")
                                 {
-                                    message.To.Add(new System.Net.Mail.MailAddress(ds.Tables[5].Rows[i][0].ToString()));
+                                    message.To.Add(new System.Net.Mail.MailAddress(ds.Tables[8].Rows[0][0].ToString()));
                                 }
                             }
-                            if (ds.Tables[8].Rows[0][0].ToString() != "")
+                            else
                             {
-                                try
+                                for (int i = 0; i < ds.Tables[5].Rows.Count; i++)
                                 {
-                                    message.CC.Add(new System.Net.Mail.MailAddress(ds.Tables[8].Rows[0][0].ToString()));
+                                    if (i <= 40)
+                                    {
+                                        if (ds.Tables[5].Rows[i][0].ToString() != "")
+                                        {
+                                            message.To.Add(new System.Net.Mail.MailAddress(ds.Tables[5].Rows[i][0].ToString()));
+                                        }
+                                    }
+                                    else
+                                    {
+                                        break;
+                                    }
                                 }
-                                catch (Exception wer)
-                                {
-                                    CreateLogFiles log = new CreateLogFiles();
-                                    log.ErrorLog("=> Confirmation Email API => Room Email => Invalid Email => CC => " + ds.Tables[8].Rows[0][0].ToString() +
-                                        " => BookingId => " + All.BookingId + ", Err Msg => " + wer.Message);
-                                }
-
-                            }
-                        }
-                        //Extra CC
-                        for (int i = 0; i < ds.Tables[7].Rows.Count; i++)
-                        {
-                            if (ds.Tables[7].Rows[i][0].ToString() != "")
-                            {
-                                try
-                                {
-                                    message.CC.Add(new System.Net.Mail.MailAddress(ds.Tables[7].Rows[i][0].ToString()));
-                                }
-                                catch (Exception wer)
-                                {
-                                    CreateLogFiles log = new CreateLogFiles();
-                                    log.ErrorLog("=> Confirmation Email API => Room Email => Invalid Email => Extra CC => " + ds.Tables[7].Rows[i][0].ToString() +
-                                        " => BookingId => " + All.BookingId + ", Err Msg => " + wer.Message);
-                                }
-                            }
-                        }
-                        //Extra CC email from Front end
-                        if (ds.Tables[8].Rows[0][2].ToString() != "")
-                        {
-                            string ExtraCC = ds.Tables[8].Rows[0][2].ToString();
-                            var ExtraCCEmail = ExtraCC.Split(',');
-                            int cnt = ExtraCCEmail.Length;
-                            for (int i = 0; i < cnt; i++)
-                            {
-                                if (ExtraCCEmail[i].ToString() != "")
+                                if (ds.Tables[8].Rows[0][0].ToString() != "")
                                 {
                                     try
                                     {
-                                        message.CC.Add(new System.Net.Mail.MailAddress(ExtraCCEmail[i].ToString()));
+                                        message.CC.Add(new System.Net.Mail.MailAddress(ds.Tables[8].Rows[0][0].ToString()));
                                     }
                                     catch (Exception wer)
                                     {
                                         CreateLogFiles log = new CreateLogFiles();
-                                        log.ErrorLog("=> Confirmation Email API => Room Email => Invalid Email => Extra CC email from Front end => " + ExtraCCEmail[i].ToString() +
+                                        log.ErrorLog("=> Confirmation Email API => Room Email => Invalid Email => CC => " + ds.Tables[8].Rows[0][0].ToString() +
                                             " => BookingId => " + All.BookingId + ", Err Msg => " + wer.Message);
                                     }
+
                                 }
                             }
+                            //////Extra CC
+                            ////for (int i = 0; i < ds.Tables[7].Rows.Count; i++)
+                            ////{
+                            ////    if (ds.Tables[7].Rows[i][0].ToString() != "")
+                            ////    {
+                            ////        try
+                            ////        {
+                            ////            message.CC.Add(new System.Net.Mail.MailAddress(ds.Tables[7].Rows[i][0].ToString()));
+                            ////        }
+                            ////        catch (Exception wer)
+                            ////        {
+                            ////            CreateLogFiles log = new CreateLogFiles();
+                            ////            log.ErrorLog("=> Confirmation Email API => Room Email => Invalid Email => Extra CC => " + ds.Tables[7].Rows[i][0].ToString() +
+                            ////                " => BookingId => " + All.BookingId + ", Err Msg => " + wer.Message);
+                            ////        }
+                            ////    }
+                            ////}
+                            //////Extra CC email from Front end
+                            ////if (ds.Tables[8].Rows[0][2].ToString() != "")
+                            ////{
+                            ////    string ExtraCC = ds.Tables[8].Rows[0][2].ToString();
+                            ////    var ExtraCCEmail = ExtraCC.Split(',');
+                            ////    int cnt = ExtraCCEmail.Length;
+                            ////    for (int i = 0; i < cnt; i++)
+                            ////    {
+                            ////        if (ExtraCCEmail[i].ToString() != "")
+                            ////        {
+                            ////            try
+                            ////            {
+                            ////                message.CC.Add(new System.Net.Mail.MailAddress(ExtraCCEmail[i].ToString()));
+                            ////            }
+                            ////            catch (Exception wer)
+                            ////            {
+                            ////                CreateLogFiles log = new CreateLogFiles();
+                            ////                log.ErrorLog("=> Confirmation Email API => Room Email => Invalid Email => Extra CC email from Front end => " + ExtraCCEmail[i].ToString() +
+                            ////                    " => BookingId => " + All.BookingId + ", Err Msg => " + wer.Message);
+                            ////            }
+                            ////        }
+                            ////    }
+                            ////}
+                            ////if (ds.Tables[2].Rows[0][4].ToString() != "")
+                            ////{
+                            ////    try
+                            ////    {
+                            ////        message.Bcc.Add(new System.Net.Mail.MailAddress(ds.Tables[2].Rows[0][4].ToString()));
+                            ////    }
+                            ////    catch (Exception wer)
+                            ////    {
+                            ////        CreateLogFiles log = new CreateLogFiles();
+                            ////        log.ErrorLog("=> Confirmation Email API => Room Email => Invalid Email => Bcc => " + ds.Tables[2].Rows[0][4].ToString() +
+                            ////            " => BookingId => " + All.BookingId + ", Err Msg => " + wer.Message);
+                            ////    }
+                            ////}
+                            ////message.Bcc.Add(new System.Net.Mail.MailAddress(ds.Tables[10].Rows[0][0].ToString()));
+                            ////if (ds.Tables[10].Rows[0][0].ToString() != "stay@hummingbirdindia.com")
+                            ////{
+                            ////    message.Bcc.Add(new System.Net.Mail.MailAddress("stay@hummingbirdindia.com"));
+                            ////}
+                            ////message.Bcc.Add(new System.Net.Mail.MailAddress("hbconf17@gmail.com"));
                         }
-                        if (ds.Tables[2].Rows[0][4].ToString() != "")
-                        {
-                            try
-                            {
-                                message.Bcc.Add(new System.Net.Mail.MailAddress(ds.Tables[2].Rows[0][4].ToString()));
-                            }
-                            catch (Exception wer)
-                            {
-                                CreateLogFiles log = new CreateLogFiles();
-                                log.ErrorLog("=> Confirmation Email API => Room Email => Invalid Email => Bcc => " + ds.Tables[2].Rows[0][4].ToString() +
-                                    " => BookingId => " + All.BookingId + ", Err Msg => " + wer.Message);
-                            }
-                        }
-                        message.Bcc.Add(new System.Net.Mail.MailAddress(ds.Tables[10].Rows[0][0].ToString()));
-                        if (ds.Tables[10].Rows[0][0].ToString() != "stay@hummingbirdindia.com")
-                        {
-                            message.Bcc.Add(new System.Net.Mail.MailAddress("stay@hummingbirdindia.com"));
-                        }
-                        message.Bcc.Add(new System.Net.Mail.MailAddress("hbconf17@gmail.com")); 
+                        message.Bcc.Add(new System.Net.Mail.MailAddress("prabakaran@warblerit.com"));
 
                         message.Subject = "Booking Confirmation - " + ds.Tables[2].Rows[0][2].ToString();
                         string typeofpty = ds.Tables[4].Rows[0][8].ToString();
@@ -861,25 +941,13 @@ namespace ConfirmationEMailWebApi.Controllers
                             Imagelocation = ds.Tables[6].Rows[0][0].ToString();
                             Imagealt = ds.Tables[6].Rows[0][1].ToString();
                         }
-
+                        
                         // Contact Email And Phone
                         string ContactEmail = "";
                         string DeskNo = "";
-                        if (Convert.ToInt64(ds.Tables[2].Rows[0][11].ToString()) == 2281)
-                        {
-                            DeskNo = "+91-7349250264";
-                            ContactEmail = "DL_Traveldesk@teamhgs.com";
-                        }
-                        else if (Convert.ToInt64(ds.Tables[2].Rows[0][11].ToString()) == 2383)
-                        {
-                            DeskNo = "+91 8879974666 <br> +91 8046123363";
-                            ContactEmail = "hotel.bookings@cipla.com";
-                        }
-                        else
-                        {
-                            DeskNo = ds.Tables[2].Rows[0][14].ToString();
-                            ContactEmail = ds.Tables[10].Rows[0][0].ToString();
-                        }
+                        DeskNo = ds.Tables[2].Rows[0][14].ToString();
+                        ContactEmail = ds.Tables[2].Rows[0][16].ToString();
+                       
 
                         // Map Link
                         string MapLink = "";
@@ -893,9 +961,18 @@ namespace ConfirmationEMailWebApi.Controllers
                         }
 
                         // View in browser Link
-                        string id = ds.Tables[2].Rows[0][11].ToString();
-                        string link = "http://mybooking.hummingbirdindia.com/?redirect=BookingConfirmation&B=B&R=" + id;
+                        string id = ds.Tables[2].Rows[0][12].ToString();
+                        string link = "http://mybooking.hummingbirdindia.com/?redirect=BookingConfirmation&B=R&R=" + id;
 
+                        string BOKCreditcardView = "";
+                        if (typeofpty == "BOK")
+                        {
+                            BOKCreditcardView = "<tr class=\"\" style=\"padding:0;text-align:left\">" +
+                                            "<th style=\"width: 60%;\"><a style = \"font-size:13px; padding:10px 10px 10px 10px;\" align =\"right\" href=" + link + "&C=BOK#Creditcard" + ">UPDATE YOUR CREDIT CARD INFO</a>" +
+                                            "</th><th style=\"font-size:10px;padding:10px 16px 10px 0;line-height:28px;text-align:right;\" >" +
+                                            "</th></tsr>";
+                               
+                        }
 
                         string style = @"<!DOCTYPE html>
                                     <html lang=""en"">
@@ -1279,7 +1356,7 @@ namespace ConfirmationEMailWebApi.Controllers
                         {
                             header_cnt1 += "<p>Hotel Confirmation:" + ds.Tables[2].Rows[0][15].ToString() + "</p>";
                         }
-                        header_cnt1 += "<p>Booking Confirmation #: " + ds.Tables[2].Rows[0][2].ToString() + "</p>" +
+                        header_cnt1 += "<p>HB Confirmation #: " + ds.Tables[2].Rows[0][2].ToString() + "</p>" +
                                              "</th>" +
                                              "</tr>" +
                                              "</table>" +
@@ -1298,14 +1375,14 @@ namespace ConfirmationEMailWebApi.Controllers
                                     "<tr style=\"padding:0;vertical-align:top;text-align:left\">" +
                                     "<th class=\"small-5 large-5 columns first\" style=\"font-size:16px;text-align:left;line-height:1.3;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;color:#0a0a0a;padding-right:8px;margin:0 auto;padding-bottom:16px;width:225.66667px;padding-left:16px\">" +
                                     "<p class=\"body-text-lg light\" style=\"margin:0;text-align:left;padding:0;font-weight:300;font-family:'Circular', 'Cabin', Helvetica, Arial, sans-serif;color:#484848;word-break:normal;line-height:1.2;font-size:17px;margin-bottom:0px !important;\">" + ds.Tables[0].Rows[0][9].ToString() + "</p>" +
-                                    "<p class=\"body-text light\" style=\"margin:0;text-align:left;padding:0;font-weight:300;font-family:'Circular', 'Cabin', Helvetica, Arial, sans-serif;color:#484848;word-break:normal;line-height:1.4;font-size:16px;margin-bottom:0px !important;\">Check in " + ds.Tables[0].Rows[0][8].ToString() + "</p>" +
+                                    "<p class=\"body-text light\" style=\"margin:0;text-align:left;padding:0;font-weight:300;font-family:'Circular', 'Cabin', Helvetica, Arial, sans-serif;color:#484848;word-break:normal;line-height:1.4;font-size:16px;margin-bottom:0px !important;\">Check-in " + ds.Tables[0].Rows[0][11].ToString() + "</p>" +
                                     "</th>" +
                                     "<th class=\"small-2 large-2 columns\" style=\"font-size:16px;color:#0a0a0a;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;text-align:left;line-height:1.3;padding-right:8px;width:80.66667px;padding-bottom:16px;padding-left:16px;margin:0 auto\">" +
                                     "<img alt=\"\" class=\"slash text-center\" src=\"https://endpoint887127.azureedge.net/img/slash.png\" style=\"outline:none;text-decoration:none;-ms-interpolation-mode:bicubic;display:block;clear:both;max-width:40px;width:40px;text-align:center;float:none;margin:0 auto\">" +
                                     "</th>" +
                                     "<th class=\"small-5 large-5 columns last\" style=\"font-size:16px;text-align:left;color:#0a0a0a;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;line-height:1.3;width:225.66667px;padding-left:16px;margin:0 auto;padding-bottom:16px;padding-right:16px\">" +
                                     "<p class=\"body-text-lg light text-right\" style=\"padding:0;margin:0;font-size:17px;font-weight:300;font-family:'Circular', 'Helvetica', Helvetica, Arial, sans-serif;color:#484848;word-break:normal;line-height:1.2;text-align:right;margin-bottom:0px !important;\">" + ds.Tables[0].Rows[0][10].ToString() + "</p>" +
-                                    "<p class=\"body-text light text-right\"  style=\"padding:0;margin:0;font-size:16px;font-weight:300;font-family:'Circular', 'Helvetica', Helvetica, Arial, sans-serif;color:#484848;word-break:normal;line-height:1.4;text-align:right;margin-bottom:0px !important;\">Check out</p>" +
+                                    "<p class=\"body-text light text-right\"  style=\"padding:0;margin:0;font-size:16px;font-weight:300;font-family:'Circular', 'Helvetica', Helvetica, Arial, sans-serif;color:#484848;word-break:normal;line-height:1.4;text-align:right;margin-bottom:0px !important;\">Check-out</p>" +
                                     "</th></tr></table></div>" +
 
                                     "<div><table class=\"row\" style=\"border-spacing:0;border-collapse:collapse;text-align:left;vertical-align:top;padding:0;width:100%;position:relative;display:table\">" +
@@ -1351,6 +1428,18 @@ namespace ConfirmationEMailWebApi.Controllers
                                     "<p class=\"body-text light text-right\" style='padding:0;margin:0;font-size:18px;font-weight:300;font-family:\"Circular\", \"Helvetica\", Helvetica, Arial, sans-serif;color:#484848;word-break:normal;line-height:1.4;text-align:right;margin-bottom:0px !important;'>Service Payment: " + ds.Tables[0].Rows[0][6].ToString() + "</p>" +
                                     "</th></tr></table></div></div>";
 
+                        string Inclusions = "<div><table class=\"row\" style=\"border-spacing:0;border-collapse:collapse;text-align:left;vertical-align:top;padding:0;width:100%;position:relative;display:table\">" +
+                                    "<tr class=\"\" style=\"padding:0;vertical-align:top;text-align:left\">" +
+                                    "<th class=\"small-12 large-12 columns first last\" style=\"font-size:16px;padding:0;text-align:left;color:#0a0a0a;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;line-height:1.3;margin:0 auto;padding-bottom:16px;width:564px;padding-left:16px;padding-right:16px\">" +
+                                    "<hr class=\"full-divider\" style=\"clear:both;max-width:580px;border-right:0;border-top:0;border-left:0;margin:20px auto;border-bottom:1px solid #cacaca;background-color:#dbdbdb;height:1px;border:none;width:100%;margin-top:0;margin-bottom:0\">" +
+                                    "</th></tr></table></div>"+
+                                    "<table class=\"row\" style=\"border-spacing:0;border-collapse:collapse;text-align:left;vertical-align:top;padding:0;width:100%;position:relative;display:table\">" +
+                                    "<tr style=\"padding:0;vertical-align:top;text-align:left\">" +
+                                    "<th class=\"small-5 large-5 columns first\" style=\"font-size:16px;text-align:left;line-height:1.3;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;color:#0a0a0a;padding-right:8px;margin:0 auto;padding-bottom:16px;padding-left:16px\">" +
+                                    "<p class=\"body-text-lg light row-pad-bot-1\" style=\"padding:0;margin:0 0 5px 0;text-align:center;font-size:18px;font-weight:300;font-family:'Cabin',Helvetica, Arial, sans-serif;color:#484848;word-break:normal;line-height:1.2;\">Inclusions : " + ds.Tables[1].Rows[0][12].ToString() +" </p>" +
+                                    
+                                    "</th></tr></table>";
+
                         string Address = "<div><table class=\"row\" style=\"border-spacing:0;border-collapse:collapse;text-align:left;vertical-align:top;padding:0;width:100%;position:relative;display:table\">" +
                                            "<tr class=\"\" style=\"padding:0;vertical-align:top;text-align:left\">" +
                                             "<th class=\"small-12 large-12 columns first last\" style=\"font-size:16px;padding:0;text-align:left;color:#0a0a0a;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;line-height:1.3;margin:0 auto;padding-bottom:16px;width:564px;padding-left:16px;padding-right:16px\">" +
@@ -1359,12 +1448,12 @@ namespace ConfirmationEMailWebApi.Controllers
                                             "<div style =\"padding-top:8px;padding-bottom:8px\">" +
                                             "<table class=\"row\" style=\"border-spacing:0;border-collapse:collapse;text-align:left;vertical-align:top;padding:0;width:100%;position:relative;display:table\">" +
                                             "<th class=\"small-7 large-7 columns first\" style=\"font-size:16px;text-align:left;line-height:1.3;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;color:#0a0a0a;padding-right:8px;margin:0 auto;width:322.33333px;padding-left:16px;vertical-align: top;\">" +
-                                            "<p class=\"body-text-lg light row-pad-bot-1\" style=\"padding:0;margin:0;text-align:center;font-size:24px;font-weight:300;font-family:'Cabin',Helvetica, Arial, sans-serif;color:#484848;word-break:normal;line-height:1.2;\">Address</p>" +
+                                            "<p class=\"body-text-lg light row-pad-bot-1\" style=\"padding:0;margin:0 0 5px 0;text-align:center;font-size:24px;font-weight:300;font-family:'Cabin',Helvetica, Arial, sans-serif;color:#484848;word-break:normal;line-height:1.2;\">Address</p>" +
                                             "<p class=\"body-text light\" style='margin:0;text-align:left;padding:0;font-weight:300;font-family:\"Cabin\", \"Helvetica\", Helvetica, Arial, sans-serif;color:#484848;word-break:normal;line-height:1.4;font-size:18px;margin-bottom:0px !important'>" + ds.Tables[1].Rows[0][0].ToString() + "</p>" +
                                             "<p class=\"body-text light\">" + ds.Tables[1].Rows[0][1].ToString() + "</p></th>" +
                                             "<th class=\"small-5 large-5 columns last valign-top\" style=\"font-size:16px;text-align:left;line-height:1.3;color:#0a0a0a;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;vertical-align:top;width:225.66667px;padding-left:16px;margin:0 auto;padding-right:16px\">" +
                                             "<a href=\"" + MapLink + "\" style =\"font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;margin:0;text-align:left;line-height:1.3;color:#2199e8;text-decoration:none\">" +
-                                            "<p class=\"body-text-lg light color-rausch text-right\" style='padding:0;margin:0;word-break:normal;font-weight:300;font-family:\"Cabin\", \"Helvetica\", Helvetica, Arial, sans-serif;line-height:1.2;font-size:24px;text-align:center;color:#d9242c !important;margin-bottom:0px !important'>Get Directions</p>" +
+                                            "<p class=\"body-text-lg light color-rausch text-right\" style='padding:0;margin:0 0 5px 0;word-break:normal;font-weight:300;font-family:\"Cabin\", \"Helvetica\", Helvetica, Arial, sans-serif;line-height:1.2;font-size:24px;text-align:center;color:#d9242c !important;margin-bottom:0px !important'>Get Directions</p>" +
                                             "<p class=\"body-text light\" style='margin:0;text-align:left;padding:0;font-weight:300;font-family:\"Cabin\", \"Helvetica\", Helvetica, Arial, sans-serif;color:#484848;word-break:normal;line-height:1.4;font-size:18px;margin-bottom:0px !important'>" +
                                             ds.Tables[1].Rows[0][2].ToString() + "</p></a></th></table></div><div>" +
                                             "<table class=\"row\" style=\"border-spacing:0;border-collapse:collapse;text-align:left;vertical-align:top;padding:0;width:100%;position:relative;display:table\">" +
@@ -1390,6 +1479,7 @@ namespace ConfirmationEMailWebApi.Controllers
                                             "<hr class=\"full-divider\" style=\"clear:both;max-width:580px;border-right:0;border-top:0;border-left:0;margin:20px auto;border-bottom:1px solid #cacaca;background-color:#dbdbdb;height:1px;border:none;width:100%;margin-top:0;margin-bottom:0\">" +
                                             "</th></tr></table></div><div style =\"padding-top:2px\" >" +
                                             "<table class=\"row\" style=\"border-spacing:0;border-collapse:collapse;text-align:left;padding:0;width:100%;position:relative;display:table\">" +
+                                            BOKCreditcardView +
                                             "<tr class=\"\" style=\"padding:0;text-align:left\">" +
                                             "<th style=\"width: 60%;\"><a href=\"" + link + "\" target=\"_blank\"> <span style=\"font-family: 'Cabin', Helvetica, Arial, sans-serif;padding:10px 0 10px 16px;margin:0;text-align:left;line-height:1.3;text-decoration:none;font-weight:300;color:#d9242c !important\">Security/Cancellation Policy</span></a>" +
                                             "</th><th style=\"font-size:10px;padding:10px 16px 10px 0;line-height:28px;text-align:right;\" >" +
@@ -1398,31 +1488,31 @@ namespace ConfirmationEMailWebApi.Controllers
 
 
 
-                        MailContent = style + header + header_cnt1 + HotelName + ChkInOutDate + TablHdr + Address + BookerDtls + EndData;
-                        var PdfContent = header + header_cnt1 + HotelName + ChkInOutDate + TablHdr + Address + BookerDtls;
+                        MailContent = style + header + header_cnt1 + HotelName + ChkInOutDate + TablHdr + Inclusions + Address + BookerDtls + EndData;
+                        var PdfContent = header + header_cnt1 + HotelName + ChkInOutDate + TablHdr + Inclusions + Address + BookerDtls;
 
 
-                        ////var htmlContent = String.Format(PdfContent, DateTime.Now);
-                        ////var htmlToPdf = new NReco.PdfGenerator.HtmlToPdfConverter();
-                        ////var pdfBytes = htmlToPdf.GeneratePdf(htmlContent);
-                        ////string path = @"D:\home\site\wwwroot\Confirmations\";
-                        ////// Determine whether the directory exists.
-                        ////if (Directory.Exists(path))
-                        ////{
-                        ////    File.WriteAllBytes(path + "Booking Confirmation - " + ds.Tables[2].Rows[0][2].ToString() + ".pdf", pdfBytes);
-                        ////}
-                        ////else
-                        ////{
-                        ////    DirectoryInfo di = Directory.CreateDirectory(path);
-                        ////    File.WriteAllBytes(path + "Booking Confirmation - " + ds.Tables[2].Rows[0][2].ToString() + ".pdf", pdfBytes);
-                        ////}
+                        var htmlContent = String.Format(PdfContent, DateTime.Now);
+                        var htmlToPdf = new NReco.PdfGenerator.HtmlToPdfConverter();
+                        var pdfBytes = htmlToPdf.GeneratePdf(htmlContent);
+                        string path = @"D:\home\site\wwwroot\Confirmations\";
+                        // Determine whether the directory exists.
+                        if (Directory.Exists(path))
+                        {
+                            File.WriteAllBytes(path + "Booking Confirmation - " + ds.Tables[2].Rows[0][2].ToString() + ".pdf", pdfBytes);
+                        }
+                        else
+                        {
+                            DirectoryInfo di = Directory.CreateDirectory(path);
+                            File.WriteAllBytes(path + "Booking Confirmation - " + ds.Tables[2].Rows[0][2].ToString() + ".pdf", pdfBytes);
+                        }
                         message.Body = MailContent;
                         message.IsBodyHtml = true;
                         if (ds.Tables[2].Rows[0][11].ToString() == "218" && ds.Tables[0].Rows[0][5].ToString() == "Direct<br>(Cash/Card)")
                         {
                             message.Attachments.Add(new Attachment(@"D:\home\site\wwwroot\Confirmations\" + "icici_letter.pdf"));
                         }
-                        ////message.Attachments.Add(new Attachment(@"D:\home\site\wwwroot\Confirmations\" + "Booking Confirmation - " + ds.Tables[2].Rows[0][2].ToString() + ".pdf"));
+                        message.Attachments.Add(new Attachment(@"D:\home\site\wwwroot\Confirmations\" + "Booking Confirmation - " + ds.Tables[2].Rows[0][2].ToString() + ".pdf"));
                     }
                     #endregion
 
@@ -1459,9 +1549,23 @@ namespace ConfirmationEMailWebApi.Controllers
                     if (ds.Tables[0].Rows[0][8].ToString() == "Bed")
                     {
 
-                        if (ds.Tables[3].Rows.Count > 0)
+                        var ChCnt = 0;
+                        var ChCntVal = "txt";
+
+                        if(All.ResendFlag == true)
                         {
-                            if (ds.Tables[3].Rows[0][4].ToString() != "")
+                            ChCnt = 1;
+                            ChCntVal = "txt";
+                        }
+                        else
+                        {
+                            ChCnt = ds.Tables[3].Rows.Count;
+                            ChCntVal = ds.Tables[3].Rows[0][4].ToString();
+                        }
+
+                        if (ChCnt > 0)
+                        {
+                            if (ChCntVal != "")
                             {
                                 string PropertyMail = ds.Tables[3].Rows[0][4].ToString();
                                 var PtyMail = PropertyMail.Split(',');
@@ -1476,51 +1580,90 @@ namespace ConfirmationEMailWebApi.Controllers
                                     message1.From = new System.Net.Mail.MailAddress("stay@hummingbirdindia.com", "", System.Text.Encoding.UTF8);
                                 }
 
-                                for (int i = 0; i < cnt; i++)
+                                if (All.ResendFlag == true)
                                 {
-                                    if (PtyMail[i].ToString() != "")
+                                    var Mail = All.PropertyGusetEmail.Split(',');
+                                    for (int i = 0; i < Mail.Length; i++)
                                     {
                                         try
                                         {
-                                            message1.To.Add(new System.Net.Mail.MailAddress(PtyMail[i].ToString()));
+                                            message1.To.Add(new System.Net.Mail.MailAddress(Mail[i].ToString()));
                                         }
                                         catch (Exception ex)
                                         {
                                             CreateLogFiles log = new CreateLogFiles();
-                                            log.ErrorLog("=> Confirmation Email API => Bed Property Email => BookingId => " + All.BookingId + " => Invaild Email => To =>" + PtyMail[i].ToString());
+                                            log.ErrorLog("=> Confirmation Email API => Resend Guest Email => BookingId => " + All.BookingId + " => Invaild Email => To =>" + Mail[i].ToString());
                                         }
                                     }
-                                }
-                                for (int i = 0; i < ds.Tables[3].Rows.Count; i++)
-                                {
-                                    if (ds.Tables[3].Rows[i][2].ToString() != "")
+                                    if (All.UserEmail != "")
                                     {
                                         try
                                         {
-                                            message1.CC.Add(new System.Net.Mail.MailAddress(ds.Tables[3].Rows[i][2].ToString()));
+                                            message1.CC.Add(new System.Net.Mail.MailAddress(All.UserEmail));
                                         }
                                         catch (Exception ex)
                                         {
                                             CreateLogFiles log = new CreateLogFiles();
-                                            log.ErrorLog("=> Confirmation Email API => Bed Property Email => BookingId => " + All.BookingId + " => Invaild Email => Cc =>" + ds.Tables[3].Rows[i][2].ToString());
+                                            log.ErrorLog("=> Confirmation Email API => Resend Guest Email => BookingId => " + All.BookingId + " => Invaild Email => To =>" + All.UserEmail);
                                         }
                                     }
-                                }
-                                if (ds.Tables[2].Rows[0][4].ToString() != "")
-                                {
-                                    try
-                                    {
-                                        message1.Bcc.Add(ds.Tables[2].Rows[0][4].ToString());
-                                    }
-                                    catch (Exception ex)
-                                    {
-                                        CreateLogFiles log = new CreateLogFiles();
-                                        log.ErrorLog("=> Confirmation Email API => Bed Property Email => BookingId => " + All.BookingId + " => Invaild Email => Bcc =>" + ds.Tables[2].Rows[0][4].ToString());
-                                    }
-                                }
-                                ////message1.Bcc.Add(new System.Net.Mail.MailAddress("bookingbcc@staysimplyfied.com"));
-                                message1.Bcc.Add(new System.Net.Mail.MailAddress("hbconf17@gmail.com"));
 
+
+                                    message1.Bcc.Add(new System.Net.Mail.MailAddress("hbconf17@gmail.com"));
+
+                                }
+                                else
+                                {
+
+                                    for (int i = 0; i < cnt; i++)
+                                    {
+                                        if (PtyMail[i].ToString() != "")
+                                        {
+                                            try
+                                            {
+                                                message1.To.Add(new System.Net.Mail.MailAddress(PtyMail[i].ToString()));
+                                            }
+                                            catch (Exception ex)
+                                            {
+                                                CreateLogFiles log = new CreateLogFiles();
+                                                log.ErrorLog("=> Confirmation Email API => Bed Property Email => BookingId => " + All.BookingId + " => Invaild Email => To =>" + PtyMail[i].ToString());
+                                            }
+                                        }
+                                    }
+                                    ////for (int i = 0; i < ds.Tables[3].Rows.Count; i++)
+                                    ////{
+                                    ////    if (ds.Tables[3].Rows[i][2].ToString() != "")
+                                    ////    {
+                                    ////        try
+                                    ////        {
+                                    ////            message1.CC.Add(new System.Net.Mail.MailAddress(ds.Tables[3].Rows[i][2].ToString()));
+                                    ////        }
+                                    ////        catch (Exception ex)
+                                    ////        {
+                                    ////            CreateLogFiles log = new CreateLogFiles();
+                                    ////            log.ErrorLog("=> Confirmation Email API => Bed Property Email => BookingId => " + All.BookingId + " => Invaild Email => Cc =>" + ds.Tables[3].Rows[i][2].ToString());
+                                    ////        }
+                                    ////    }
+                                    ////}
+                                    ////if (ds.Tables[2].Rows[0][4].ToString() != "")
+                                    ////{
+                                    ////    try
+                                    ////    {
+                                    ////        message1.Bcc.Add(ds.Tables[2].Rows[0][4].ToString());
+                                    ////    }
+                                    ////    catch (Exception ex)
+                                    ////    {
+                                    ////        CreateLogFiles log = new CreateLogFiles();
+                                    ////        log.ErrorLog("=> Confirmation Email API => Bed Property Email => BookingId => " + All.BookingId + " => Invaild Email => Bcc =>" + ds.Tables[2].Rows[0][4].ToString());
+                                    ////    }
+                                    ////}
+                                    ////message1.Bcc.Add(new System.Net.Mail.MailAddress("bookingbcc@staysimplyfied.com"));
+                                    ////message1.Bcc.Add(new System.Net.Mail.MailAddress("hbconf17@gmail.com"));
+
+                                }
+
+
+                                message1.Bcc.Add(new System.Net.Mail.MailAddress("prabakaran@warblerit.com"));
                                 message1.Subject = "Booking Confirmation - " + ds.Tables[2].Rows[0][2].ToString();
                                 
 
@@ -1545,14 +1688,8 @@ namespace ConfirmationEMailWebApi.Controllers
 
                                 // Desk No
                                 string DeskNo = "";
-                                if (Convert.ToInt64(ds.Tables[2].Rows[0][10].ToString()) == 2281)
-                                {
-                                    DeskNo = "+91-7349250264"; 
-                                }
-                                else
-                                {
-                                    DeskNo = ds.Tables[2].Rows[0][13].ToString(); 
-                                }
+                                DeskNo = ds.Tables[2].Rows[0][13].ToString(); 
+                               
 
                                 // Guest Mobile No.
                                 string MobileNo = ds.Tables[4].Rows[0][2].ToString();
@@ -1952,12 +2089,12 @@ namespace ConfirmationEMailWebApi.Controllers
                                                 "<tr style=\"padding:0;vertical-align:top;text-align:left\">" +
                                                 "<th class=\"small-5 large-5 columns first\" style=\"font-size:16px;text-align:left;line-height:1.3;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;color:#0a0a0a;padding-right:8px;margin:0 auto;padding-bottom:16px;width:225.66667px;padding-left:16px\">" +
                                                 "<p class=\"body-text-lg light\" style='margin:0;text-align:left;padding:0;font-weight:300;font-family:\"Circular\", \"Helvetica\", Helvetica, Arial, sans-serif;color:#484848;word-break:normal;line-height:1.2;font-size:17px;margin-bottom:0px !important'>‌" + ds.Tables[0].Rows[0][10].ToString() + " ‌</p>" +
-                                                "<p class=\"body-text light\" style='margin:0;text-align:left;padding:0;font-weight:300;font-family:\"Circular\", \"Helvetica\", Helvetica, Arial, sans-serif;color:#484848;word-break:normal;line-height:1.4;font-size:16px;margin-bottom:0px !important'>Check in " + ds.Tables[0].Rows[0][9].ToString() + "‌</p>" +
+                                                "<p class=\"body-text light\" style='margin:0;text-align:left;padding:0;font-weight:300;font-family:\"Circular\", \"Helvetica\", Helvetica, Arial, sans-serif;color:#484848;word-break:normal;line-height:1.4;font-size:16px;margin-bottom:0px !important'>Check-in " + ds.Tables[0].Rows[0][9].ToString() + "‌</p>" +
                                                 "</th><th class=\"small-2 large-2 columns\" style=\"font-size:16px;color:#0a0a0a;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;text-align:left;line-height:1.3;padding-right:8px;width:80.66667px;padding-bottom:16px;padding-left:16px;margin:0 auto\">" +
                                                 "<img alt=\"\" class=\"slash text-center\" src=\"https://endpoint887127.azureedge.net/img/slash.png\" style=\"outline:none;text-decoration:none;-ms-interpolation-mode:bicubic;display:block;clear:both;max-width:40px;width:40px;text-align:center;float:none;margin:0 auto\">" +
                                                 "</th><th class=\"small-5 large-5 columns last\" style=\"font-size:16px;text-align:left;color:#0a0a0a;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;line-height:1.3;width:225.66667px;padding-left:16px;margin:0 auto;padding-bottom:16px;padding-right:16px\">" +
                                                 "<p class=\"body-text-lg light text-right\" style='padding:0;margin:0;font-size:17px;font-weight:300;font-family:\"Circular\", \"Helvetica\", Helvetica, Arial, sans-serif;color:#484848;word-break:normal;line-height:1.2;text-align:right;margin-bottom:0px !important'>‌" + ds.Tables[0].Rows[0][11].ToString() + "</p>" +
-                                                "<p class=\"body-text light text-right\" style='padding:0;margin:0;font-size:16px;font-weight:300;font-family:\"Circular\", \"Helvetica\", Helvetica, Arial, sans-serif;color:#484848;word-break:normal;line-height:1.4;text-align:right;margin-bottom:0px !important'>Check out</p>" +
+                                                "<p class=\"body-text light text-right\" style='padding:0;margin:0;font-size:16px;font-weight:300;font-family:\"Circular\", \"Helvetica\", Helvetica, Arial, sans-serif;color:#484848;word-break:normal;line-height:1.4;text-align:right;margin-bottom:0px !important'>Check-out</p>" +
                                                 "</th></tr></table></div><div>" +
                                                 "<table class=\"row\" style=\"border-spacing:0;border-collapse:collapse;text-align:left;vertical-align:top;padding:0;width:100%;position:relative;display:table\">"+
                                                 "<tr class=\"\" style=\"padding:0;vertical-align:top;text-align:left\">" +
@@ -1976,12 +2113,12 @@ namespace ConfirmationEMailWebApi.Controllers
                                                   "<table rules=\"rows\" style =\"border:#dbdbdb\">" +
                                                   "<tr><td style=\"font-size:13px; width:16%;\" valign=\"top\" align=\"center\" ><strong> Guest Name </strong></td > " +
                                                   "<td style=\"font-size:13px; width:16%;\" valign=\"top\" align=\"center\" ><strong> Room No / Occupancy </strong ></td > " +
-                                                  "<td style=\"font-size:13px; width:16%;\" valign=\"top\" align=\"center\" ><strong  Tariff / <br> Room / Day </strong ></td > " +
+                                                  "<td style=\"font-size:13px; width:16%;\" valign=\"top\" align=\"center\" ><strong> Tariff / <br> Room / Day </strong ></td > " +
                                                   "</tr><tr></tr>";
                                 for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
                                 {
                                     GuestTbl += "<tr style=\"font-style:normal;font-weight:normal;\" class=\"ng-scope\">" +
-                                            "<td class=\"padd ng-binding\" style=\"vertical-align:middle;text-align:center\">"+ ds.Tables[0].Rows[i][12].ToString() + "."+ ds.Tables[0].Rows[i][0].ToString() + "</td>" +
+                                            "<td class=\"padd ng-binding\" style=\"vertical-align:middle;text-align:center\">"+ ds.Tables[0].Rows[i][12].ToString() + ". "+ ds.Tables[0].Rows[i][0].ToString() + "</td>" +
                                             "<td class=\"padd ng-binding\" style=\"vertical-align: middle; text-align: center;\">" + ds.Tables[0].Rows[i][6].ToString() + " / " + ds.Tables[0].Rows[i][7].ToString() + "</td>" +
                                             "<td class=\"padd ng-binding\" style=\"vertical-align: middle; text-align: center;\">INR " + ds.Tables[0].Rows[i][3].ToString() + "</td>" +
                                             "</tr>";
@@ -2055,7 +2192,21 @@ namespace ConfirmationEMailWebApi.Controllers
                     else
                     {
 
-                        if (ds.Tables[3].Rows[0][4].ToString() != "")
+                        var ChCnt = 0;
+                        var ChCntVal = "txt";
+
+                        if (All.ResendFlag == true)
+                        {
+                            ChCnt = 1;
+                            ChCntVal = "txt";
+                        }
+                        else
+                        {
+                            ChCnt = ds.Tables[3].Rows.Count;
+                            ChCntVal = ds.Tables[3].Rows[0][4].ToString();
+                        }
+
+                        if (ChCntVal != "")
                         {
                             if (ds.Tables[10].Rows.Count > 0)
                             {
@@ -2065,58 +2216,94 @@ namespace ConfirmationEMailWebApi.Controllers
                             {
                                 message1.From = new System.Net.Mail.MailAddress("stay@hummingbirdindia.com", "", System.Text.Encoding.UTF8);
                             }
-
-                            string PropertyMail = ds.Tables[3].Rows[0][4].ToString();
-                            var PtyMail = PropertyMail.Split(',');
-                            int cnt = PtyMail.Length;
-                            for (int i = 0; i < cnt; i++)
+                            if (All.ResendFlag == true)
                             {
-                                if (PtyMail[i].ToString() != "")
+                                var Mail = All.PropertyGusetEmail.Split(',');
+                                for (int i = 0; i < Mail.Length; i++)
                                 {
                                     try
                                     {
-                                        message1.To.Add(new System.Net.Mail.MailAddress(PtyMail[i].ToString()));
+                                        message1.To.Add(new System.Net.Mail.MailAddress(Mail[i].ToString()));
                                     }
                                     catch (Exception ex)
                                     {
                                         CreateLogFiles log = new CreateLogFiles();
-                                        log.ErrorLog("=> Confirmation Email API => Room Level Confirmation Property Mail => To => BookingId => " + All.BookingId + " => Invalid Email => " + PtyMail[i].ToString());
+                                        log.ErrorLog("=> Confirmation Email API => Resend Guest Email => BookingId => " + All.BookingId + " => Invaild Email => To =>" + Mail[i].ToString());
                                     }
                                 }
-                            }
-                            for (int i = 0; i < ds.Tables[3].Rows.Count; i++)
-                            {
-                                if (ds.Tables[3].Rows[i][2].ToString() != "")
+                                if (All.UserEmail != "")
                                 {
                                     try
                                     {
-                                        message1.CC.Add(new System.Net.Mail.MailAddress(ds.Tables[3].Rows[i][2].ToString()));
+                                        message1.CC.Add(new System.Net.Mail.MailAddress(All.UserEmail));
                                     }
                                     catch (Exception ex)
                                     {
                                         CreateLogFiles log = new CreateLogFiles();
-                                        log.ErrorLog("=> Confirmation Email API => Room Level Confirmation Property Mail => Cc => BookingId => " + All.BookingId + " => Invalid Email => " + ds.Tables[3].Rows[i][2].ToString());
+                                        log.ErrorLog("=> Confirmation Email API => Resend Guest Email => BookingId => " + All.BookingId + " => Invaild Email => To =>" + All.UserEmail);
                                     }
                                 }
-                            }
-                            if (ds.Tables[2].Rows[0][4].ToString() != "")
-                            {
-                                try
-                                {
-                                    message1.Bcc.Add(new System.Net.Mail.MailAddress(ds.Tables[2].Rows[0][4].ToString()));
-                                }
-                                catch (Exception ex)
-                                {
-                                    CreateLogFiles log = new CreateLogFiles();
-                                    log.ErrorLog("=> Confirmation Email API => Room Level Confirmation Property Mail => Bcc => BookingId => " + All.BookingId + " => Invalid Email => " + ds.Tables[2].Rows[0][4].ToString());
-                                }
-                            }
 
-                            if (ds.Tables[10].Rows[0][1].ToString() != "stay@hummingbirdindia.com")
-                            {
-                                message1.Bcc.Add(new System.Net.Mail.MailAddress("stay@hummingbirdindia.com"));
+
+                                message1.Bcc.Add(new System.Net.Mail.MailAddress("hbconf17@gmail.com"));
+
                             }
-                            message1.Bcc.Add(new System.Net.Mail.MailAddress("hbconf17@gmail.com"));
+                            else
+                            {
+
+                                string PropertyMail = ds.Tables[3].Rows[0][4].ToString();
+                                var PtyMail = PropertyMail.Split(',');
+                                int cnt = PtyMail.Length;
+                                for (int i = 0; i < cnt; i++)
+                                {
+                                    if (PtyMail[i].ToString() != "")
+                                    {
+                                        try
+                                        {
+                                            message1.To.Add(new System.Net.Mail.MailAddress(PtyMail[i].ToString()));
+                                        }
+                                        catch (Exception ex)
+                                        {
+                                            CreateLogFiles log = new CreateLogFiles();
+                                            log.ErrorLog("=> Confirmation Email API => Room Level Confirmation Property Mail => To => BookingId => " + All.BookingId + " => Invalid Email => " + PtyMail[i].ToString());
+                                        }
+                                    }
+                                }
+                                ////for (int i = 0; i < ds.Tables[3].Rows.Count; i++)
+                                ////{
+                                ////    if (ds.Tables[3].Rows[i][2].ToString() != "")
+                                ////    {
+                                ////        try
+                                ////        {
+                                ////            message1.CC.Add(new System.Net.Mail.MailAddress(ds.Tables[3].Rows[i][2].ToString()));
+                                ////        }
+                                ////        catch (Exception ex)
+                                ////        {
+                                ////            CreateLogFiles log = new CreateLogFiles();
+                                ////            log.ErrorLog("=> Confirmation Email API => Room Level Confirmation Property Mail => Cc => BookingId => " + All.BookingId + " => Invalid Email => " + ds.Tables[3].Rows[i][2].ToString());
+                                ////        }
+                                ////    }
+                                ////}
+                                ////if (ds.Tables[2].Rows[0][4].ToString() != "")
+                                ////{
+                                ////    try
+                                ////    {
+                                ////        message1.Bcc.Add(new System.Net.Mail.MailAddress(ds.Tables[2].Rows[0][4].ToString()));
+                                ////    }
+                                ////    catch (Exception ex)
+                                ////    {
+                                ////        CreateLogFiles log = new CreateLogFiles();
+                                ////        log.ErrorLog("=> Confirmation Email API => Room Level Confirmation Property Mail => Bcc => BookingId => " + All.BookingId + " => Invalid Email => " + ds.Tables[2].Rows[0][4].ToString());
+                                ////    }
+                                ////}
+
+                                ////if (ds.Tables[10].Rows[0][1].ToString() != "stay@hummingbirdindia.com")
+                                ////{
+                                ////    message1.Bcc.Add(new System.Net.Mail.MailAddress("stay@hummingbirdindia.com"));
+                                ////}
+                                ////message1.Bcc.Add(new System.Net.Mail.MailAddress("hbconf17@gmail.com"));
+                            }
+                            message1.Bcc.Add(new System.Net.Mail.MailAddress("prabakaran@warblerit.com"));
 
                             message1.Subject = "Booking Confirmation - " + ds.Tables[2].Rows[0][2].ToString();
 
@@ -2141,15 +2328,8 @@ namespace ConfirmationEMailWebApi.Controllers
 
                             // Contact Email 
                             string DeskNo = "";
-                            if (Convert.ToInt64(ds.Tables[2].Rows[0][11].ToString()) == 2281)
-                            {
-                                DeskNo = "+91-7349250264";
-                            }
-                            else
-                            {
-                                DeskNo = ds.Tables[2].Rows[0][14].ToString();
-                            }
-
+                            DeskNo = ds.Tables[2].Rows[0][14].ToString();
+                            
                             // Guest Contact No.
                             string MobileNo = ds.Tables[4].Rows[0][4].ToString();
                             if (MobileNo == "")
@@ -2549,12 +2729,12 @@ namespace ConfirmationEMailWebApi.Controllers
                                                   "<tr style=\"padding:0;vertical-align:top;text-align:left\">" +
                                                   "<th class=\"small-5 large-5 columns first\" style=\"font-size:16px;text-align:left;line-height:1.3;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;color:#0a0a0a;padding-right:8px;margin:0 auto;padding-bottom:16px;width:225.66667px;padding-left:16px\">" +
                                                   "<p class=\"body-text-lg light\" style='margin:0;text-align:left;padding:0;font-weight:300;font-family:\"Circular\", \"Helvetica\", Helvetica, Arial, sans-serif;color:#484848;word-break:normal;line-height:1.2;font-size:17px;margin-bottom:0px !important'>‌" + ds.Tables[0].Rows[0][9].ToString() + " ‌</p>" +
-                                                  "<p class=\"body-text light\" style='margin:0;text-align:left;padding:0;font-weight:300;font-family:\"Circular\", \"Helvetica\", Helvetica, Arial, sans-serif;color:#484848;word-break:normal;line-height:1.4;font-size:16px;margin-bottom:0px !important'>Check in " + ds.Tables[0].Rows[0][11].ToString() + "‌</p>" +
+                                                  "<p class=\"body-text light\" style='margin:0;text-align:left;padding:0;font-weight:300;font-family:\"Circular\", \"Helvetica\", Helvetica, Arial, sans-serif;color:#484848;word-break:normal;line-height:1.4;font-size:16px;margin-bottom:0px !important'>Check-in " + ds.Tables[0].Rows[0][11].ToString() + "‌</p>" +
                                                   "</th><th class=\"small-2 large-2 columns\" style=\"font-size:16px;color:#0a0a0a;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;text-align:left;line-height:1.3;padding-right:8px;width:80.66667px;padding-bottom:16px;padding-left:16px;margin:0 auto\">" +
                                                   "<img alt=\"\" class=\"slash text-center\" src=\"https://endpoint887127.azureedge.net/img/slash.png\" style=\"outline:none;text-decoration:none;-ms-interpolation-mode:bicubic;display:block;clear:both;max-width:40px;width:40px;text-align:center;float:none;margin:0 auto\">" +
                                                   "</th><th class=\"small-5 large-5 columns last\" style=\"font-size:16px;text-align:left;color:#0a0a0a;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;line-height:1.3;width:225.66667px;padding-left:16px;margin:0 auto;padding-bottom:16px;padding-right:16px\">" +
                                                   "<p class=\"body-text-lg light text-right\" style='padding:0;margin:0;font-size:17px;font-weight:300;font-family:\"Circular\", \"Helvetica\", Helvetica, Arial, sans-serif;color:#484848;word-break:normal;line-height:1.2;text-align:right;margin-bottom:0px !important'>‌" + ds.Tables[0].Rows[0][10].ToString() + "</p>" +
-                                                  "<p class=\"body-text light text-right\" style='padding:0;margin:0;font-size:16px;font-weight:300;font-family:\"Circular\", \"Helvetica\", Helvetica, Arial, sans-serif;color:#484848;word-break:normal;line-height:1.4;text-align:right;margin-bottom:0px !important'>Check out</p>" +
+                                                  "<p class=\"body-text light text-right\" style='padding:0;margin:0;font-size:16px;font-weight:300;font-family:\"Circular\", \"Helvetica\", Helvetica, Arial, sans-serif;color:#484848;word-break:normal;line-height:1.4;text-align:right;margin-bottom:0px !important'>Check-out</p>" +
                                                   "</th></tr></table></div><div>" +
                                                   "<table class=\"row\" style=\"border-spacing:0;border-collapse:collapse;text-align:left;vertical-align:top;padding:0;width:100%;position:relative;display:table\">" +
                                                   "<tr class=\"\" style=\"padding:0;vertical-align:top;text-align:left\">" +
@@ -2573,7 +2753,7 @@ namespace ConfirmationEMailWebApi.Controllers
                                               "<table rules=\"rows\" style =\"border:#dbdbdb\">" +
                                               "<tr><td style=\"font-size:13px; width:16%;\" valign=\"top\" align=\"center\" ><strong> Guest Name </strong></td > " +
                                               "<td style=\"font-size:13px; width:16%;\" valign=\"top\" align=\"center\" ><strong> Room No / Occupancy </strong ></td > " +
-                                              "<td style=\"font-size:13px; width:16%;\" valign=\"top\" align=\"center\" ><strong  Tariff / <br> Room / Day </strong ></td > " +
+                                              "<td style=\"font-size:13px; width:16%;\" valign=\"top\" align=\"center\" ><strong> Tariff / <br> Room / Day </strong ></td > " +
                                               "</tr><tr></tr>";
                             for (int i = 0; i < ds.Tables[11].Rows.Count; i++)
                             {
@@ -2889,13 +3069,13 @@ namespace ConfirmationEMailWebApi.Controllers
                     Response = "Confirmation Email Sent Successfully";
                 }
 
-                return Json(new { EmailResponse = Response });
+                return Json(new { Code = "200", EmailResponse = Response });
             }
             catch (Exception Ex)
             {
                 log = new CreateLogFiles();
-                log.ErrorLog(" => Confirmation Email API =>" + Ex.Message);
-                throw Ex;
+                log.ErrorLog(" => Confirmation Email API => BookingId => " + All.BookingId + "=>" + Ex.Message);
+                return Json(new { Code = "400", EmailResponse = "Confirmation Email not Sent - " + Ex.Message });
             }
         }
     }

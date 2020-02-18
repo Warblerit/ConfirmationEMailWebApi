@@ -16,6 +16,9 @@ namespace ConfirmationEMailWebApi.Models
         public string RowId { get; set; } 
         public long? Caretaker { get; set; }
         public string ShortPath { get; set; }
+        public bool ResendFlag { get; set; }
+        public string PropertyGusetEmail { get; set; }
+        public string UserEmail { get; set; }
     }
     public class URLShort
     {
