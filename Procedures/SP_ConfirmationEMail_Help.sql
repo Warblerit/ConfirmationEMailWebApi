@@ -89,7 +89,7 @@ FROM WRBHBBookingPropertyAssingedGuest BA
   ISNULL(BA.RoomShiftingFlag,0) = 0                              
   FOR XML PATH('')),1,1,'') AS Name,B.ChkInDt,B.ChkOutDt,                              
   B.Tariff,B.Occupancy,B.TariffPaymentMode,B.ServicePaymentMode,B.RoomNo,B.BookingLevel,B.ChkInDt1,B.ChkOutDt1,B.ExpectChkInTime,
-  STUFF((SELECT ', '+BA.Title+'. '+BA.FirstName                               
+  STUFF((SELECT ', '+BA.Title+'. '+BA.FirstName+'  '+BA.LastName                                
 FROM WRBHBBookingPropertyAssingedGuest BA                          
   WHERE BA.BookingId=B.BookingId AND BA.RoomCaptured=B.RoomCaptured AND BA.Isactive=1 AND BA.IsDeleted=0 AND                             
   ISNULL(BA.RoomShiftingFlag,0) = 0                              
@@ -645,11 +645,11 @@ SELECT LEFT(Email, CHARINDEX(',',Email+',')-1),
   CREATE TABLE #PropertyMailBTCChecking(Name NVARCHAR(100),                              
   ChkInDt NVARCHAR(100),ChkOutDt NVARCHAR(100),Tariff NVARCHAR(100),                              
   Occupancy NVARCHAR(100),TariffPaymentMode NVARCHAR(100),                              
-  ServicePaymentMode NVARCHAR(100),RoomNo NVARCHAR(100));                              
+  ServicePaymentMode NVARCHAR(100),RoomNo NVARCHAR(100),NameWthTitle NVARCHAR(100));                              
   INSERT INTO #PropertyMailBTCChecking(Name,ChkInDt,ChkOutDt,Tariff,                              
-  Occupancy,TariffPaymentMode,ServicePaymentMode,RoomNo)                              
+  Occupancy,TariffPaymentMode,ServicePaymentMode,RoomNo,NameWthTitle)                              
   SELECT B.NameWthTitle,B.ChkInDt,B.ChkOutDt,B.Tariff,B.Occupancy,B.TariffPaymentMode,                              
-  B.ServicePaymentMode,B.RoomNo FROM #QAZ B;                              
+  B.ServicePaymentMode,B.RoomNo,B.NameWthTitle FROM #QAZ B;                              
   IF EXISTS(SELECT NULL FROM WRBHBBookingProperty BP                              
   LEFT OUTER JOIN WRBHBBookingPropertyAssingedGuest BG WITH(NOLOCK)ON                              
   BP.BookingId=BG.BookingId AND BP.Id=BG.BookingPropertyTableId AND                              
@@ -681,7 +681,7 @@ FROM WRBHBBookingProperty BP
          WHEN Occupancy = 'Triple' THEN @Triple                              
          ELSE Tariff END AS VARCHAR)+'/-' END 
 		 ,Occupancy,TariffPaymentMode,                              
-    ServicePaymentMode,'BTC',@AgreedTariff,@BelowTACcontent,RoomNo                      
+    ServicePaymentMode,'BTC',@AgreedTariff,@BelowTACcontent,RoomNo,NameWthTitle                      
     FROM #PropertyMailBTCChecking;                              
    END                        
   ELSE IF EXISTS(SELECT NULL FROM WRBHBBookingProperty BP                      
@@ -726,7 +726,7 @@ ELSE IF @CPPOccupancy = 'Double'
     WHEN @TXADED = 'N' AND Tariff = '0.00' THEN Tariff                                
          ELSE CASE WHEN CAST(Tariff AS DECIMAL(27,2)) >= 500 THEN Tariff +'/-' + '<br>  + Taxes' ELSE
     CAST(Tariff AS VARCHAR)+'/-' END  END,Occupancy,TariffPaymentMode,                              
-    ServicePaymentMode,'NOTBTC',@AgreedTariff,@BelowTACcontent,RoomNo                              
+    ServicePaymentMode,'NOTBTC',@AgreedTariff,@BelowTACcontent,RoomNo,NameWthTitle                              
     FROM #PropertyMailBTCChecking;                              
    END                              
   ELSE                              
@@ -738,7 +738,7 @@ ELSE IF @CPPOccupancy = 'Double'
          WHEN @TXADED = 'N' AND Tariff = '0.00' THEN Tariff                               
          ELSE CASE WHEN Tariff >= 500 THEN  Tariff +'/-' + '<br>  + Taxes' ELSE
     Tariff +'/-' END  END,Occupancy,TariffPaymentMode,                              
-    ServicePaymentMode,'NOTBTC',@AgreedTariff,@BelowTACcontent,RoomNo                               
+    ServicePaymentMode,'NOTBTC',@AgreedTariff,@BelowTACcontent,RoomNo,NameWthTitle                               
     FROM #PropertyMailBTCChecking;                              
    END                              
   /*-- Dataset Table 11 eND */                    
@@ -793,7 +793,7 @@ IF @Action = 'BedBookingConfirmed'
        WHEN BA.ServicePaymentMode = 'Bill to Client' THEN 'Bill to '+@ClientName1                                
        ELSE BA.ServicePaymentMode END AS ServicePaymentMode,                              
        BA.BedType,'Single',BP.BookingLevel,LEFT(ExpectedChkInTime, 5)+' '+BA.AMPM,convert(varchar, BA.ChkInDt, 107),
-	   convert(varchar, BA.ChkOutDt, 107),BA.Title             
+	   convert(varchar, BA.ChkOutDt, 107),BA.Title,BA.LastName            
   FROM WRBHBBooking BP                              
   LEFT OUTER JOIN dbo.WRBHBBedBookingPropertyAssingedGuest BA                               
   WITH(NOLOCK)ON BP.Id=BA.BookingId AND BA.IsActive=1 AND BA.IsDeleted=0                              

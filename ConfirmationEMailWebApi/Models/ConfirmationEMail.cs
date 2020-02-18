@@ -19,6 +19,12 @@ namespace ConfirmationEMailWebApi.Models
         public bool ResendFlag { get; set; }
         public string PropertyGusetEmail { get; set; }
         public string UserEmail { get; set; }
+        public string CheckinDate { get; set; }
+        public string CheckoutDate { get; set; }
+        public string CheckinTime { get; set; }
+        public string CheckoutTime { get; set; }
+        public bool LTIAPIFlag { get; set; }
+
     }
     public class URLShort
     {

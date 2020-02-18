@@ -642,33 +642,66 @@ namespace ConfirmationEMailWebApi.Controllers
                                           "<p class=\"body  body-lg body-link-rausch light text-left   \" style=\"font-family: 'Cabin', Helvetica, Arial, sans-serif;padding:0;margin:0;line-height:1.4;font-weight:300;color:#484848;font-size:24px;hyphens:none;-ms-hyphens:none;-webkit-hyphens:none;-moz-hyphens:none;text-align:left;margin-bottom:0px !important;\">" + ds.Tables[1].Rows[0][5].ToString() + "</p>" +
                                           "</th></tr></table></div></div>";
 
-                        string ChkInOutDate = "<div>" +
-                                    "<table class=\"row\" style=\"border-spacing:0;border-collapse:collapse;text-align:left;vertical-align:top;padding:0;width:100%;position:relative;display:table\">" +
-                                    "<tr style=\"padding:0;vertical-align:top;text-align:left\">" +
-                                    "<th class=\"small-5 large-5 columns first\" style=\"font-size:16px;text-align:left;line-height:1.3;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;color:#0a0a0a;padding-right:8px;margin:0 auto;padding-bottom:16px;width:225.66667px;padding-left:16px\">" +
-                                    "<p class=\"body-text-lg light\" style=\"margin:0;text-align:left;padding:0;font-weight:300;font-family:'Circular', 'Cabin', Helvetica, Arial, sans-serif;color:#484848;word-break:normal;line-height:1.2;font-size:17px;margin-bottom:0px !important;\">" + ds.Tables[0].Rows[0][10].ToString() + "</p>" +
-                                    "<p class=\"body-text light\" style=\"margin:0;text-align:left;padding:0;font-weight:300;font-family:'Circular', 'Cabin', Helvetica, Arial, sans-serif;color:#484848;word-break:normal;line-height:1.4;font-size:16px;margin-bottom:0px !important;\">Check-in " + ds.Tables[0].Rows[0][9].ToString() + "</p>" +
-                                    "</th>" +
-                                    "<th class=\"small-2 large-2 columns\" style=\"font-size:16px;color:#0a0a0a;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;text-align:left;line-height:1.3;padding-right:8px;width:80.66667px;padding-bottom:16px;padding-left:16px;margin:0 auto\">" +
-                                    "<img alt=\"\" class=\"slash text-center\" src=\"https://endpoint887127.azureedge.net/img/slash.png\" style=\"outline:none;text-decoration:none;-ms-interpolation-mode:bicubic;display:block;clear:both;max-width:40px;width:40px;text-align:center;float:none;margin:0 auto\">" +
-                                    "</th>" +
-                                    "<th class=\"small-5 large-5 columns last\" style=\"font-size:16px;text-align:left;color:#0a0a0a;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;line-height:1.3;width:225.66667px;padding-left:16px;margin:0 auto;padding-bottom:16px;padding-right:16px\">" +
-                                    "<p class=\"body-text-lg light text-right\" style=\"padding:0;margin:0;font-size:17px;font-weight:300;font-family:'Circular', 'Helvetica', Helvetica, Arial, sans-serif;color:#484848;word-break:normal;line-height:1.2;text-align:right;margin-bottom:0px !important;\">" + ds.Tables[0].Rows[0][11].ToString() + "</p>" +
-                                    "<p class=\"body-text light text-right\"  style=\"padding:0;margin:0;font-size:16px;font-weight:300;font-family:'Circular', 'Helvetica', Helvetica, Arial, sans-serif;color:#484848;word-break:normal;line-height:1.4;text-align:right;margin-bottom:0px !important;\">Check-out</p>" +
-                                    "</th></tr></table></div>" +
+                        string ChkInOutDate = "";
+                        if (All.LTIAPIFlag==true)
+                        {
+                            ChkInOutDate = "<div>" +
+                                  "<table class=\"row\" style=\"border-spacing:0;border-collapse:collapse;text-align:left;vertical-align:top;padding:0;width:100%;position:relative;display:table\">" +
+                                  "<tr style=\"padding:0;vertical-align:top;text-align:left\">" +
+                                  "<th class=\"small-5 large-5 columns first\" style=\"font-size:16px;text-align:left;line-height:1.3;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;color:#0a0a0a;padding-right:8px;margin:0 auto;padding-bottom:16px;width:225.66667px;padding-left:16px\">" +
+                                  "<p class=\"body-text-lg light\" style=\"margin:0;text-align:left;padding:0;font-weight:300;font-family:'Circular', 'Cabin', Helvetica, Arial, sans-serif;color:#484848;word-break:normal;line-height:1.2;font-size:17px;margin-bottom:0px !important;\">" + All.CheckinDate + "</p>" +
+                                  "<p class=\"body-text light\" style=\"margin:0;text-align:left;padding:0;font-weight:300;font-family:'Circular', 'Cabin', Helvetica, Arial, sans-serif;color:#484848;word-break:normal;line-height:1.4;font-size:16px;margin-bottom:0px !important;\">Check-in " + All.CheckinTime + "</p>" +
+                                  "</th>" +
+                                  "<th class=\"small-2 large-2 columns\" style=\"font-size:16px;color:#0a0a0a;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;text-align:left;line-height:1.3;padding-right:8px;width:80.66667px;padding-bottom:16px;padding-left:16px;margin:0 auto\">" +
+                                  "<img alt=\"\" class=\"slash text-center\" src=\"https://endpoint887127.azureedge.net/img/slash.png\" style=\"outline:none;text-decoration:none;-ms-interpolation-mode:bicubic;display:block;clear:both;max-width:40px;width:40px;text-align:center;float:none;margin:0 auto\">" +
+                                  "</th>" +
+                                  "<th class=\"small-5 large-5 columns last\" style=\"font-size:16px;text-align:left;color:#0a0a0a;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;line-height:1.3;width:225.66667px;padding-left:16px;margin:0 auto;padding-bottom:16px;padding-right:16px\">" +
+                                  "<p class=\"body-text-lg light text-right\" style=\"padding:0;margin:0;font-size:17px;font-weight:300;font-family:'Circular', 'Helvetica', Helvetica, Arial, sans-serif;color:#484848;word-break:normal;line-height:1.2;text-align:right;margin-bottom:0px !important;\">" + All.CheckoutDate + "</p>" +
+                                  "<p class=\"body-text light text-right\"  style=\"padding:0;margin:0;font-size:16px;font-weight:300;font-family:'Circular', 'Helvetica', Helvetica, Arial, sans-serif;color:#484848;word-break:normal;line-height:1.4;text-align:right;margin-bottom:0px !important;\">Check-out</p>" +
+                                  "</th></tr></table></div>" +
+                                  "<div><table class=\"row\" style=\"border-spacing:0;border-collapse:collapse;text-align:left;vertical-align:top;padding:0;width:100%;position:relative;display:table\">" +
+                                  "<tr class=\"\" style=\"padding:0;vertical-align:top;text-align:left\">" +
+                                  "<th class=\"small-12 large-12 columns first last\" style=\"padding-bottom:5px;width:564px;padding-left:16px;padding-right:16px\">" +
+                                  "<hr class=\"full-divider\" style=\"clear:both;max-width:580px;border-right:0;border-top:0;border-left:0;margin:20px auto;border-bottom:1px solid #cacaca;background-color:#dbdbdb;height:1px;border:none;width:100%;margin-top:0;margin-bottom:0\">" +
+                                  "</th></tr></table></div>" +
+                                  "<div style=\"padding-top:8px;padding-bottom:8px\">" +
+                                  "<table class=\"row\" style=\"border-spacing:0;border-collapse:collapse;text-align:left;vertical-align:top;padding:0;width:100%;position:relative;display:table\">" +
+                                  "<tr style=\"padding:0;vertical-align:top;text-align:left\">" +
+                                  "<th class=\"col-pad-left-2 col-pad-right-2\" style=\"padding:0;margin:0;padding-left:16px;padding-right:16px\">" +
+                                  "<div style=\"margin:0;-webkit-border-radius:8px;border-radius:8px;display:block;border-color:#d9242c;border-width:2px;border-style:dotted dashed;\">" +
+                                  "<p class=\"text-center\" style='font-weight:normal;padding:0;margin:0;text-align:center;font-family:\"Circular\", \"Helvetica\", Helvetica, Arial, sans-serif;font-size:24px;line-height:32px;margin-bottom:0px !important'>Guest Details</p>" +
+                                  "</div></th></tr></table></div>";
+                        }
+                        else {
 
-                                    "<div><table class=\"row\" style=\"border-spacing:0;border-collapse:collapse;text-align:left;vertical-align:top;padding:0;width:100%;position:relative;display:table\">" +
-                                    "<tr class=\"\" style=\"padding:0;vertical-align:top;text-align:left\">" +
-                                    "<th class=\"small-12 large-12 columns first last\" style=\"padding-bottom:5px;width:564px;padding-left:16px;padding-right:16px\">" +
-                                    "<hr class=\"full-divider\" style=\"clear:both;max-width:580px;border-right:0;border-top:0;border-left:0;margin:20px auto;border-bottom:1px solid #cacaca;background-color:#dbdbdb;height:1px;border:none;width:100%;margin-top:0;margin-bottom:0\">" +
-                                    "</th></tr></table></div>" +
-                                    "<div style=\"padding-top:8px;padding-bottom:8px\">" +
-                                    "<table class=\"row\" style=\"border-spacing:0;border-collapse:collapse;text-align:left;vertical-align:top;padding:0;width:100%;position:relative;display:table\">" +
-                                    "<tr style=\"padding:0;vertical-align:top;text-align:left\">" +
-                                    "<th class=\"col-pad-left-2 col-pad-right-2\" style=\"padding:0;margin:0;padding-left:16px;padding-right:16px\">" +
-                                    "<div style=\"margin:0;-webkit-border-radius:8px;border-radius:8px;display:block;border-color:#d9242c;border-width:2px;border-style:dotted dashed;\">" +
-                                    "<p class=\"text-center\" style='font-weight:normal;padding:0;margin:0;text-align:center;font-family:\"Circular\", \"Helvetica\", Helvetica, Arial, sans-serif;font-size:24px;line-height:32px;margin-bottom:0px !important'>Guest Details</p>" +
-                                    "</div></th></tr></table></div>";
+                            ChkInOutDate = "<div>" +
+                                   "<table class=\"row\" style=\"border-spacing:0;border-collapse:collapse;text-align:left;vertical-align:top;padding:0;width:100%;position:relative;display:table\">" +
+                                   "<tr style=\"padding:0;vertical-align:top;text-align:left\">" +
+                                   "<th class=\"small-5 large-5 columns first\" style=\"font-size:16px;text-align:left;line-height:1.3;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;color:#0a0a0a;padding-right:8px;margin:0 auto;padding-bottom:16px;width:225.66667px;padding-left:16px\">" +
+                                   "<p class=\"body-text-lg light\" style=\"margin:0;text-align:left;padding:0;font-weight:300;font-family:'Circular', 'Cabin', Helvetica, Arial, sans-serif;color:#484848;word-break:normal;line-height:1.2;font-size:17px;margin-bottom:0px !important;\">" + ds.Tables[0].Rows[0][10].ToString() + "</p>" +
+                                   "<p class=\"body-text light\" style=\"margin:0;text-align:left;padding:0;font-weight:300;font-family:'Circular', 'Cabin', Helvetica, Arial, sans-serif;color:#484848;word-break:normal;line-height:1.4;font-size:16px;margin-bottom:0px !important;\">Check-in " + ds.Tables[0].Rows[0][9].ToString() + "</p>" +
+                                   "</th>" +
+                                   "<th class=\"small-2 large-2 columns\" style=\"font-size:16px;color:#0a0a0a;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;text-align:left;line-height:1.3;padding-right:8px;width:80.66667px;padding-bottom:16px;padding-left:16px;margin:0 auto\">" +
+                                   "<img alt=\"\" class=\"slash text-center\" src=\"https://endpoint887127.azureedge.net/img/slash.png\" style=\"outline:none;text-decoration:none;-ms-interpolation-mode:bicubic;display:block;clear:both;max-width:40px;width:40px;text-align:center;float:none;margin:0 auto\">" +
+                                   "</th>" +
+                                   "<th class=\"small-5 large-5 columns last\" style=\"font-size:16px;text-align:left;color:#0a0a0a;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;line-height:1.3;width:225.66667px;padding-left:16px;margin:0 auto;padding-bottom:16px;padding-right:16px\">" +
+                                   "<p class=\"body-text-lg light text-right\" style=\"padding:0;margin:0;font-size:17px;font-weight:300;font-family:'Circular', 'Helvetica', Helvetica, Arial, sans-serif;color:#484848;word-break:normal;line-height:1.2;text-align:right;margin-bottom:0px !important;\">" + ds.Tables[0].Rows[0][11].ToString() + "</p>" +
+                                   "<p class=\"body-text light text-right\"  style=\"padding:0;margin:0;font-size:16px;font-weight:300;font-family:'Circular', 'Helvetica', Helvetica, Arial, sans-serif;color:#484848;word-break:normal;line-height:1.4;text-align:right;margin-bottom:0px !important;\">Check-out</p>" +
+                                   "</th></tr></table></div>" +
+                                   "<div><table class=\"row\" style=\"border-spacing:0;border-collapse:collapse;text-align:left;vertical-align:top;padding:0;width:100%;position:relative;display:table\">" +
+                                   "<tr class=\"\" style=\"padding:0;vertical-align:top;text-align:left\">" +
+                                   "<th class=\"small-12 large-12 columns first last\" style=\"padding-bottom:5px;width:564px;padding-left:16px;padding-right:16px\">" +
+                                   "<hr class=\"full-divider\" style=\"clear:both;max-width:580px;border-right:0;border-top:0;border-left:0;margin:20px auto;border-bottom:1px solid #cacaca;background-color:#dbdbdb;height:1px;border:none;width:100%;margin-top:0;margin-bottom:0\">" +
+                                   "</th></tr></table></div>" +
+                                   "<div style=\"padding-top:8px;padding-bottom:8px\">" +
+                                   "<table class=\"row\" style=\"border-spacing:0;border-collapse:collapse;text-align:left;vertical-align:top;padding:0;width:100%;position:relative;display:table\">" +
+                                   "<tr style=\"padding:0;vertical-align:top;text-align:left\">" +
+                                   "<th class=\"col-pad-left-2 col-pad-right-2\" style=\"padding:0;margin:0;padding-left:16px;padding-right:16px\">" +
+                                   "<div style=\"margin:0;-webkit-border-radius:8px;border-radius:8px;display:block;border-color:#d9242c;border-width:2px;border-style:dotted dashed;\">" +
+                                   "<p class=\"text-center\" style='font-weight:normal;padding:0;margin:0;text-align:center;font-family:\"Circular\", \"Helvetica\", Helvetica, Arial, sans-serif;font-size:24px;line-height:32px;margin-bottom:0px !important'>Guest Details</p>" +
+                                   "</div></th></tr></table></div>";
+                        }
+                       
 
                         string TablHdr = "<div style=\"padding-top:8px;padding-bottom:8px;padding-left:16px;padding-right:16px;\">" +
                                          "<table rules=\"rows\" style=\"border:#dbdbdb\"><tr>" +
@@ -1370,7 +1403,40 @@ namespace ConfirmationEMailWebApi.Controllers
                                           "<p class=\"body  body-lg body-link-rausch light text-left   \" style=\"font-family: 'Cabin', Helvetica, Arial, sans-serif;padding:0;margin:0;line-height:1.4;font-weight:300;color:#484848;font-size:24px;hyphens:none;-ms-hyphens:none;-webkit-hyphens:none;-moz-hyphens:none;text-align:left;margin-bottom:0px !important;\">" + ds.Tables[1].Rows[0][5].ToString() + "</p>" +
                                           "</th></tr></table></div></div>";
 
-                        string ChkInOutDate = "<div>" +
+                        string ChkInOutDate = "";
+
+                        if (All.LTIAPIFlag == true)
+                        {
+                            ChkInOutDate = "<div>" +
+                                    "<table class=\"row\" style=\"border-spacing:0;border-collapse:collapse;text-align:left;vertical-align:top;padding:0;width:100%;position:relative;display:table\">" +
+                                    "<tr style=\"padding:0;vertical-align:top;text-align:left\">" +
+                                    "<th class=\"small-5 large-5 columns first\" style=\"font-size:16px;text-align:left;line-height:1.3;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;color:#0a0a0a;padding-right:8px;margin:0 auto;padding-bottom:16px;width:225.66667px;padding-left:16px\">" +
+                                    "<p class=\"body-text-lg light\" style=\"margin:0;text-align:left;padding:0;font-weight:300;font-family:'Circular', 'Cabin', Helvetica, Arial, sans-serif;color:#484848;word-break:normal;line-height:1.2;font-size:17px;margin-bottom:0px !important;\">" + All.CheckinDate + "</p>" +
+                                    "<p class=\"body-text light\" style=\"margin:0;text-align:left;padding:0;font-weight:300;font-family:'Circular', 'Cabin', Helvetica, Arial, sans-serif;color:#484848;word-break:normal;line-height:1.4;font-size:16px;margin-bottom:0px !important;\">Check-in " + All.CheckinTime + "</p>" +
+                                    "</th>" +
+                                    "<th class=\"small-2 large-2 columns\" style=\"font-size:16px;color:#0a0a0a;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;text-align:left;line-height:1.3;padding-right:8px;width:80.66667px;padding-bottom:16px;padding-left:16px;margin:0 auto\">" +
+                                    "<img alt=\"\" class=\"slash text-center\" src=\"https://endpoint887127.azureedge.net/img/slash.png\" style=\"outline:none;text-decoration:none;-ms-interpolation-mode:bicubic;display:block;clear:both;max-width:40px;width:40px;text-align:center;float:none;margin:0 auto\">" +
+                                    "</th>" +
+                                    "<th class=\"small-5 large-5 columns last\" style=\"font-size:16px;text-align:left;color:#0a0a0a;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;line-height:1.3;width:225.66667px;padding-left:16px;margin:0 auto;padding-bottom:16px;padding-right:16px\">" +
+                                    "<p class=\"body-text-lg light text-right\" style=\"padding:0;margin:0;font-size:17px;font-weight:300;font-family:'Circular', 'Helvetica', Helvetica, Arial, sans-serif;color:#484848;word-break:normal;line-height:1.2;text-align:right;margin-bottom:0px !important;\">" + All.CheckoutDate + "</p>" +
+                                    "<p class=\"body-text light text-right\"  style=\"padding:0;margin:0;font-size:16px;font-weight:300;font-family:'Circular', 'Helvetica', Helvetica, Arial, sans-serif;color:#484848;word-break:normal;line-height:1.4;text-align:right;margin-bottom:0px !important;\">Check-out</p>" +
+                                    "</th></tr></table></div>" +
+                                    "<div><table class=\"row\" style=\"border-spacing:0;border-collapse:collapse;text-align:left;vertical-align:top;padding:0;width:100%;position:relative;display:table\">" +
+                                    "<tr class=\"\" style=\"padding:0;vertical-align:top;text-align:left\">" +
+                                    "<th class=\"small-12 large-12 columns first last\" style=\"padding-bottom:5px;width:564px;padding-left:16px;padding-right:16px\">" +
+                                    "<hr class=\"full-divider\" style=\"clear:both;max-width:580px;border-right:0;border-top:0;border-left:0;margin:20px auto;border-bottom:1px solid #cacaca;background-color:#dbdbdb;height:1px;border:none;width:100%;margin-top:0;margin-bottom:0\">" +
+                                    "</th></tr></table></div>" +
+                                    "<div style=\"padding-top:8px;padding-bottom:8px\">" +
+                                    "<table class=\"row\" style=\"border-spacing:0;border-collapse:collapse;text-align:left;vertical-align:top;padding:0;width:100%;position:relative;display:table\">" +
+                                    "<tr style=\"padding:0;vertical-align:top;text-align:left\">" +
+                                    "<th class=\"col-pad-left-2 col-pad-right-2\" style=\"padding:0;margin:0;padding-left:16px;padding-right:16px\">" +
+                                    "<div style=\"margin:0;-webkit-border-radius:8px;border-radius:8px;display:block;border-color:#d9242c;border-width:2px;border-style:dotted dashed;\">" +
+                                    "<p class=\"text-center\" style='font-weight:normal;padding:0;margin:0;text-align:center;font-family:\"Circular\", \"Helvetica\", Helvetica, Arial, sans-serif;font-size:24px;line-height:32px;margin-bottom:0px !important'>Guest Details</p>" +
+                                    "</div></th></tr></table></div>";
+                        }
+                        else
+                        {
+                            ChkInOutDate = "<div>" +
                                     "<table class=\"row\" style=\"border-spacing:0;border-collapse:collapse;text-align:left;vertical-align:top;padding:0;width:100%;position:relative;display:table\">" +
                                     "<tr style=\"padding:0;vertical-align:top;text-align:left\">" +
                                     "<th class=\"small-5 large-5 columns first\" style=\"font-size:16px;text-align:left;line-height:1.3;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;color:#0a0a0a;padding-right:8px;margin:0 auto;padding-bottom:16px;width:225.66667px;padding-left:16px\">" +
@@ -1384,7 +1450,6 @@ namespace ConfirmationEMailWebApi.Controllers
                                     "<p class=\"body-text-lg light text-right\" style=\"padding:0;margin:0;font-size:17px;font-weight:300;font-family:'Circular', 'Helvetica', Helvetica, Arial, sans-serif;color:#484848;word-break:normal;line-height:1.2;text-align:right;margin-bottom:0px !important;\">" + ds.Tables[0].Rows[0][10].ToString() + "</p>" +
                                     "<p class=\"body-text light text-right\"  style=\"padding:0;margin:0;font-size:16px;font-weight:300;font-family:'Circular', 'Helvetica', Helvetica, Arial, sans-serif;color:#484848;word-break:normal;line-height:1.4;text-align:right;margin-bottom:0px !important;\">Check-out</p>" +
                                     "</th></tr></table></div>" +
-
                                     "<div><table class=\"row\" style=\"border-spacing:0;border-collapse:collapse;text-align:left;vertical-align:top;padding:0;width:100%;position:relative;display:table\">" +
                                     "<tr class=\"\" style=\"padding:0;vertical-align:top;text-align:left\">" +
                                     "<th class=\"small-12 large-12 columns first last\" style=\"padding-bottom:5px;width:564px;padding-left:16px;padding-right:16px\">" +
@@ -1397,6 +1462,10 @@ namespace ConfirmationEMailWebApi.Controllers
                                     "<div style=\"margin:0;-webkit-border-radius:8px;border-radius:8px;display:block;border-color:#d9242c;border-width:2px;border-style:dotted dashed;\">" +
                                     "<p class=\"text-center\" style='font-weight:normal;padding:0;margin:0;text-align:center;font-family:\"Circular\", \"Helvetica\", Helvetica, Arial, sans-serif;font-size:24px;line-height:32px;margin-bottom:0px !important'>Guest Details</p>" +
                                     "</div></th></tr></table></div>";
+
+                        }
+
+                            
 
                         string TablHdr = "<div style=\"padding-top:8px;padding-bottom:8px;padding-left:16px;padding-right:16px;\">" +
                                          "<table rules=\"rows\" style=\"border:#dbdbdb\"><tr>" +
@@ -2085,22 +2154,47 @@ namespace ConfirmationEMailWebApi.Controllers
                                                 "<p class=\"body  body-lg body-link-rausch light text-left   \" style=\"font-family: 'Cabin', Helvetica, Arial, sans-serif;padding:0;margin:0;line-height:1.4;font-weight:300;color:#484848;font-size:24px;hyphens:none;-ms-hyphens:none;-webkit-hyphens:none;-moz-hyphens:none;text-align:left;margin-bottom:0px !important;\">" + ds.Tables[2].Rows[0][1].ToString() + "</p>" +
                                                 "</th></tr></table></div></div>";
 
-                          string ChkInOutDate = "<div><div><table class=\"row\" style=\"border-spacing:0;border-collapse:collapse;text-align:left;vertical-align:top;padding:0;width:100%;position:relative;display:table\">" +
-                                                "<tr style=\"padding:0;vertical-align:top;text-align:left\">" +
-                                                "<th class=\"small-5 large-5 columns first\" style=\"font-size:16px;text-align:left;line-height:1.3;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;color:#0a0a0a;padding-right:8px;margin:0 auto;padding-bottom:16px;width:225.66667px;padding-left:16px\">" +
-                                                "<p class=\"body-text-lg light\" style='margin:0;text-align:left;padding:0;font-weight:300;font-family:\"Circular\", \"Helvetica\", Helvetica, Arial, sans-serif;color:#484848;word-break:normal;line-height:1.2;font-size:17px;margin-bottom:0px !important'>‌" + ds.Tables[0].Rows[0][10].ToString() + " ‌</p>" +
-                                                "<p class=\"body-text light\" style='margin:0;text-align:left;padding:0;font-weight:300;font-family:\"Circular\", \"Helvetica\", Helvetica, Arial, sans-serif;color:#484848;word-break:normal;line-height:1.4;font-size:16px;margin-bottom:0px !important'>Check-in " + ds.Tables[0].Rows[0][9].ToString() + "‌</p>" +
-                                                "</th><th class=\"small-2 large-2 columns\" style=\"font-size:16px;color:#0a0a0a;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;text-align:left;line-height:1.3;padding-right:8px;width:80.66667px;padding-bottom:16px;padding-left:16px;margin:0 auto\">" +
-                                                "<img alt=\"\" class=\"slash text-center\" src=\"https://endpoint887127.azureedge.net/img/slash.png\" style=\"outline:none;text-decoration:none;-ms-interpolation-mode:bicubic;display:block;clear:both;max-width:40px;width:40px;text-align:center;float:none;margin:0 auto\">" +
-                                                "</th><th class=\"small-5 large-5 columns last\" style=\"font-size:16px;text-align:left;color:#0a0a0a;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;line-height:1.3;width:225.66667px;padding-left:16px;margin:0 auto;padding-bottom:16px;padding-right:16px\">" +
-                                                "<p class=\"body-text-lg light text-right\" style='padding:0;margin:0;font-size:17px;font-weight:300;font-family:\"Circular\", \"Helvetica\", Helvetica, Arial, sans-serif;color:#484848;word-break:normal;line-height:1.2;text-align:right;margin-bottom:0px !important'>‌" + ds.Tables[0].Rows[0][11].ToString() + "</p>" +
-                                                "<p class=\"body-text light text-right\" style='padding:0;margin:0;font-size:16px;font-weight:300;font-family:\"Circular\", \"Helvetica\", Helvetica, Arial, sans-serif;color:#484848;word-break:normal;line-height:1.4;text-align:right;margin-bottom:0px !important'>Check-out</p>" +
-                                                "</th></tr></table></div><div>" +
-                                                "<table class=\"row\" style=\"border-spacing:0;border-collapse:collapse;text-align:left;vertical-align:top;padding:0;width:100%;position:relative;display:table\">"+
-                                                "<tr class=\"\" style=\"padding:0;vertical-align:top;text-align:left\">" +
-                                                "<th class=\"small-12 large-12 columns first last\" style=\"padding-bottom:5px;width:564px;padding-left:16px;padding-right:16px\">" +
-                                                "<hr class=\"full-divider\" style=\"clear:both;max-width:580px;border-right:0;border-top:0;border-left:0;margin:20px auto;border-bottom:1px solid #cacaca;background-color:#dbdbdb;height:1px;border:none;width:100%;margin-top:0;margin-bottom:0\">" +
-                                                "</th></tr></table></div>";
+                                string ChkInOutDate = "";
+                                if (All.LTIAPIFlag==true)
+                                {
+                                    ChkInOutDate = "<div><div><table class=\"row\" style=\"border-spacing:0;border-collapse:collapse;text-align:left;vertical-align:top;padding:0;width:100%;position:relative;display:table\">" +
+                                     "<tr style=\"padding:0;vertical-align:top;text-align:left\">" +
+                                     "<th class=\"small-5 large-5 columns first\" style=\"font-size:16px;text-align:left;line-height:1.3;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;color:#0a0a0a;padding-right:8px;margin:0 auto;padding-bottom:16px;width:225.66667px;padding-left:16px\">" +
+                                     "<p class=\"body-text-lg light\" style='margin:0;text-align:left;padding:0;font-weight:300;font-family:\"Circular\", \"Helvetica\", Helvetica, Arial, sans-serif;color:#484848;word-break:normal;line-height:1.2;font-size:17px;margin-bottom:0px !important'>‌" + All.CheckinDate + " ‌</p>" +
+                                     "<p class=\"body-text light\" style='margin:0;text-align:left;padding:0;font-weight:300;font-family:\"Circular\", \"Helvetica\", Helvetica, Arial, sans-serif;color:#484848;word-break:normal;line-height:1.4;font-size:16px;margin-bottom:0px !important'>Check-in " + All.CheckinTime + "‌</p>" +
+                                     "</th><th class=\"small-2 large-2 columns\" style=\"font-size:16px;color:#0a0a0a;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;text-align:left;line-height:1.3;padding-right:8px;width:80.66667px;padding-bottom:16px;padding-left:16px;margin:0 auto\">" +
+                                     "<img alt=\"\" class=\"slash text-center\" src=\"https://endpoint887127.azureedge.net/img/slash.png\" style=\"outline:none;text-decoration:none;-ms-interpolation-mode:bicubic;display:block;clear:both;max-width:40px;width:40px;text-align:center;float:none;margin:0 auto\">" +
+                                     "</th><th class=\"small-5 large-5 columns last\" style=\"font-size:16px;text-align:left;color:#0a0a0a;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;line-height:1.3;width:225.66667px;padding-left:16px;margin:0 auto;padding-bottom:16px;padding-right:16px\">" +
+                                     "<p class=\"body-text-lg light text-right\" style='padding:0;margin:0;font-size:17px;font-weight:300;font-family:\"Circular\", \"Helvetica\", Helvetica, Arial, sans-serif;color:#484848;word-break:normal;line-height:1.2;text-align:right;margin-bottom:0px !important'>‌" + All.CheckoutDate + "</p>" +
+                                     "<p class=\"body-text light text-right\" style='padding:0;margin:0;font-size:16px;font-weight:300;font-family:\"Circular\", \"Helvetica\", Helvetica, Arial, sans-serif;color:#484848;word-break:normal;line-height:1.4;text-align:right;margin-bottom:0px !important'>Check-out</p>" +
+                                     "</th></tr></table></div><div>" +
+                                     "<table class=\"row\" style=\"border-spacing:0;border-collapse:collapse;text-align:left;vertical-align:top;padding:0;width:100%;position:relative;display:table\">" +
+                                     "<tr class=\"\" style=\"padding:0;vertical-align:top;text-align:left\">" +
+                                     "<th class=\"small-12 large-12 columns first last\" style=\"padding-bottom:5px;width:564px;padding-left:16px;padding-right:16px\">" +
+                                     "<hr class=\"full-divider\" style=\"clear:both;max-width:580px;border-right:0;border-top:0;border-left:0;margin:20px auto;border-bottom:1px solid #cacaca;background-color:#dbdbdb;height:1px;border:none;width:100%;margin-top:0;margin-bottom:0\">" +
+                                     "</th></tr></table></div>";
+                                }
+                                else
+                                {
+                                    ChkInOutDate = "<div><div><table class=\"row\" style=\"border-spacing:0;border-collapse:collapse;text-align:left;vertical-align:top;padding:0;width:100%;position:relative;display:table\">" +
+                                     "<tr style=\"padding:0;vertical-align:top;text-align:left\">" +
+                                     "<th class=\"small-5 large-5 columns first\" style=\"font-size:16px;text-align:left;line-height:1.3;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;color:#0a0a0a;padding-right:8px;margin:0 auto;padding-bottom:16px;width:225.66667px;padding-left:16px\">" +
+                                     "<p class=\"body-text-lg light\" style='margin:0;text-align:left;padding:0;font-weight:300;font-family:\"Circular\", \"Helvetica\", Helvetica, Arial, sans-serif;color:#484848;word-break:normal;line-height:1.2;font-size:17px;margin-bottom:0px !important'>‌" + ds.Tables[0].Rows[0][10].ToString() + " ‌</p>" +
+                                     "<p class=\"body-text light\" style='margin:0;text-align:left;padding:0;font-weight:300;font-family:\"Circular\", \"Helvetica\", Helvetica, Arial, sans-serif;color:#484848;word-break:normal;line-height:1.4;font-size:16px;margin-bottom:0px !important'>Check-in " + ds.Tables[0].Rows[0][9].ToString() + "‌</p>" +
+                                     "</th><th class=\"small-2 large-2 columns\" style=\"font-size:16px;color:#0a0a0a;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;text-align:left;line-height:1.3;padding-right:8px;width:80.66667px;padding-bottom:16px;padding-left:16px;margin:0 auto\">" +
+                                     "<img alt=\"\" class=\"slash text-center\" src=\"https://endpoint887127.azureedge.net/img/slash.png\" style=\"outline:none;text-decoration:none;-ms-interpolation-mode:bicubic;display:block;clear:both;max-width:40px;width:40px;text-align:center;float:none;margin:0 auto\">" +
+                                     "</th><th class=\"small-5 large-5 columns last\" style=\"font-size:16px;text-align:left;color:#0a0a0a;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;line-height:1.3;width:225.66667px;padding-left:16px;margin:0 auto;padding-bottom:16px;padding-right:16px\">" +
+                                     "<p class=\"body-text-lg light text-right\" style='padding:0;margin:0;font-size:17px;font-weight:300;font-family:\"Circular\", \"Helvetica\", Helvetica, Arial, sans-serif;color:#484848;word-break:normal;line-height:1.2;text-align:right;margin-bottom:0px !important'>‌" + ds.Tables[0].Rows[0][11].ToString() + "</p>" +
+                                     "<p class=\"body-text light text-right\" style='padding:0;margin:0;font-size:16px;font-weight:300;font-family:\"Circular\", \"Helvetica\", Helvetica, Arial, sans-serif;color:#484848;word-break:normal;line-height:1.4;text-align:right;margin-bottom:0px !important'>Check-out</p>" +
+                                     "</th></tr></table></div><div>" +
+                                     "<table class=\"row\" style=\"border-spacing:0;border-collapse:collapse;text-align:left;vertical-align:top;padding:0;width:100%;position:relative;display:table\">" +
+                                     "<tr class=\"\" style=\"padding:0;vertical-align:top;text-align:left\">" +
+                                     "<th class=\"small-12 large-12 columns first last\" style=\"padding-bottom:5px;width:564px;padding-left:16px;padding-right:16px\">" +
+                                     "<hr class=\"full-divider\" style=\"clear:both;max-width:580px;border-right:0;border-top:0;border-left:0;margin:20px auto;border-bottom:1px solid #cacaca;background-color:#dbdbdb;height:1px;border:none;width:100%;margin-top:0;margin-bottom:0\">" +
+                                     "</th></tr></table></div>";
+                                }
+
+               
 
                                 string GuestTbl = "<div style=\"padding-top:8px;padding-bottom:8px\">" +
                                                   "<table class=\"row\" style=\"border-spacing:0;border-collapse:collapse;text-align:left;vertical-align:top;padding:0;width:100%;position:relative;display:table\">" +
@@ -2118,7 +2212,7 @@ namespace ConfirmationEMailWebApi.Controllers
                                 for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
                                 {
                                     GuestTbl += "<tr style=\"font-style:normal;font-weight:normal;\" class=\"ng-scope\">" +
-                                            "<td class=\"padd ng-binding\" style=\"vertical-align:middle;text-align:center\">"+ ds.Tables[0].Rows[i][12].ToString() + ". "+ ds.Tables[0].Rows[i][0].ToString() + "</td>" +
+                                            "<td class=\"padd ng-binding\" style=\"vertical-align:middle;text-align:center\">"+ ds.Tables[0].Rows[i][12].ToString() + ". "+ ds.Tables[0].Rows[i][0].ToString() +" " + ds.Tables[0].Rows[i][13].ToString() + "</td>" +
                                             "<td class=\"padd ng-binding\" style=\"vertical-align: middle; text-align: center;\">" + ds.Tables[0].Rows[i][6].ToString() + " / " + ds.Tables[0].Rows[i][7].ToString() + "</td>" +
                                             "<td class=\"padd ng-binding\" style=\"vertical-align: middle; text-align: center;\">INR " + ds.Tables[0].Rows[i][3].ToString() + "</td>" +
                                             "</tr>";
@@ -2154,7 +2248,20 @@ namespace ConfirmationEMailWebApi.Controllers
                                             "<hr class=\"full-divider\" style=\"clear:both;max-width:580px;border-right:0;border-top:0;border-left:0;margin:20px auto;border-bottom:1px solid #cacaca;background-color:#dbdbdb;height:1px;border:none;width:100%;margin-top:0;margin-bottom:0\">" +
                                             "</th></tr></table></div>";
 
-                       string ContactDtls = "<div style=\"padding-top:8px;padding-bottom:8px\">" +
+                        string PropertyDtls = "";
+                        PropertyDtls = "<table class=\"row\" style=\"border-spacing:0;border-collapse:collapse;text-align:left;vertical-align:top;padding:0;width:100%;position:relative;display:table;\">" +
+                                "<tr style=\"padding:0;vertical-align:top;text-align:left\">" +
+                                "<th class=\"small-5 large-5 columns first\" style=\"font-size:16px;text-align:left;line-height:1.3;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;color:#0a0a0a;padding-right:8px;margin:0 auto;padding-bottom:16px;padding-left:16px\">" +
+                                "<p class=\"body-text-lg light row-pad-bot-1\" style=\"padding:0;margin:0 0 5px 0;text-align:center;font-size:16px;font-weight:300;font-family:'Cabin',Helvetica, Arial, sans-serif;color:#484848;word-break:normal;line-height:1.2;font-weight: bold;\">Property Name : " + ds.Tables[1].Rows[0][5].ToString() + " </p>" +
+                                "<p class=\"body-text-lg light row-pad-bot-1\" style=\"padding:0;margin:0 0 5px 0;text-align:center;font-size:13px;font-weight:300;font-family:'Cabin',Helvetica, Arial, sans-serif;color:#484848;word-break:normal;line-height:1.2;\">" + ds.Tables[1].Rows[0][0].ToString() + " </p>" +
+                                "</th></tr></table>" +
+                                "<div><table class=\"row\" style=\"border-spacing:0;border-collapse:collapse;text-align:left;vertical-align:top;padding:0;width:100%;position:relative;display:table\">" +
+                                "<tr class=\"\" style=\"padding:0;vertical-align:top;text-align:left\">" +
+                                "<th class=\"small-12 large-12 columns first last\" style=\"font-size:16px;padding:0;text-align:left;color:#0a0a0a;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;line-height:1.3;margin:0 auto;padding-bottom:16px;width:564px;padding-left:16px;padding-right:16px\">" +
+                                "<hr class=\"full-divider\" style=\"clear:both;max-width:580px;border-right:0;border-top:0;border-left:0;margin:20px auto;border-bottom:1px solid #cacaca;background-color:#dbdbdb;height:1px;border:none;width:100%;margin-top:0;margin-bottom:0\">" +
+                                "</th></tr></table></div>";
+
+                                string ContactDtls = "<div style=\"padding-top:8px;padding-bottom:8px\">" +
                                             "<table class=\"row\" style=\"border-spacing:0;border-collapse:collapse;text-align:left;vertical-align:top;padding:0;width:100%;position:relative;display:table\">" +
                                             "<th class=\"small-7 large-7 columns first\" style=\"font-size:16px;text-align:left;line-height:1.3;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;color:#0a0a0a;padding-right:8px;margin:0 auto;padding-bottom:16px;width:322.33333px;padding-left:16px;vertical-align: top;\">" +
                                             "<p style='margin:0;text-align:left;padding:0;'>Booked by 	</p>" +
@@ -2179,7 +2286,7 @@ namespace ConfirmationEMailWebApi.Controllers
                                             "</td></tr></table></center></td></tr></table>";
 
                                 string EndData = "</body></html>";
-                                MailContent = style + header + ChkInOutDate + GuestTbl + PayMode + TariffDtls + ContactDtls + EndData;
+                                MailContent = style + header + ChkInOutDate + GuestTbl + PayMode + TariffDtls + PropertyDtls + ContactDtls + EndData;
                                 message1.Body = MailContent;
                                 message1.IsBodyHtml = true; 
                                 
@@ -2725,7 +2832,30 @@ namespace ConfirmationEMailWebApi.Controllers
                                             "<p class=\"body  body-lg body-link-rausch light text-left   \" style=\"font-family: 'Cabin', Helvetica, Arial, sans-serif;padding:0;margin:0;line-height:1.4;font-weight:300;color:#484848;font-size:24px;hyphens:none;-ms-hyphens:none;-webkit-hyphens:none;-moz-hyphens:none;text-align:left;margin-bottom:0px !important;\">" + ds.Tables[2].Rows[0][1].ToString() + "</p>" +
                                             "</th></tr></table></div></div>";
 
-                            string ChkInOutDate = "<div><div><table class=\"row\" style=\"border-spacing:0;border-collapse:collapse;text-align:left;vertical-align:top;padding:0;width:100%;position:relative;display:table\">" +
+                            string ChkInOutDate = "";
+                            if (All.LTIAPIFlag == true)
+                            {
+
+                                ChkInOutDate = "<div><div><table class=\"row\" style=\"border-spacing:0;border-collapse:collapse;text-align:left;vertical-align:top;padding:0;width:100%;position:relative;display:table\">" +
+                                                  "<tr style=\"padding:0;vertical-align:top;text-align:left\">" +
+                                                  "<th class=\"small-5 large-5 columns first\" style=\"font-size:16px;text-align:left;line-height:1.3;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;color:#0a0a0a;padding-right:8px;margin:0 auto;padding-bottom:16px;width:225.66667px;padding-left:16px\">" +
+                                                  "<p class=\"body-text-lg light\" style='margin:0;text-align:left;padding:0;font-weight:300;font-family:\"Circular\", \"Helvetica\", Helvetica, Arial, sans-serif;color:#484848;word-break:normal;line-height:1.2;font-size:17px;margin-bottom:0px !important'>‌" + All.CheckinDate + " ‌</p>" +
+                                                  "<p class=\"body-text light\" style='margin:0;text-align:left;padding:0;font-weight:300;font-family:\"Circular\", \"Helvetica\", Helvetica, Arial, sans-serif;color:#484848;word-break:normal;line-height:1.4;font-size:16px;margin-bottom:0px !important'>Check-in " + All.CheckinTime + "‌</p>" +
+                                                  "</th><th class=\"small-2 large-2 columns\" style=\"font-size:16px;color:#0a0a0a;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;text-align:left;line-height:1.3;padding-right:8px;width:80.66667px;padding-bottom:16px;padding-left:16px;margin:0 auto\">" +
+                                                  "<img alt=\"\" class=\"slash text-center\" src=\"https://endpoint887127.azureedge.net/img/slash.png\" style=\"outline:none;text-decoration:none;-ms-interpolation-mode:bicubic;display:block;clear:both;max-width:40px;width:40px;text-align:center;float:none;margin:0 auto\">" +
+                                                  "</th><th class=\"small-5 large-5 columns last\" style=\"font-size:16px;text-align:left;color:#0a0a0a;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;line-height:1.3;width:225.66667px;padding-left:16px;margin:0 auto;padding-bottom:16px;padding-right:16px\">" +
+                                                  "<p class=\"body-text-lg light text-right\" style='padding:0;margin:0;font-size:17px;font-weight:300;font-family:\"Circular\", \"Helvetica\", Helvetica, Arial, sans-serif;color:#484848;word-break:normal;line-height:1.2;text-align:right;margin-bottom:0px !important'>‌" + All.CheckoutDate + "</p>" +
+                                                  "<p class=\"body-text light text-right\" style='padding:0;margin:0;font-size:16px;font-weight:300;font-family:\"Circular\", \"Helvetica\", Helvetica, Arial, sans-serif;color:#484848;word-break:normal;line-height:1.4;text-align:right;margin-bottom:0px !important'>Check-out</p>" +
+                                                  "</th></tr></table></div><div>" +
+                                                  "<table class=\"row\" style=\"border-spacing:0;border-collapse:collapse;text-align:left;vertical-align:top;padding:0;width:100%;position:relative;display:table\">" +
+                                                  "<tr class=\"\" style=\"padding:0;vertical-align:top;text-align:left\">" +
+                                                  "<th class=\"small-12 large-12 columns first last\" style=\"padding-bottom:5px;width:564px;padding-left:16px;padding-right:16px\">" +
+                                                  "<hr class=\"full-divider\" style=\"clear:both;max-width:580px;border-right:0;border-top:0;border-left:0;margin:20px auto;border-bottom:1px solid #cacaca;background-color:#dbdbdb;height:1px;border:none;width:100%;margin-top:0;margin-bottom:0\">" +
+                                                  "</th></tr></table></div>";
+                            }
+                            else
+                            {
+                                ChkInOutDate = "<div><div><table class=\"row\" style=\"border-spacing:0;border-collapse:collapse;text-align:left;vertical-align:top;padding:0;width:100%;position:relative;display:table\">" +
                                                   "<tr style=\"padding:0;vertical-align:top;text-align:left\">" +
                                                   "<th class=\"small-5 large-5 columns first\" style=\"font-size:16px;text-align:left;line-height:1.3;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;color:#0a0a0a;padding-right:8px;margin:0 auto;padding-bottom:16px;width:225.66667px;padding-left:16px\">" +
                                                   "<p class=\"body-text-lg light\" style='margin:0;text-align:left;padding:0;font-weight:300;font-family:\"Circular\", \"Helvetica\", Helvetica, Arial, sans-serif;color:#484848;word-break:normal;line-height:1.2;font-size:17px;margin-bottom:0px !important'>‌" + ds.Tables[0].Rows[0][9].ToString() + " ‌</p>" +
@@ -2741,6 +2871,12 @@ namespace ConfirmationEMailWebApi.Controllers
                                                   "<th class=\"small-12 large-12 columns first last\" style=\"padding-bottom:5px;width:564px;padding-left:16px;padding-right:16px\">" +
                                                   "<hr class=\"full-divider\" style=\"clear:both;max-width:580px;border-right:0;border-top:0;border-left:0;margin:20px auto;border-bottom:1px solid #cacaca;background-color:#dbdbdb;height:1px;border:none;width:100%;margin-top:0;margin-bottom:0\">" +
                                                   "</th></tr></table></div>";
+                            }
+
+                         
+
+
+
 
                             string GuestTbl = "<div style=\"padding-top:8px;padding-bottom:8px\">" +
                                               "<table class=\"row\" style=\"border-spacing:0;border-collapse:collapse;text-align:left;vertical-align:top;padding:0;width:100%;position:relative;display:table\">" +
@@ -2761,7 +2897,7 @@ namespace ConfirmationEMailWebApi.Controllers
                                 if ((typeofpty1 == "MGH") || (typeofpty1 == "DdP"))
                                 {
                                     GuestTbl += "<tr style=\"font-style:normal;font-weight:normal;\" class=\"ng-scope\">" +
-                                                "<td class=\"padd ng-binding\" style=\"vertical-align:middle;text-align:center\">" + ds.Tables[11].Rows[i][0].ToString() + "</td>" +
+                                                "<td class=\"padd ng-binding\" style=\"vertical-align:middle;text-align:center\">" + ds.Tables[11].Rows[i][11].ToString() + "</td>" +
                                                 "<td class=\"padd ng-binding\" style=\"vertical-align: middle; text-align: center;\">" + ds.Tables[11].Rows[i][10].ToString() + " / " + ds.Tables[11].Rows[i][4].ToString() + "</td>" +
                                                 "<td class=\"padd ng-binding\" style=\"vertical-align: middle; text-align: center;\">INR " + ds.Tables[11].Rows[i][3].ToString() + "</td>" +
                                                 "</tr>";
@@ -2769,7 +2905,7 @@ namespace ConfirmationEMailWebApi.Controllers
                                 else
                                 {
                                     GuestTbl += "<tr style=\"font-style:normal;font-weight:normal;\" class=\"ng-scope\">" +
-                                     "<td class=\"padd ng-binding\" style=\"vertical-align:middle;text-align:center\">" + ds.Tables[11].Rows[i][0].ToString() + "</td>" +
+                                     "<td class=\"padd ng-binding\" style=\"vertical-align:middle;text-align:center\">" + ds.Tables[11].Rows[i][11].ToString() + "</td>" +
                                      "<td class=\"padd ng-binding\" style=\"vertical-align: middle; text-align: center;\">" + ds.Tables[4].Rows[0][12].ToString() + " / " + ds.Tables[11].Rows[i][4].ToString() + "</td>" +
                                      "<td class=\"padd ng-binding\" style=\"vertical-align: middle; text-align: center;\">INR " + ds.Tables[11].Rows[i][3].ToString() + "</td>" +
                                      "</tr>";
@@ -2843,6 +2979,39 @@ namespace ConfirmationEMailWebApi.Controllers
                                                 "<hr class=\"full-divider\" style=\"clear:both;max-width:580px;border-right:0;border-top:0;border-left:0;margin:20px auto;border-bottom:1px solid #cacaca;background-color:#dbdbdb;height:1px;border:none;width:100%;margin-top:0;margin-bottom:0\">" +
                                                 "</th></tr></table></div>";
 
+
+
+                            ////PropertyDtls = "<div style=\"padding-top:8px;padding-bottom:8px\">" +
+                            ////                "<table class=\"row\" style=\"border-spacing:0;border-collapse:collapse;text-align:left;vertical-align:top;padding:0;width:100%;position:relative;display:table\">" +
+                            ////                "<th class=\"small-7 large-7 columns first\" style=\"font-size:16px;text-align:left;line-height:1.3;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;color:#0a0a0a;padding-right:8px;margin:0 auto;width:322.33333px;padding-left:16px;vertical-align: top;\">" +
+                            ////                "<p class=\"body-text-lg light row-pad-bot-1\" style=\"padding:0;margin:0 0 5px 0;text-align:center;font-size:18px;font-weight:300;font-family:'Cabin',Helvetica, Arial, sans-serif;color:#d9242c !important;word-break:normal;line-height:1.2;\">Property Name</p>" +
+                            ////                "<p class=\"body-text light\" style='margin:0;text-align:left;padding:0;font-weight:300;font-family:\"Cabin\", \"Helvetica\", Helvetica, Arial, sans-serif;color:#484848;word-break:normal;line-height:1.4;font-size:16px;margin-bottom:0px !important'>" + ds.Tables[1].Rows[0][5].ToString() + "</p>" +
+                            ////                "</th>" +
+                            ////                "<th class=\"small-5 large-5 columns last valign-top\" style=\"font-size:16px;text-align:left;line-height:1.3;color:#0a0a0a;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;vertical-align:top;width:225.66667px;padding-left:16px;margin:0 auto;padding-right:16px\">" +
+                            ////                 "<p class=\"body-text-lg light row-pad-bot-1\" style=\"padding:0;margin:0 0 5px 0;text-align:center;font-size:18px;font-weight:300;font-family:'Cabin',Helvetica, Arial, sans-serif;color:#d9242c !important;word-break:normal;line-height:1.2;\">Property Address</p>" +
+                            ////                "<p class=\"body-text light\" style='margin:0;text-align:left;padding:0;font-weight:300;font-family:\"Cabin\", \"Helvetica\", Helvetica, Arial, sans-serif;color:#484848;word-break:normal;line-height:1.4;font-size:16px;margin-bottom:0px !important'>" +
+                            ////                ds.Tables[1].Rows[0][0].ToString() +
+                            ////                "</p></th></table></div><div>" +
+
+                            ////                "<table class=\"row\" style=\"border-spacing:0;border-collapse:collapse;text-align:left;vertical-align:top;padding:0;width:100%;position:relative;display:table\">" +
+                            ////                "<tr class=\"\" style=\"padding:0;vertical-align:top;text-align:left\">" +
+                            ////                "<th class=\"small-12 large-12 columns first last\" style=\"font-size:16px;padding:0;text-align:left;color:#0a0a0a;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;line-height:1.3;margin:0 auto;padding-bottom:16px;width:564px;padding-left:16px;padding-right:16px\">" +
+                            ////                "<hr class=\"full-divider\" style=\"clear:both;max-width:580px;border-right:0;border-top:0;border-left:0;margin:20px auto;border-bottom:1px solid #cacaca;background-color:#dbdbdb;height:1px;border:none;width:100%;margin-top:0;margin-bottom:0\">" +
+                            ////                "</th></tr></table></div>";
+
+                            string PropertyDtls = "";
+                            PropertyDtls = "<table class=\"row\" style=\"border-spacing:0;border-collapse:collapse;text-align:left;vertical-align:top;padding:0;width:100%;position:relative;display:table;\">" +
+                                  "<tr style=\"padding:0;vertical-align:top;text-align:left\">" +
+                                  "<th class=\"small-5 large-5 columns first\" style=\"font-size:16px;text-align:left;line-height:1.3;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;color:#0a0a0a;padding-right:8px;margin:0 auto;padding-bottom:16px;padding-left:16px\">" +
+                                  "<p class=\"body-text-lg light row-pad-bot-1\" style=\"padding:0;margin:0 0 5px 0;text-align:center;font-size:16px;font-weight:300;font-family:'Cabin',Helvetica, Arial, sans-serif;color:#484848;word-break:normal;line-height:1.2;font-weight: bold;\">Property Name : " + ds.Tables[1].Rows[0][5].ToString() + " </p>" +
+                                   "<p class=\"body-text-lg light row-pad-bot-1\" style=\"padding:0;margin:0 0 5px 0;text-align:center;font-size:13px;font-weight:300;font-family:'Cabin',Helvetica, Arial, sans-serif;color:#484848;word-break:normal;line-height:1.2;\">" + ds.Tables[1].Rows[0][0].ToString() + " </p>" +
+                                  "</th></tr></table>" +
+                                  "<div><table class=\"row\" style=\"border-spacing:0;border-collapse:collapse;text-align:left;vertical-align:top;padding:0;width:100%;position:relative;display:table\">" +
+                                  "<tr class=\"\" style=\"padding:0;vertical-align:top;text-align:left\">" +
+                                  "<th class=\"small-12 large-12 columns first last\" style=\"font-size:16px;padding:0;text-align:left;color:#0a0a0a;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;line-height:1.3;margin:0 auto;padding-bottom:16px;width:564px;padding-left:16px;padding-right:16px\">" +
+                                  "<hr class=\"full-divider\" style=\"clear:both;max-width:580px;border-right:0;border-top:0;border-left:0;margin:20px auto;border-bottom:1px solid #cacaca;background-color:#dbdbdb;height:1px;border:none;width:100%;margin-top:0;margin-bottom:0\">" +
+                                  "</th></tr></table></div>";
+
                             string ContactDtls = "<div style=\"padding-top:8px;padding-bottom:8px\">" +
                                                  "<table class=\"row\" style=\"border-spacing:0;border-collapse:collapse;text-align:left;vertical-align:top;padding:0;width:100%;position:relative;display:table\">" +
                                                  "<th class=\"small-7 large-7 columns first\" style=\"font-size:16px;text-align:left;line-height:1.3;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;color:#0a0a0a;padding-right:8px;margin:0 auto;padding-bottom:16px;width:322.33333px;padding-left:16px;vertical-align: top;\">" +
@@ -2868,7 +3037,7 @@ namespace ConfirmationEMailWebApi.Controllers
                                                  "</td></tr></table></center></td></tr></table>";
 
                             string EndData = "</body></html>";
-                            MailContent = style + header + ChkInOutDate + GuestTbl + PayMode + TariffDtls + ContactDtls + EndData;
+                            MailContent = style + header + ChkInOutDate  + GuestTbl + PayMode + TariffDtls  + PropertyDtls + ContactDtls + EndData;
                             message1.Body = MailContent;
                             message1.IsBodyHtml = true;
                           }
