@@ -22,7 +22,7 @@ namespace ConfirmationEMailWebApi.Controllers
         [Route("ConfirmEMail")]
         public IHttpActionResult ConfirmEMail(ConfirmationEMail All)
         {
-            var FileName = "";
+         
             try
             {
 
@@ -801,16 +801,22 @@ namespace ConfirmationEMailWebApi.Controllers
 
                         if (Directory.Exists(path))
                         {
-                            ////File.WriteAllBytes(path + "Booking Confirmation - " + ds.Tables[2].Rows[0][2].ToString() + ".pdf", pdfBytes);
-                            FileName = path + "Booking Confirmation - " + ds.Tables[2].Rows[0][2].ToString() + ".pdf";
+                            var FileName = path + "Booking Confirmation - " + ds.Tables[2].Rows[0][2].ToString() + ".pdf";
                             if (File.Exists(FileName))
                             {
-                                File.Delete(FileName);
-                                File.WriteAllBytes(path + "Booking Confirmation - " + ds.Tables[2].Rows[0][2].ToString() + ".pdf", pdfBytes);
+                                var AttachmentName = "Booking Confirmation - " + ds.Tables[2].Rows[0][2].ToString() + ".pdf";
+                                long ticks = DateTime.Now.Ticks;
+                                byte[] bytes = BitConverter.GetBytes(ticks);
+                                string Newid = Convert.ToBase64String(bytes).Replace('+', '_').Replace('/', '-').TrimEnd('=');
+                                File.WriteAllBytes(path + "Booking Confirmation - " + Newid + " - " + ds.Tables[2].Rows[0][2].ToString() + ".pdf", pdfBytes);
+                                System.Net.Mail.Attachment att1 = new Attachment(@"D:\home\site\wwwroot\Confirmations\" + "Booking Confirmation - " + Newid + " - " + ds.Tables[2].Rows[0][2].ToString() + ".pdf");
+                                att1.Name = AttachmentName;
+                                message.Attachments.Add(att1);
                             }
                             else
                             {
                                 File.WriteAllBytes(path + "Booking Confirmation - " + ds.Tables[2].Rows[0][2].ToString() + ".pdf", pdfBytes);
+                                message.Attachments.Add(new Attachment(@"D:\home\site\wwwroot\Confirmations\" + "Booking Confirmation - " + ds.Tables[2].Rows[0][2].ToString() + ".pdf"));
                             }
                         }
                         else
@@ -820,7 +826,7 @@ namespace ConfirmationEMailWebApi.Controllers
                         }
                         message.Body = MailContent;
                         message.IsBodyHtml = true;
-                        message.Attachments.Add(new Attachment(@"D:\home\site\wwwroot\Confirmations\" + "Booking Confirmation - " + ds.Tables[2].Rows[0][2].ToString() + ".pdf"));
+                        
 
                     }
                     #endregion
@@ -1575,47 +1581,47 @@ namespace ConfirmationEMailWebApi.Controllers
                         var htmlContent = String.Format(PdfContent, DateTime.Now);
                         var htmlToPdf = new NReco.PdfGenerator.HtmlToPdfConverter();
                         var pdfBytes = htmlToPdf.GeneratePdf(htmlContent);
-                        //string path = @"E:\home\site\wwwroot\Confirmations\";
-                        //FileName = path + "Booking Confirmation - " + ds.Tables[2].Rows[0][2].ToString() + ".pdf";
+                        string path = @"D:\home\site\wwwroot\Confirmations\";
+                        if (Directory.Exists(path))
+                        {
+                            var FileName = path + "Booking Confirmation - " + ds.Tables[2].Rows[0][2].ToString() + ".pdf";
+                            if (File.Exists(FileName))
+                            {
+                                var AttachmentName = "Booking Confirmation - " + ds.Tables[2].Rows[0][2].ToString() + ".pdf";
+                                long ticks = DateTime.Now.Ticks;
+                                byte[] bytes = BitConverter.GetBytes(ticks);
+                                string Newid = Convert.ToBase64String(bytes).Replace('+', '_').Replace('/', '-').TrimEnd('=');
+                                File.WriteAllBytes(path + "Booking Confirmation - "+ Newid + " - "+ ds.Tables[2].Rows[0][2].ToString() + ".pdf", pdfBytes);
+                                System.Net.Mail.Attachment att1 = new Attachment(@"D:\home\site\wwwroot\Confirmations\" + "Booking Confirmation - " + Newid + " - " + ds.Tables[2].Rows[0][2].ToString() + ".pdf");
+                                att1.Name = AttachmentName;
+                                message.Attachments.Add(att1);
 
-                        //if (Directory.Exists(path))
-                        //{
-
-                        //    FileStream file = new FileStream(FileName, FileMode.Open, FileAccess.Read);
-                        //    file.Close();
-                        //    File.Delete(FileName);
-
-                        //    File.WriteAllBytes(path + "Booking Confirmation - " + ds.Tables[2].Rows[0][2].ToString() + ".pdf", pdfBytes);
-
-
-                        //}
-                        //else
-                        //{
-                        //    DirectoryInfo di = Directory.CreateDirectory(path);
-                        //    File.WriteAllBytes(path + "Booking Confirmation - " + ds.Tables[2].Rows[0][2].ToString() + ".pdf", pdfBytes);
-                        //}
-
-                        string Location = "";
-                        //Location = string.Format("{0}/{1}", "D:/home/site/wwwroot/App_Data/Temp/Guestimport", id + "-" + fileName);
-                        //Location = string.Format("{0}/{1}", "D:/GitHub/_Warsoft/Warsoft_Tool/Sstageback/App_Data/Temp/Guestimport", id + "-" + fileName);
-
-
-
+                            }
+                            else
+                            {
+                                File.WriteAllBytes(path + "Booking Confirmation - " + ds.Tables[2].Rows[0][2].ToString() + ".pdf", pdfBytes);
+                                message.Attachments.Add(new Attachment(@"D:\home\site\wwwroot\Confirmations\" + "Booking Confirmation - " + ds.Tables[2].Rows[0][2].ToString() + ".pdf"));
+                            }
+                        }
+                        else
+                        {
+                            DirectoryInfo di = Directory.CreateDirectory(path);
+                            File.WriteAllBytes(path + "Booking Confirmation - " + ds.Tables[2].Rows[0][2].ToString() + ".pdf", pdfBytes);
+                        }
                         message.Body = MailContent;
                         message.IsBodyHtml = true;
                         if (ds.Tables[2].Rows[0][11].ToString() == "218" && ds.Tables[0].Rows[0][5].ToString() == "Direct<br>(Cash/Card)")
                         {
                             message.Attachments.Add(new Attachment(@"D:\home\site\wwwroot\Confirmations\" + "icici_letter.pdf"));
                         }
-                        message.Attachments.Add(new Attachment(@"E:\home\site\wwwroot\Confirmations\" + "Booking Confirmation - " + ds.Tables[2].Rows[0][2].ToString() + ".pdf"));
-                    }
+                       
+
+                     }
                     #endregion
 
                     try
                     {
                         smtp.Send(message);
-                        FileStream file = new FileStream(FileName, FileMode.Open, FileAccess.Read);
-                        file.Close();
                         Response1 = "Success";
                     }
                     catch (Exception ex)
