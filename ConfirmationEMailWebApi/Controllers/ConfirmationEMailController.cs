@@ -46,7 +46,7 @@ namespace ConfirmationEMailWebApi.Controllers
          
                 SqlCommand command = new SqlCommand();
                 DataSet ds = new DataSet();
-                command.CommandText = "SP_ConfirmationEMail_Help1";
+                command.CommandText = "SP_ConfirmationEMail_Help";
                 command.CommandType = CommandType.StoredProcedure; 
                 command.Parameters.Add("@Str", SqlDbType.NVarChar).Value = "";
                 command.Parameters.Add("@Id", SqlDbType.BigInt).Value = All.BookingId;
