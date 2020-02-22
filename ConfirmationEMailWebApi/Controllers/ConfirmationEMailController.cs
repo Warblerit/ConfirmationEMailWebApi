@@ -1641,7 +1641,7 @@ namespace ConfirmationEMailWebApi.Controllers
                                     "<div><table class=\"row\" style=\"border-spacing:0;border-collapse:collapse;text-align:left;vertical-align:top;padding:0;width:100%;position:relative;display:table\">" +
                                     "<tr style=\"padding:0;vertical-align:top;text-align:left\">" +
                                     "<th class=\"small-5 large-5 columns first\" style=\"font-size:16px;text-align:left;line-height:1.3;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;color:#0a0a0a;padding-right:8px;margin:0 auto;padding-bottom:5px;padding-left:16px\">" +
-                                    "<p class=\"body-text-lg light row-pad-bot-1\" style=\"padding:0;margin:0 0 5px 0;text-align:center;font-size:18px;font-weight:300;font-family:'Cabin',Helvetica, Arial, sans-serif;color:#484848;word-break:normal;line-height:1.2;\"> <strong> GSTIN Details for Billing <br> <span style=\"font-size:12px;\">(If GST No. is not mentioned, kindly enquire with the Client) </span></strong> </p>" +
+                                    "<p class=\"body-text-lg light row-pad-bot-1\" style=\"padding:0;margin:0 0 5px 0;text-align:center;font-size:18px;font-weight:300;font-family:'Cabin',Helvetica, Arial, sans-serif;color:#000;word-break:normal;line-height:1.2;\"> <strong> GSTIN Details for Billing <br> <span style=\"font-size:12px;\">(If GST No. is not mentioned, kindly enquire with the Client) </span></strong> </p>" +
                                     "</th></tr></table>"+
                                     "<table><tr>" +
                                     "<td style=\"font-size:13px; width:25%;\" valign=\"top\" align=\"center\"><strong> GST Number </strong></td>" +
