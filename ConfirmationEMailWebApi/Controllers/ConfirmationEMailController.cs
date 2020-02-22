@@ -249,7 +249,12 @@ namespace ConfirmationEMailWebApi.Controllers
                         string id = ds.Tables[2].Rows[0][11].ToString();
                         string link = "http://mybooking.hummingbirdindia.com/?redirect=BookingConfirmation&B=B&R=" + id;
 
-                  
+                        // Spl Note
+                        string SplNote = ds.Tables[2].Rows[0][8].ToString();
+                        if (SplNote == "")
+                        {
+                            SplNote = "- NA -";
+                        }
 
                         string style = @"<!DOCTYPE html>
                                     <html lang=""en"">
@@ -716,7 +721,7 @@ namespace ConfirmationEMailWebApi.Controllers
                         {
                             TablHdr +=
                                 "<tr style=\"font-style:normal;font-weight:normal;\" class=\"ng-scope\">" +
-                                "<td class=\"padd ng-binding\" style=\"vertical-align:middle;text-align:center \">" + ds.Tables[0].Rows[i][12].ToString() + ". "  + ds.Tables[0].Rows[i][0].ToString() + " </td>" +
+                                "<td class=\"padd ng-binding\" style=\"vertical-align:middle;text-align:center \">" + ds.Tables[0].Rows[i][12].ToString() + ". "  + ds.Tables[0].Rows[i][0].ToString() + " " + ds.Tables[0].Rows[i][13].ToString() + " </td>" +
                                 "<td class=\"padd ng-binding\" style=\"vertical-align: middle; text-align: center;\">" + ds.Tables[0].Rows[i][6].ToString() + "</td>" +
                                 "<td class=\"padd ng-binding\" style=\"vertical-align: middle; text-align: center;\">" + ds.Tables[0].Rows[i][7].ToString() + "</td>" +
                                 "<td class=\"padd ng-binding\" style=\"vertical-align: middle; text-align: center;\">INR " + ds.Tables[0].Rows[i][3].ToString() + "</td>" +
@@ -734,17 +739,16 @@ namespace ConfirmationEMailWebApi.Controllers
                                     "<p class=\"body-text light text-right\" style='padding:0;margin:0;font-size:18px;font-weight:300;font-family:\"Circular\", \"Helvetica\", Helvetica, Arial, sans-serif;color:#484848;word-break:normal;line-height:1.4;text-align:right;margin-bottom:0px !important;'>Service Payment: " + ds.Tables[0].Rows[0][5].ToString() + "</p>" +
                                     "</th></tr></table></div></div>";
 
-                        ////string Inclusions = "<div><table class=\"row\" style=\"border-spacing:0;border-collapse:collapse;text-align:left;vertical-align:top;padding:0;width:100%;position:relative;display:table\">" +
-                        ////            "<tr class=\"\" style=\"padding:0;vertical-align:top;text-align:left\">" +
-                        ////            "<th class=\"small-12 large-12 columns first last\" style=\"font-size:16px;padding:0;text-align:left;color:#0a0a0a;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;line-height:1.3;margin:0 auto;padding-bottom:16px;width:564px;padding-left:16px;padding-right:16px\">" +
-                        ////            "<hr class=\"full-divider\" style=\"clear:both;max-width:580px;border-right:0;border-top:0;border-left:0;margin:20px auto;border-bottom:1px solid #cacaca;background-color:#dbdbdb;height:1px;border:none;width:100%;margin-top:0;margin-bottom:0\">" +
-                        ////            "</th></tr></table></div>" +
-                        ////            "<table class=\"row\" style=\"border-spacing:0;border-collapse:collapse;text-align:left;vertical-align:top;padding:0;width:100%;position:relative;display:table\">" +
-                        ////            "<tr style=\"padding:0;vertical-align:top;text-align:left\">" +
-                        ////            "<th class=\"small-5 large-5 columns first\" style=\"font-size:16px;text-align:left;line-height:1.3;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;color:#0a0a0a;padding-right:8px;margin:0 auto;padding-bottom:16px;padding-left:16px\">" +
-                        ////            "<p class=\"body-text-lg light row-pad-bot-1\" style=\"padding:0;margin:0 0 5px 0;text-align:center;font-size:18px;font-weight:300;font-family:'Cabin',Helvetica, Arial, sans-serif;color:#484848;word-break:normal;line-height:1.2;\">Inclusions : " + ds.Tables[1].Rows[0][12].ToString() + " </p>" +
-
-                        ////            "</th></tr></table>";
+                        string Note = "<div><table class=\"row\" style=\"border-spacing:0;border-collapse:collapse;text-align:left;vertical-align:top;padding:0;width:100%;position:relative;display:table\">" +
+                                  "<tr class=\"\" style=\"padding:0;vertical-align:top;text-align:left\">" +
+                                  "<th class=\"small-12 large-12 columns first last\" style=\"font-size:16px;padding:0;text-align:left;color:#0a0a0a;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;line-height:1.3;margin:0 auto;padding-bottom:16px;width:564px;padding-left:16px;padding-right:16px\">" +
+                                  "<hr class=\"full-divider\" style=\"clear:both;max-width:580px;border-right:0;border-top:0;border-left:0;margin:20px auto;border-bottom:1px solid #cacaca;background-color:#dbdbdb;height:1px;border:none;width:100%;margin-top:0;margin-bottom:0\">" +
+                                  "</th></tr></table></div>" +
+                                  "<table class=\"row\" style=\"border-spacing:0;border-collapse:collapse;text-align:left;vertical-align:top;padding:0;width:100%;position:relative;display:table\">" +
+                                  "<tr style=\"padding:0;vertical-align:top;text-align:left\">" +
+                                  "<th class=\"small-5 large-5 columns first\" style=\"font-size:16px;text-align:left;line-height:1.3;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;color:#0a0a0a;padding-right:8px;margin:0 auto;padding-bottom:16px;padding-left:16px\">" +
+                                  "<p class=\"body-text-lg light row-pad-bot-1\" style=\"padding:0;margin:0 0 5px 0;text-align:center;font-size:14px;font-family:'Cabin',Helvetica, Arial, sans-serif;color:#484848;word-break:normal;line-height:1.2;\"><strong>Note : </strong>" + SplNote + " </p>" +
+                                  "</th></tr></table>";
 
                         string Address = "<div><table class=\"row\" style=\"border-spacing:0;border-collapse:collapse;text-align:left;vertical-align:top;padding:0;width:100%;position:relative;display:table\">" +
                                            "<tr class=\"\" style=\"padding:0;vertical-align:top;text-align:left\">" +
@@ -760,25 +764,51 @@ namespace ConfirmationEMailWebApi.Controllers
                                             "<th class=\"small-5 large-5 columns last valign-top\" style=\"font-size:16px;text-align:left;line-height:1.3;color:#0a0a0a;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;vertical-align:top;width:225.66667px;padding-left:16px;margin:0 auto;padding-right:16px\">" +
                                             "<a href=\"" + MapLink + "\" style =\"font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;margin:0;text-align:left;line-height:1.3;color:#2199e8;text-decoration:none\">" +
                                             "<p class=\"body-text-lg light color-rausch text-right\" style='padding:0;margin:0 0 5px 0;word-break:normal;font-weight:300;font-family:\"Cabin\", \"Helvetica\", Helvetica, Arial, sans-serif;line-height:1.2;font-size:24px;text-align:center;color:#d9242c !important;margin-bottom:0px !important'>Get Directions</p>" +
-                                            "<p class=\"body-text light\" style='margin:0;text-align:left;padding:0;font-weight:300;font-family:\"Cabin\", \"Helvetica\", Helvetica, Arial, sans-serif;color:#484848;word-break:normal;line-height:1.4;font-size:18px;margin-bottom:0px !important'>" +
-                                            ds.Tables[1].Rows[0][2].ToString() + "</p></a></th></table></div><div>" +
+                                            "<p class=\"body-text light\" style='margin:0;text-align:center;padding:0;font-weight:300;font-family:\"Cabin\", \"Helvetica\", Helvetica, Arial, sans-serif;color:#484848;word-break:normal;line-height:1.4;font-size:18px;margin-bottom:0px !important'>" +
+                                            "<img style =\"width:36px;height:36px;\" src=\"https://portalvhds4prl9ymlwxnt8.blob.core.windows.net/img/Google_Maps_Icon.png\"/></p></a></th></table></div><div>" +
                                             "<table class=\"row\" style=\"border-spacing:0;border-collapse:collapse;text-align:left;vertical-align:top;padding:0;width:100%;position:relative;display:table\">" +
                                             "<tr class=\"\" style=\"padding:0;vertical-align:top;text-align:left\">" +
                                             "<th class=\"small-12 large-12 columns first last\" style=\"font-size:16px;padding:0;text-align:left;color:#0a0a0a;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;line-height:1.3;margin:0 auto;padding-bottom:16px;width:564px;padding-left:16px;padding-right:16px\">" +
                                             "<hr class=\"full-divider\" style=\"clear:both;max-width:580px;border-right:0;border-top:0;border-left:0;margin:20px auto;border-bottom:1px solid #cacaca;background-color:#dbdbdb;height:1px;border:none;width:100%;margin-top:0;margin-bottom:0\">" +
                                             "</th></tr></table></div>";
 
-                        string BookerDtls = "<div style=\"padding-top:8px;padding-bottom:8px\" >" +
+
+                       string BookerDtls = "<div style=\"padding-top:8px;padding-bottom:8px\" >" +
                                             "<table class=\"row\" style=\"border-spacing:0;border-collapse:collapse;text-align:left;vertical-align:top;padding:0;width:100%;position:relative;display:table\">" +
-                                            "<th class=\"small-7 large-7 columns first\" style=\"font-size:16px;text-align:left;line-height:1.3;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;color:#0a0a0a;padding-right:8px;margin:0 auto;padding-bottom:16px;width:322.33333px;padding-left:16px;vertical-align: top;\">" +
+                                            "<tr class=\"\" style=\"padding:0;vertical-align:top;text-align:left\">" +
+                                            "<th class=\"small-7 large-7 columns first\" style=\"font-size:16px;text-align:left;line-height:1.3;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;color:#0a0a0a;padding-right:8px;margin:0 auto;width:322.33333px;padding-left:16px;vertical-align: top;\">" +
                                             "<p style = 'margin:0;text-align:left;padding:0;' > Booked by</p>" +
-                                            "<hr><p style = 'margin:0;text-align:left;padding:0;' > Client Request #</p>" +
-                                            "<hr><p style = 'margin:0;text-align:left;padding:0;' > Issues / feedbacks </ p ></ th >" +
-                                            "<th class=\"small-5 large-5 columns last valign-top\" style=\"font-size:16px;text-align:left;line-height:1.3;color:#0a0a0a;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;vertical-align:top;width:225.66667px;padding-left:16px;margin:0 auto;padding-bottom:16px;padding-right:16px\">" +
+                                            "<th class=\"small-5 large-5 columns last valign-top\" style=\"font-size:16px;text-align:left;line-height:1.3;color:#0a0a0a;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;vertical-align:top;width:225.66667px;padding-left:16px;margin:0 auto;padding-right:16px\">" +
                                             "<p style = 'padding:0;margin:0;text-align:right;margin-bottom:0px !important' > " + ds.Tables[2].Rows[0][3].ToString() + " </ p >" +
-                                            "<hr><p style='padding:0;margin:0;text-align:right;margin-bottom:0px !important'>" + ds.Tables[2].Rows[0][12].ToString() + "&nbsp;</p>" +
-                                            "<hr><p style = 'padding:0;margin:0;text-align:right;margin-bottom:0px !important' >" + DeskNo + "<br>" + ContactEmail + "</p>" +
-                                            "</th></table></div><div>" +
+                                            "</th>" +
+                                            "</tr><tr class=\"\" style=\"padding:0;vertical-align:top;text-align:left\">" +
+                                            "<th class=\"small-7 large-7 columns first\" style=\"font-size:16px;text-align:left;line-height:1.3;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;color:#0a0a0a;padding-right:8px;margin:0 auto;width:322.33333px;padding-left:16px;vertical-align: top;\">" +
+                                            "<hr>" +
+                                            "<th class=\"small-5 large-5 columns last valign-top\" style=\"font-size:16px;text-align:left;line-height:1.3;color:#0a0a0a;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;vertical-align:top;width:225.66667px;padding-left:16px;margin:0 auto;padding-right:16px\">" +
+                                            "<hr>" +
+                                            "</th>" +
+                                             "</tr><tr class=\"\" style=\"padding:0;vertical-align:top;text-align:left\">" +
+                                            "<th class=\"small-7 large-7 columns first\" style=\"font-size:16px;text-align:left;line-height:1.3;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;color:#0a0a0a;padding-right:8px;margin:0 auto;width:322.33333px;padding-left:16px;vertical-align: top;\">" +
+                                            "<p style = 'margin:0;text-align:left;padding:0;' >Client Request #</p>" +
+                                            "<th class=\"small-5 large-5 columns last valign-top\" style=\"font-size:16px;text-align:left;line-height:1.3;color:#0a0a0a;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;vertical-align:top;width:225.66667px;padding-left:16px;margin:0 auto;padding-right:16px\">" +
+                                            "<p style = 'padding:0;margin:0;text-align:right;margin-bottom:0px !important' > " + ds.Tables[2].Rows[0][12].ToString() + " </ p >" +
+                                            "</th>" +
+                                             "</tr><tr class=\"\" style=\"padding:0;vertical-align:top;text-align:left\">" +
+                                            "<th class=\"small-7 large-7 columns first\" style=\"font-size:16px;text-align:left;line-height:1.3;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;color:#0a0a0a;padding-right:8px;margin:0 auto;width:322.33333px;padding-left:16px;vertical-align: top;\">" +
+                                            "<hr>" +
+                                            "<th class=\"small-5 large-5 columns last valign-top\" style=\"font-size:16px;text-align:left;line-height:1.3;color:#0a0a0a;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;vertical-align:top;width:225.66667px;padding-left:16px;margin:0 auto;padding-right:16px\">" +
+                                            "<hr>" +
+                                            "</th>" +
+                                             "</tr><tr class=\"\" style=\"padding:0;vertical-align:top;text-align:left\">" +
+                                            "<th class=\"small-7 large-7 columns first\" style=\"font-size:16px;text-align:left;line-height:1.3;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;color:#0a0a0a;padding-right:8px;margin:0 auto;width:322.33333px;padding-left:16px;vertical-align: top;\">" +
+                                            "<p style = 'margin:0;text-align:left;padding:0;' >Issues / feedbacks</p>" +
+                                            "<th class=\"small-5 large-5 columns last valign-top\" style=\"font-size:16px;text-align:left;line-height:1.3;color:#0a0a0a;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;vertical-align:top;width:225.66667px;padding-left:16px;margin:0 auto;padding-right:16px\">" +
+                                            "<p style = 'padding:0;margin:0;text-align:right;margin-bottom:0px !important' > " + DeskNo + "<br>" + ContactEmail + " </ p >" +
+                                            "</th>" +
+                                            "</tr></table></div>";
+
+
+                        BookerDtls +=  "<div>" +
                                             "<table class=\"row\" style=\"border-spacing:0;border-collapse:collapse;text-align:left;vertical-align:top;padding:0;width:100%;position:relative;display:table\">" +
                                             "<tr class=\"\" style=\"padding:0;vertical-align:top;text-align:left\">" +
                                             "<th class=\"small-12 large-12 columns first last\" style=\"font-size:16px;padding:0;text-align:left;color:#0a0a0a;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;line-height:1.3;margin:0 auto;padding-bottom:16px;width:564px;padding-left:16px;padding-right:16px\">" +
@@ -791,8 +821,8 @@ namespace ConfirmationEMailWebApi.Controllers
                                             "<p> Powered by Staysimplyfied.com</p></th></tr></table></div></tr></table></div></td></tr></table></center></td></tr></table>";
                         string EndData = "</body></html>";
 
-                        MailContent = style + header + header_cnt1 + HotelName + ChkInOutDate + TablHdr +  Address + BookerDtls + EndData;
-                        var PdfContent = header + header_cnt1 + HotelName + ChkInOutDate + TablHdr +  Address + BookerDtls;
+                        MailContent = style + header + header_cnt1 + HotelName + ChkInOutDate + TablHdr + Note +  Address + BookerDtls + EndData;
+                        var PdfContent = header + header_cnt1 + HotelName + ChkInOutDate + TablHdr + Note + Address + BookerDtls;
 
                         var htmlContent = String.Format(PdfContent, DateTime.Now);
                         var htmlToPdf = new NReco.PdfGenerator.HtmlToPdfConverter();
@@ -1013,6 +1043,13 @@ namespace ConfirmationEMailWebApi.Controllers
                         // View in browser Link
                         string id = ds.Tables[2].Rows[0][12].ToString();
                         string link = "http://mybooking.hummingbirdindia.com/?redirect=BookingConfirmation&B=R&R=" + id;
+
+                        // Spl Note
+                        string SplNote = ds.Tables[2].Rows[0][8].ToString();
+                        if (SplNote == "")
+                        {
+                            SplNote = "- NA -";
+                        }
 
                         string BOKCreditcardView = "";
                         if (typeofpty == "BOK")
@@ -1523,7 +1560,17 @@ namespace ConfirmationEMailWebApi.Controllers
                                     "<tr style=\"padding:0;vertical-align:top;text-align:left\">" +
                                     "<th class=\"small-5 large-5 columns first\" style=\"font-size:16px;text-align:left;line-height:1.3;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;color:#0a0a0a;padding-right:8px;margin:0 auto;padding-bottom:16px;padding-left:16px\">" +
                                     "<p class=\"body-text-lg light row-pad-bot-1\" style=\"padding:0;margin:0 0 5px 0;text-align:center;font-size:18px;font-weight:300;font-family:'Cabin',Helvetica, Arial, sans-serif;color:#484848;word-break:normal;line-height:1.2;\">Inclusions : " + ds.Tables[1].Rows[0][12].ToString() +" </p>" +
-                                    
+                                    "</th></tr></table>";
+
+                        string Note = "<div><table class=\"row\" style=\"border-spacing:0;border-collapse:collapse;text-align:left;vertical-align:top;padding:0;width:100%;position:relative;display:table\">" +
+                                    "<tr class=\"\" style=\"padding:0;vertical-align:top;text-align:left\">" +
+                                    "<th class=\"small-12 large-12 columns first last\" style=\"font-size:16px;padding:0;text-align:left;color:#0a0a0a;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;line-height:1.3;margin:0 auto;padding-bottom:16px;width:564px;padding-left:16px;padding-right:16px\">" +
+                                    "<hr class=\"full-divider\" style=\"clear:both;max-width:580px;border-right:0;border-top:0;border-left:0;margin:20px auto;border-bottom:1px solid #cacaca;background-color:#dbdbdb;height:1px;border:none;width:100%;margin-top:0;margin-bottom:0\">" +
+                                    "</th></tr></table></div>" +
+                                    "<table class=\"row\" style=\"border-spacing:0;border-collapse:collapse;text-align:left;vertical-align:top;padding:0;width:100%;position:relative;display:table\">" +
+                                    "<tr style=\"padding:0;vertical-align:top;text-align:left\">" +
+                                    "<th class=\"small-5 large-5 columns first\" style=\"font-size:16px;text-align:left;line-height:1.3;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;color:#0a0a0a;padding-right:8px;margin:0 auto;padding-bottom:16px;padding-left:16px\">" +
+                                    "<p class=\"body-text-lg light row-pad-bot-1\" style=\"padding:0;margin:0 0 5px 0;text-align:center;font-size:14px;font-family:'Cabin',Helvetica, Arial, sans-serif;color:#484848;word-break:normal;line-height:1.2;\"><strong>Note : </strong>" + SplNote + " </p>" +
                                     "</th></tr></table>";
 
                         string Address = "<div><table class=\"row\" style=\"border-spacing:0;border-collapse:collapse;text-align:left;vertical-align:top;padding:0;width:100%;position:relative;display:table\">" +
@@ -1540,8 +1587,8 @@ namespace ConfirmationEMailWebApi.Controllers
                                             "<th class=\"small-5 large-5 columns last valign-top\" style=\"font-size:16px;text-align:left;line-height:1.3;color:#0a0a0a;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;vertical-align:top;width:225.66667px;padding-left:16px;margin:0 auto;padding-right:16px\">" +
                                             "<a href=\"" + MapLink + "\" style =\"font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;margin:0;text-align:left;line-height:1.3;color:#2199e8;text-decoration:none\">" +
                                             "<p class=\"body-text-lg light color-rausch text-right\" style='padding:0;margin:0 0 5px 0;word-break:normal;font-weight:300;font-family:\"Cabin\", \"Helvetica\", Helvetica, Arial, sans-serif;line-height:1.2;font-size:24px;text-align:center;color:#d9242c !important;margin-bottom:0px !important'>Get Directions</p>" +
-                                            "<p class=\"body-text light\" style='margin:0;text-align:left;padding:0;font-weight:300;font-family:\"Cabin\", \"Helvetica\", Helvetica, Arial, sans-serif;color:#484848;word-break:normal;line-height:1.4;font-size:18px;margin-bottom:0px !important'>" +
-                                            ds.Tables[1].Rows[0][2].ToString() + "</p></a></th></table></div><div>" +
+                                            "<p class=\"body-text light\" style='margin:0;text-align:center;padding:0;font-weight:300;font-family:\"Cabin\", \"Helvetica\", Helvetica, Arial, sans-serif;color:#484848;word-break:normal;line-height:1.4;font-size:18px;margin-bottom:0px !important'>" +
+                                            "<img style =\"width:36px;height:36px;\" src=\"https://portalvhds4prl9ymlwxnt8.blob.core.windows.net/img/Google_Maps_Icon.png\"/></p></a></th></table></div><div>" +
                                             "<table class=\"row\" style=\"border-spacing:0;border-collapse:collapse;text-align:left;vertical-align:top;padding:0;width:100%;position:relative;display:table\">" +
                                             "<tr class=\"\" style=\"padding:0;vertical-align:top;text-align:left\">" +
                                             "<th class=\"small-12 large-12 columns first last\" style=\"font-size:16px;padding:0;text-align:left;color:#0a0a0a;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;line-height:1.3;margin:0 auto;padding-bottom:16px;width:564px;padding-left:16px;padding-right:16px\">" +
@@ -1550,15 +1597,102 @@ namespace ConfirmationEMailWebApi.Controllers
 
                         string BookerDtls = "<div style=\"padding-top:8px;padding-bottom:8px\" >" +
                                             "<table class=\"row\" style=\"border-spacing:0;border-collapse:collapse;text-align:left;vertical-align:top;padding:0;width:100%;position:relative;display:table\">" +
-                                            "<th class=\"small-7 large-7 columns first\" style=\"font-size:16px;text-align:left;line-height:1.3;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;color:#0a0a0a;padding-right:8px;margin:0 auto;padding-bottom:16px;width:322.33333px;padding-left:16px;vertical-align: top;\">" +
+                                            "<tr class=\"\" style=\"padding:0;vertical-align:top;text-align:left\">" +
+                                            "<th class=\"small-7 large-7 columns first\" style=\"font-size:16px;text-align:left;line-height:1.3;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;color:#0a0a0a;padding-right:8px;margin:0 auto;width:322.33333px;padding-left:16px;vertical-align: top;\">" +
                                             "<p style = 'margin:0;text-align:left;padding:0;' > Booked by</p>" +
-                                            "<hr><p style = 'margin:0;text-align:left;padding:0;' > Client Request #</p>" +
-                                            "<hr><p style = 'margin:0;text-align:left;padding:0;' > Issues / feedbacks </ p ></ th >" +
-                                            "<th class=\"small-5 large-5 columns last valign-top\" style=\"font-size:16px;text-align:left;line-height:1.3;color:#0a0a0a;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;vertical-align:top;width:225.66667px;padding-left:16px;margin:0 auto;padding-bottom:16px;padding-right:16px\">" +
+                                            "<th class=\"small-5 large-5 columns last valign-top\" style=\"font-size:16px;text-align:left;line-height:1.3;color:#0a0a0a;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;vertical-align:top;width:225.66667px;padding-left:16px;margin:0 auto;padding-right:16px\">" +
                                             "<p style = 'padding:0;margin:0;text-align:right;margin-bottom:0px !important' > " + ds.Tables[2].Rows[0][3].ToString() + " </ p >" +
-                                            "<hr><p style='padding:0;margin:0;text-align:right;margin-bottom:0px !important'>" + ds.Tables[2].Rows[0][13].ToString() + "&nbsp;</p>" +
-                                            "<hr><p style = 'padding:0;margin:0;text-align:right;margin-bottom:0px !important' >" + DeskNo + "<br>" + ContactEmail + "</p>" +
-                                            "</th></table></div><div>" +
+                                            "</th>" +
+                                            "</tr><tr class=\"\" style=\"padding:0;vertical-align:top;text-align:left\">" +
+                                            "<th class=\"small-7 large-7 columns first\" style=\"font-size:16px;text-align:left;line-height:1.3;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;color:#0a0a0a;padding-right:8px;margin:0 auto;width:322.33333px;padding-left:16px;vertical-align: top;\">" +
+                                            "<hr>" +
+                                            "<th class=\"small-5 large-5 columns last valign-top\" style=\"font-size:16px;text-align:left;line-height:1.3;color:#0a0a0a;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;vertical-align:top;width:225.66667px;padding-left:16px;margin:0 auto;padding-right:16px\">" +
+                                            "<hr>" +
+                                            "</th>" +
+                                             "</tr><tr class=\"\" style=\"padding:0;vertical-align:top;text-align:left\">" +
+                                            "<th class=\"small-7 large-7 columns first\" style=\"font-size:16px;text-align:left;line-height:1.3;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;color:#0a0a0a;padding-right:8px;margin:0 auto;width:322.33333px;padding-left:16px;vertical-align: top;\">" +
+                                            "<p style = 'margin:0;text-align:left;padding:0;' >Client Request #</p>" +
+                                            "<th class=\"small-5 large-5 columns last valign-top\" style=\"font-size:16px;text-align:left;line-height:1.3;color:#0a0a0a;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;vertical-align:top;width:225.66667px;padding-left:16px;margin:0 auto;padding-right:16px\">" +
+                                            "<p style = 'padding:0;margin:0;text-align:right;margin-bottom:0px !important' > " + ds.Tables[2].Rows[0][13].ToString() + " </ p >" +
+                                            "</th>" +
+                                             "</tr><tr class=\"\" style=\"padding:0;vertical-align:top;text-align:left\">" +
+                                            "<th class=\"small-7 large-7 columns first\" style=\"font-size:16px;text-align:left;line-height:1.3;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;color:#0a0a0a;padding-right:8px;margin:0 auto;width:322.33333px;padding-left:16px;vertical-align: top;\">" +
+                                            "<hr>" +
+                                            "<th class=\"small-5 large-5 columns last valign-top\" style=\"font-size:16px;text-align:left;line-height:1.3;color:#0a0a0a;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;vertical-align:top;width:225.66667px;padding-left:16px;margin:0 auto;padding-right:16px\">" +
+                                            "<hr>" +
+                                            "</th>" +
+                                             "</tr><tr class=\"\" style=\"padding:0;vertical-align:top;text-align:left\">" +
+                                            "<th class=\"small-7 large-7 columns first\" style=\"font-size:16px;text-align:left;line-height:1.3;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;color:#0a0a0a;padding-right:8px;margin:0 auto;width:322.33333px;padding-left:16px;vertical-align: top;\">" +
+                                            "<p style = 'margin:0;text-align:left;padding:0;' >Issues / feedbacks</p>" +
+                                            "<th class=\"small-5 large-5 columns last valign-top\" style=\"font-size:16px;text-align:left;line-height:1.3;color:#0a0a0a;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;vertical-align:top;width:225.66667px;padding-left:16px;margin:0 auto;padding-right:16px\">" +
+                                            "<p style = 'padding:0;margin:0;text-align:right;margin-bottom:0px !important' > " + DeskNo + "<br>" + ContactEmail + " </ p >" +
+                                            "</th>" +
+                                            "</tr></table></div>";
+
+                        string GSTDtls = "";
+
+                        if (ds.Tables[0].Rows[0][5].ToString() == "Direct<br>(Cash/Card)")
+                        {
+                          GSTDtls = "<div><table class=\"row\" style=\"border-spacing:0;border-collapse:collapse;text-align:left;vertical-align:top;padding:0;width:100%;position:relative;display:table\">" +
+                                    "<tr class=\"\" style=\"padding:0;vertical-align:top;text-align:left\">" +
+                                    "<th class=\"small-12 large-12 columns first last\" style=\"font-size:16px;padding:0;text-align:left;color:#0a0a0a;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;line-height:1.3;margin:0 auto;padding-bottom:16px;width:564px;padding-left:16px;padding-right:16px\">" +
+                                    "<hr class=\"full-divider\" style=\"clear:both;max-width:580px;border-right:0;border-top:0;border-left:0;margin:20px auto;border-bottom:1px solid #cacaca;background-color:#dbdbdb;height:1px;border:none;width:100%;margin-top:0;margin-bottom:0\">" +
+                                    "</th></tr></table></div>"+
+                                    "<div><table class=\"row\" style=\"border-spacing:0;border-collapse:collapse;text-align:left;vertical-align:top;padding:0;width:100%;position:relative;display:table\">" +
+                                    "<tr style=\"padding:0;vertical-align:top;text-align:left\">" +
+                                    "<th class=\"small-5 large-5 columns first\" style=\"font-size:16px;text-align:left;line-height:1.3;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;color:#0a0a0a;padding-right:8px;margin:0 auto;padding-bottom:5px;padding-left:16px\">" +
+                                    "<p class=\"body-text-lg light row-pad-bot-1\" style=\"padding:0;margin:0 0 5px 0;text-align:center;font-size:18px;font-weight:300;font-family:'Cabin',Helvetica, Arial, sans-serif;color:#484848;word-break:normal;line-height:1.2;\"> <strong> GSTIN Details for Billing <br> <span style=\"font-size:12px;\">(If GST No. is not mentioned, kindly enquire with the Client) </span></strong> </p>" +
+                                    "</th></tr></table>"+
+                                    "<table><tr>" +
+                                    "<td style=\"font-size:13px; width:25%;\" valign=\"top\" align=\"center\"><strong> GST Number </strong></td>" +
+                                    "<td style=\"font-size:13px; width:25%;\" valign=\"top\" align=\"center\"><strong> Legal Name </strong></td>" +
+                                    "<td style=\"font-size:13px; width:49%;\" valign=\"top\" align=\"center\"><strong> Address </strong></td>" +
+                                    "</tr><tr><td colspan=\"3\"><hr class=\"full-divider\" style=\"clear:both;max-width:580px;border-right:0;border-top:0;border-left:0;margin:20px auto;border-bottom:1px solid #cacaca;background-color:#dbdbdb;height:1px;border:none;width:100%;margin-top:0;margin-bottom:0\"></td></tr>" +
+                                    "<tr style=\"font-style:normal;font-size:13px;\" class=\"ng-scope\">" +
+                                    "<td class=\"padd ng-binding\" style=\"vertical-align:middle;text-align:center \">" + ds.Tables[12].Rows[0][1].ToString() + " </td>" +
+                                    "<td class=\"padd ng-binding\" style=\"vertical-align: middle; text-align: center;\">" + ds.Tables[12].Rows[0][0].ToString() + "</td>" + 
+                                    "<td class=\"padd ng-binding\" style=\"vertical-align: middle; text-align: center;\">" + ds.Tables[12].Rows[0][2].ToString() + "</td>" +
+                                    "</tr></table></div>";
+
+
+
+
+
+
+                            ////"<div>" +
+                            ////        "<table class=\"row\" style=\"border-spacing:0;border-collapse:collapse;text-align:left;vertical-align:top;padding:0;width:100%;position:relative;display:table\">" +
+                            ////        "<tr class=\"\" style=\"padding:0;vertical-align:top;text-align:left\">" +
+                            ////        "<th class=\"small-12 large-12 columns first last\" style=\"font-size:16px;padding:0;text-align:left;color:#0a0a0a;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;line-height:1.3;margin:0 auto;padding-bottom:16px;width:564px;padding-left:16px;padding-right:16px\">" +
+                            ////        "<hr class=\"full-divider\" style=\"clear:both;max-width:580px;border-right:0;border-top:0;border-left:0;margin:20px auto;border-bottom:1px solid #cacaca;background-color:#dbdbdb;height:1px;border:none;width:100%;margin-top:0;margin-bottom:0\">" +
+                            ////        "</th></tr></table></div>"+
+                            ////        "<div style =\"padding-top:8px;padding-bottom:8px\" >" +
+                            ////        "<table class=\"row\" style=\"border-spacing:0;border-collapse:collapse;text-align:left;vertical-align:top;padding:0;width:100%;position:relative;display:table\">" +
+                            ////        "<th class=\"small-7 large-7 columns first\" style=\"font-size:16px;text-align:left;line-height:1.3;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;color:#0a0a0a;padding-right:8px;margin:0 auto;padding-bottom:16px;width:322.33333px;padding-left:16px;vertical-align: top;\">" +
+                            ////        "<p style = 'margin:0;text-align:left;padding:0;' > GST Number </p></ th >" +
+                            ////        "<th class=\"small-5 large-5 columns last valign-top\" style=\"font-size:16px;text-align:left;line-height:1.3;color:#0a0a0a;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;vertical-align:top;width:225.66667px;padding-left:16px;margin:0 auto;padding-bottom:16px;padding-right:16px\">" +
+                            ////        "<p style = 'padding:0;margin:0;text-align:right;margin-bottom:0px !important' > " + ds.Tables[12].Rows[0][0].ToString() + " </ p >" +
+                            ////        "</th></table>" +
+                            ////        "<hr>" +
+                            ////        "<table class=\"row\" style=\"border-spacing:0;border-collapse:collapse;text-align:left;vertical-align:top;padding:0;width:100%;position:relative;display:table\">" +
+                            ////        "<th class=\"small-7 large-7 columns first\" style=\"font-size:16px;text-align:left;line-height:1.3;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;color:#0a0a0a;padding-right:8px;margin:0 auto;padding-bottom:16px;width:322.33333px;padding-left:16px;vertical-align: top;\">" +
+                            ////        "<p style = 'margin:0;text-align:left;padding:0;' > Legal Name </p></ th >" +
+                            ////        "<th class=\"small-5 large-5 columns last valign-top\" style=\"font-size:16px;text-align:left;line-height:1.3;color:#0a0a0a;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;vertical-align:top;width:225.66667px;padding-left:16px;margin:0 auto;padding-bottom:16px;padding-right:16px\">" +
+                            ////        "<p style = 'padding:0;margin:0;text-align:right;margin-bottom:0px !important' > " + ds.Tables[12].Rows[0][1].ToString() + " </ p >" +
+                            ////        "</th></table>" +
+                            ////        "<hr>" +
+                            ////        "<table class=\"row\" style=\"border-spacing:0;border-collapse:collapse;text-align:left;vertical-align:top;padding:0;width:100%;position:relative;display:table\">" +
+                            ////        "<th class=\"small-7 large-7 columns first\" style=\"font-size:16px;text-align:left;line-height:1.3;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;color:#0a0a0a;padding-right:8px;margin:0 auto;padding-bottom:16px;width:322.33333px;padding-left:16px;vertical-align: top;\">" +
+                            ////        "<p style = 'margin:0;text-align:left;padding:0;' > Address </p></ th >" +
+                            ////        "<th class=\"small-5 large-5 columns last valign-top\" style=\"font-size:16px;text-align:left;line-height:1.3;color:#0a0a0a;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;vertical-align:top;width:225.66667px;padding-left:16px;margin:0 auto;padding-bottom:16px;padding-right:16px\">" +
+                            ////        "<p style = 'padding:0;margin:0;text-align:right;margin-bottom:0px !important' > " + ds.Tables[12].Rows[0][2].ToString() + " </ p >" +
+                            ////        "</th></table>" +
+                            ////        "<hr>" +
+                            ////        "</div>";
+
+                        }
+
+
+                        string FooterDtls = "<div>" +
                                             "<table class=\"row\" style=\"border-spacing:0;border-collapse:collapse;text-align:left;vertical-align:top;padding:0;width:100%;position:relative;display:table\">" +
                                             "<tr class=\"\" style=\"padding:0;vertical-align:top;text-align:left\">" +
                                             "<th class=\"small-12 large-12 columns first last\" style=\"font-size:16px;padding:0;text-align:left;color:#0a0a0a;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;line-height:1.3;margin:0 auto;padding-bottom:16px;width:564px;padding-left:16px;padding-right:16px\">" +
@@ -1572,11 +1706,17 @@ namespace ConfirmationEMailWebApi.Controllers
                                             "<p> Powered by Staysimplyfied.com</p></th></tr></table></div></tr></table></div></td></tr></table></center></td></tr></table>";
                         string EndData = "</body></html>";
 
-
-
-                        MailContent = style + header + header_cnt1 + HotelName + ChkInOutDate + TablHdr + Inclusions + Address + BookerDtls + EndData;
-                        var PdfContent = header + header_cnt1 + HotelName + ChkInOutDate + TablHdr + Inclusions + Address + BookerDtls;
-
+                        var PdfContent = "";
+                        if (ds.Tables[0].Rows[0][5].ToString() == "Direct<br>(Cash/Card)")
+                        {
+                            MailContent = style + header + header_cnt1 + HotelName + ChkInOutDate + TablHdr + Inclusions + Note + Address + BookerDtls + GSTDtls + FooterDtls + EndData;
+                            PdfContent = header + header_cnt1 + HotelName + ChkInOutDate + TablHdr + Inclusions + Note + Address + BookerDtls + GSTDtls + FooterDtls;
+                        }
+                        else
+                        {
+                            MailContent = style + header + header_cnt1 + HotelName + ChkInOutDate + TablHdr + Inclusions + Note + Address + BookerDtls + FooterDtls + EndData;
+                            PdfContent = header + header_cnt1 + HotelName + ChkInOutDate + TablHdr + Inclusions + Note + Address + BookerDtls + FooterDtls;
+                        }
 
                         var htmlContent = String.Format(PdfContent, DateTime.Now);
                         var htmlToPdf = new NReco.PdfGenerator.HtmlToPdfConverter();
@@ -1800,7 +1940,15 @@ namespace ConfirmationEMailWebApi.Controllers
                                 {
                                     MobileNo = " - NA - ";
                                 }
- 
+
+
+                                // Spl Note
+                                string SplNote = ds.Tables[2].Rows[0][8].ToString();
+                                if (SplNote == "")
+                                {
+                                    SplNote = "- NA -";
+                                }
+
                                 // View in browser Link
                                 string id = ds.Tables[2].Rows[0][11].ToString();
                                 string link = "http://mybooking.hummingbirdindia.com/?redirect=BookingPropertyConfirmation&B=B&R=" + id;
@@ -2282,8 +2430,8 @@ namespace ConfirmationEMailWebApi.Controllers
                                             "<hr class=\"full-divider\" style=\"clear:both;max-width:580px;border-right:0;border-top:0;border-left:0;margin:20px auto;border-bottom:1px solid #cacaca;background-color:#dbdbdb;height:1px;border:none;width:100%;margin-top:0;margin-bottom:0\">" +
                                             "</th></tr></table></div>";
 
-                        string PropertyDtls = "";
-                        PropertyDtls = "<table class=\"row\" style=\"border-spacing:0;border-collapse:collapse;text-align:left;vertical-align:top;padding:0;width:100%;position:relative;display:table;\">" +
+            
+                        string PropertyDtls = "<table class=\"row\" style=\"border-spacing:0;border-collapse:collapse;text-align:left;vertical-align:top;padding:0;width:100%;position:relative;display:table;\">" +
                                 "<tr style=\"padding:0;vertical-align:top;text-align:left\">" +
                                 "<th class=\"small-5 large-5 columns first\" style=\"font-size:16px;text-align:left;line-height:1.3;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;color:#0a0a0a;padding-right:8px;margin:0 auto;padding-bottom:16px;padding-left:16px\">" +
                                 "<p class=\"body-text-lg light row-pad-bot-1\" style=\"padding:0;margin:0 0 5px 0;text-align:center;font-size:16px;font-weight:300;font-family:'Cabin',Helvetica, Arial, sans-serif;color:#484848;word-break:normal;line-height:1.2;font-weight: bold;\">Property Name : " + ds.Tables[1].Rows[0][5].ToString() + " </p>" +
@@ -2295,17 +2443,54 @@ namespace ConfirmationEMailWebApi.Controllers
                                 "<hr class=\"full-divider\" style=\"clear:both;max-width:580px;border-right:0;border-top:0;border-left:0;margin:20px auto;border-bottom:1px solid #cacaca;background-color:#dbdbdb;height:1px;border:none;width:100%;margin-top:0;margin-bottom:0\">" +
                                 "</th></tr></table></div>";
 
-                                string ContactDtls = "<div style=\"padding-top:8px;padding-bottom:8px\">" +
+                    string Note = "<table class=\"row\" style=\"border-spacing:0;border-collapse:collapse;text-align:left;vertical-align:top;padding:0;width:100%;position:relative;display:table\">" +
+                                "<tr style=\"padding:0;vertical-align:top;text-align:left\">" +
+                                "<th class=\"small-5 large-5 columns first\" style=\"font-size:16px;text-align:left;line-height:1.3;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;color:#0a0a0a;padding-right:8px;margin:0 auto;padding-bottom:16px;padding-left:16px\">" +
+                                "<p class=\"body-text-lg light row-pad-bot-1\" style=\"padding:0;margin:0 0 5px 0;text-align:center;font-size:14px;font-family:'Cabin',Helvetica, Arial, sans-serif;color:#484848;word-break:normal;line-height:1.2;\"><strong>Note : </strong>" + SplNote + " </p>" +
+                                "</th></tr></table>" +
+                                "<div><table class=\"row\" style=\"border-spacing:0;border-collapse:collapse;text-align:left;vertical-align:top;padding:0;width:100%;position:relative;display:table\">" +
+                                "<tr class=\"\" style=\"padding:0;vertical-align:top;text-align:left\">" +
+                                "<th class=\"small-12 large-12 columns first last\" style=\"font-size:16px;padding:0;text-align:left;color:#0a0a0a;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;line-height:1.3;margin:0 auto;padding-bottom:16px;width:564px;padding-left:16px;padding-right:16px\">" +
+                                "<hr class=\"full-divider\" style=\"clear:both;max-width:580px;border-right:0;border-top:0;border-left:0;margin:20px auto;border-bottom:1px solid #cacaca;background-color:#dbdbdb;height:1px;border:none;width:100%;margin-top:0;margin-bottom:0\">" +
+                                "</th></tr></table></div>";
+
+                                string ContactDtls = "<div style=\"padding-top:8px;padding-bottom:8px\" >" +
                                             "<table class=\"row\" style=\"border-spacing:0;border-collapse:collapse;text-align:left;vertical-align:top;padding:0;width:100%;position:relative;display:table\">" +
-                                            "<th class=\"small-7 large-7 columns first\" style=\"font-size:16px;text-align:left;line-height:1.3;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;color:#0a0a0a;padding-right:8px;margin:0 auto;padding-bottom:16px;width:322.33333px;padding-left:16px;vertical-align: top;\">" +
-                                            "<p style='margin:0;text-align:left;padding:0;'>Booked by 	</p>" +
-                                            "<hr><p style='margin:0;text-align:left;padding:0;'>Client Request #</p>" +
-                                            "<hr><p style='margin:0;text-align:left;padding:0;'>Issues / feedbacks	</p></th>" +
-                                            "<th class=\"small-5 large-5 columns last valign-top\" style=\"font-size:16px;text-align:left;line-height:1.3;color:#0a0a0a;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;vertical-align:top;width:225.66667px;padding-left:16px;margin:0 auto;padding-bottom:16px;padding-right:16px\">" +
-                                            "<p style='padding:0;margin:0;text-align:right;margin-bottom:0px !important'> " + ds.Tables[2].Rows[0][3].ToString() + "</p>" +
-                                            "<hr><p style='padding:0;margin:0;text-align:right;margin-bottom:0px !important'> " + ds.Tables[2].Rows[0][12].ToString() + "&nbsp;</p>" +
-                                            "<hr><p style='padding:0;margin:0;text-align:right;margin-bottom:0px !important'>"+ DeskNo + "<br> " + ds.Tables[10].Rows[0][1].ToString() + " </p>" +
-                                            "</th></table></div><div>" +
+                                            "<tr class=\"\" style=\"padding:0;vertical-align:top;text-align:left\">" +
+                                            "<th class=\"small-7 large-7 columns first\" style=\"font-size:16px;text-align:left;line-height:1.3;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;color:#0a0a0a;padding-right:8px;margin:0 auto;width:322.33333px;padding-left:16px;vertical-align: top;\">" +
+                                            "<p style = 'margin:0;text-align:left;padding:0;' > Booked by</p>" +
+                                            "<th class=\"small-5 large-5 columns last valign-top\" style=\"font-size:16px;text-align:left;line-height:1.3;color:#0a0a0a;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;vertical-align:top;width:225.66667px;padding-left:16px;margin:0 auto;padding-right:16px\">" +
+                                            "<p style = 'padding:0;margin:0;text-align:right;margin-bottom:0px !important' > " + ds.Tables[2].Rows[0][3].ToString() + " </ p >" +
+                                            "</th>" +
+                                            "</tr><tr class=\"\" style=\"padding:0;vertical-align:top;text-align:left\">" +
+                                            "<th class=\"small-7 large-7 columns first\" style=\"font-size:16px;text-align:left;line-height:1.3;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;color:#0a0a0a;padding-right:8px;margin:0 auto;width:322.33333px;padding-left:16px;vertical-align: top;\">" +
+                                            "<hr>" +
+                                            "<th class=\"small-5 large-5 columns last valign-top\" style=\"font-size:16px;text-align:left;line-height:1.3;color:#0a0a0a;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;vertical-align:top;width:225.66667px;padding-left:16px;margin:0 auto;padding-right:16px\">" +
+                                            "<hr>" +
+                                            "</th>" +
+                                             "</tr><tr class=\"\" style=\"padding:0;vertical-align:top;text-align:left\">" +
+                                            "<th class=\"small-7 large-7 columns first\" style=\"font-size:16px;text-align:left;line-height:1.3;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;color:#0a0a0a;padding-right:8px;margin:0 auto;width:322.33333px;padding-left:16px;vertical-align: top;\">" +
+                                            "<p style = 'margin:0;text-align:left;padding:0;' >Client Request #</p>" +
+                                            "<th class=\"small-5 large-5 columns last valign-top\" style=\"font-size:16px;text-align:left;line-height:1.3;color:#0a0a0a;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;vertical-align:top;width:225.66667px;padding-left:16px;margin:0 auto;padding-right:16px\">" +
+                                            "<p style = 'padding:0;margin:0;text-align:right;margin-bottom:0px !important' > " + ds.Tables[2].Rows[0][12].ToString() + " </ p >" +
+                                            "</th>" +
+                                             "</tr><tr class=\"\" style=\"padding:0;vertical-align:top;text-align:left\">" +
+                                            "<th class=\"small-7 large-7 columns first\" style=\"font-size:16px;text-align:left;line-height:1.3;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;color:#0a0a0a;padding-right:8px;margin:0 auto;width:322.33333px;padding-left:16px;vertical-align: top;\">" +
+                                            "<hr>" +
+                                            "<th class=\"small-5 large-5 columns last valign-top\" style=\"font-size:16px;text-align:left;line-height:1.3;color:#0a0a0a;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;vertical-align:top;width:225.66667px;padding-left:16px;margin:0 auto;padding-right:16px\">" +
+                                            "<hr>" +
+                                            "</th>" +
+                                             "</tr><tr class=\"\" style=\"padding:0;vertical-align:top;text-align:left\">" +
+                                            "<th class=\"small-7 large-7 columns first\" style=\"font-size:16px;text-align:left;line-height:1.3;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;color:#0a0a0a;padding-right:8px;margin:0 auto;width:322.33333px;padding-left:16px;vertical-align: top;\">" +
+                                            "<p style = 'margin:0;text-align:left;padding:0;' >Issues / feedbacks</p>" +
+                                            "<th class=\"small-5 large-5 columns last valign-top\" style=\"font-size:16px;text-align:left;line-height:1.3;color:#0a0a0a;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;vertical-align:top;width:225.66667px;padding-left:16px;margin:0 auto;padding-right:16px\">" +
+                                            "<p style = 'padding:0;margin:0;text-align:right;margin-bottom:0px !important' > " + DeskNo + "<br>" + ds.Tables[10].Rows[0][1].ToString() + " </ p >" +
+                                            "</th>" +
+                                            "</tr></table></div>";
+
+
+
+                                ContactDtls += "<div>" +
                                             "<table class=\"row\" style=\"border-spacing:0;border-collapse:collapse;text-align:left;vertical-align:top;padding:0;width:100%;position:relative;display:table\">" +
                                             "<tr class=\"\" style=\"padding:0;vertical-align:top;text-align:left\">" +
                                             "<th class=\"small-12 large-12 columns first last\" style=\"font-size:16px;padding:0;text-align:left;color:#0a0a0a;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;line-height:1.3;margin:0 auto;padding-bottom:16px;width:564px;padding-left:16px;padding-right:16px\">" +
@@ -2320,7 +2505,7 @@ namespace ConfirmationEMailWebApi.Controllers
                                             "</td></tr></table></center></td></tr></table>";
 
                                 string EndData = "</body></html>";
-                                MailContent = style + header + ChkInOutDate + GuestTbl + PayMode + TariffDtls + PropertyDtls + ContactDtls + EndData;
+                                MailContent = style + header + ChkInOutDate + GuestTbl + PayMode + TariffDtls + PropertyDtls + Note + ContactDtls + EndData;
                                 message1.Body = MailContent;
                                 message1.IsBodyHtml = true; 
                                 
@@ -2477,6 +2662,14 @@ namespace ConfirmationEMailWebApi.Controllers
                             {
                                 MobileNo = " - NA - ";
                             }
+
+                            // Spl Note
+                            string SplNote = ds.Tables[2].Rows[0][8].ToString();
+                            if (SplNote == "")
+                            {
+                                SplNote = "- NA -";
+                            }
+
 
                             // View in browser Link
                             string id = ds.Tables[2].Rows[0][12].ToString();
@@ -3013,28 +3206,8 @@ namespace ConfirmationEMailWebApi.Controllers
                                                 "<hr class=\"full-divider\" style=\"clear:both;max-width:580px;border-right:0;border-top:0;border-left:0;margin:20px auto;border-bottom:1px solid #cacaca;background-color:#dbdbdb;height:1px;border:none;width:100%;margin-top:0;margin-bottom:0\">" +
                                                 "</th></tr></table></div>";
 
-
-
-                            ////PropertyDtls = "<div style=\"padding-top:8px;padding-bottom:8px\">" +
-                            ////                "<table class=\"row\" style=\"border-spacing:0;border-collapse:collapse;text-align:left;vertical-align:top;padding:0;width:100%;position:relative;display:table\">" +
-                            ////                "<th class=\"small-7 large-7 columns first\" style=\"font-size:16px;text-align:left;line-height:1.3;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;color:#0a0a0a;padding-right:8px;margin:0 auto;width:322.33333px;padding-left:16px;vertical-align: top;\">" +
-                            ////                "<p class=\"body-text-lg light row-pad-bot-1\" style=\"padding:0;margin:0 0 5px 0;text-align:center;font-size:18px;font-weight:300;font-family:'Cabin',Helvetica, Arial, sans-serif;color:#d9242c !important;word-break:normal;line-height:1.2;\">Property Name</p>" +
-                            ////                "<p class=\"body-text light\" style='margin:0;text-align:left;padding:0;font-weight:300;font-family:\"Cabin\", \"Helvetica\", Helvetica, Arial, sans-serif;color:#484848;word-break:normal;line-height:1.4;font-size:16px;margin-bottom:0px !important'>" + ds.Tables[1].Rows[0][5].ToString() + "</p>" +
-                            ////                "</th>" +
-                            ////                "<th class=\"small-5 large-5 columns last valign-top\" style=\"font-size:16px;text-align:left;line-height:1.3;color:#0a0a0a;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;vertical-align:top;width:225.66667px;padding-left:16px;margin:0 auto;padding-right:16px\">" +
-                            ////                 "<p class=\"body-text-lg light row-pad-bot-1\" style=\"padding:0;margin:0 0 5px 0;text-align:center;font-size:18px;font-weight:300;font-family:'Cabin',Helvetica, Arial, sans-serif;color:#d9242c !important;word-break:normal;line-height:1.2;\">Property Address</p>" +
-                            ////                "<p class=\"body-text light\" style='margin:0;text-align:left;padding:0;font-weight:300;font-family:\"Cabin\", \"Helvetica\", Helvetica, Arial, sans-serif;color:#484848;word-break:normal;line-height:1.4;font-size:16px;margin-bottom:0px !important'>" +
-                            ////                ds.Tables[1].Rows[0][0].ToString() +
-                            ////                "</p></th></table></div><div>" +
-
-                            ////                "<table class=\"row\" style=\"border-spacing:0;border-collapse:collapse;text-align:left;vertical-align:top;padding:0;width:100%;position:relative;display:table\">" +
-                            ////                "<tr class=\"\" style=\"padding:0;vertical-align:top;text-align:left\">" +
-                            ////                "<th class=\"small-12 large-12 columns first last\" style=\"font-size:16px;padding:0;text-align:left;color:#0a0a0a;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;line-height:1.3;margin:0 auto;padding-bottom:16px;width:564px;padding-left:16px;padding-right:16px\">" +
-                            ////                "<hr class=\"full-divider\" style=\"clear:both;max-width:580px;border-right:0;border-top:0;border-left:0;margin:20px auto;border-bottom:1px solid #cacaca;background-color:#dbdbdb;height:1px;border:none;width:100%;margin-top:0;margin-bottom:0\">" +
-                            ////                "</th></tr></table></div>";
-
-                            string PropertyDtls = "";
-                            PropertyDtls = "<table class=\"row\" style=\"border-spacing:0;border-collapse:collapse;text-align:left;vertical-align:top;padding:0;width:100%;position:relative;display:table;\">" +
+                             
+                            string PropertyDtls = "<table class=\"row\" style=\"border-spacing:0;border-collapse:collapse;text-align:left;vertical-align:top;padding:0;width:100%;position:relative;display:table;\">" +
                                   "<tr style=\"padding:0;vertical-align:top;text-align:left\">" +
                                   "<th class=\"small-5 large-5 columns first\" style=\"font-size:16px;text-align:left;line-height:1.3;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;color:#0a0a0a;padding-right:8px;margin:0 auto;padding-bottom:16px;padding-left:16px\">" +
                                   "<p class=\"body-text-lg light row-pad-bot-1\" style=\"padding:0;margin:0 0 5px 0;text-align:center;font-size:16px;font-weight:300;font-family:'Cabin',Helvetica, Arial, sans-serif;color:#484848;word-break:normal;line-height:1.2;font-weight: bold;\">Property Name : " + ds.Tables[1].Rows[0][5].ToString() + " </p>" +
@@ -3046,17 +3219,54 @@ namespace ConfirmationEMailWebApi.Controllers
                                   "<hr class=\"full-divider\" style=\"clear:both;max-width:580px;border-right:0;border-top:0;border-left:0;margin:20px auto;border-bottom:1px solid #cacaca;background-color:#dbdbdb;height:1px;border:none;width:100%;margin-top:0;margin-bottom:0\">" +
                                   "</th></tr></table></div>";
 
-                            string ContactDtls = "<div style=\"padding-top:8px;padding-bottom:8px\">" +
-                                                 "<table class=\"row\" style=\"border-spacing:0;border-collapse:collapse;text-align:left;vertical-align:top;padding:0;width:100%;position:relative;display:table\">" +
-                                                 "<th class=\"small-7 large-7 columns first\" style=\"font-size:16px;text-align:left;line-height:1.3;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;color:#0a0a0a;padding-right:8px;margin:0 auto;padding-bottom:16px;width:322.33333px;padding-left:16px;vertical-align: top;\">" +
-                                                 "<p style='margin:0;text-align:left;padding:0;'>Booked by 	</p>" +
-                                                 "<hr><p style='margin:0;text-align:left;padding:0;'>Client Request #</p>" +
-                                                 "<hr><p style='margin:0;text-align:left;padding:0;'>Issues / feedbacks	</p></th>" +
-                                                 "<th class=\"small-5 large-5 columns last valign-top\" style=\"font-size:16px;text-align:left;line-height:1.3;color:#0a0a0a;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;vertical-align:top;width:225.66667px;padding-left:16px;margin:0 auto;padding-bottom:16px;padding-right:16px\">" +
-                                                 "<p style='padding:0;margin:0;text-align:right;margin-bottom:0px !important'> " + ds.Tables[2].Rows[0][3].ToString() + "</p>" +
-                                                 "<hr><p style='padding:0;margin:0;text-align:right;margin-bottom:0px !important'> " + ds.Tables[2].Rows[0][13].ToString() + "&nbsp;</p>" +
-                                                 "<hr><p style='padding:0;margin:0;text-align:right;margin-bottom:0px !important'>" + DeskNo + "<br> " + ds.Tables[10].Rows[0][0].ToString() + " </p>" +
-                                                 "</th></table></div><div>" +
+                            string Note = "<table class=\"row\" style=\"border-spacing:0;border-collapse:collapse;text-align:left;vertical-align:top;padding:0;width:100%;position:relative;display:table\">" +
+                                                         "<tr style=\"padding:0;vertical-align:top;text-align:left\">" +
+                                                         "<th class=\"small-5 large-5 columns first\" style=\"font-size:16px;text-align:left;line-height:1.3;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;color:#0a0a0a;padding-right:8px;margin:0 auto;padding-bottom:16px;padding-left:16px\">" +
+                                                         "<p class=\"body-text-lg light row-pad-bot-1\" style=\"padding:0;margin:0 0 5px 0;text-align:center;font-size:14px;font-family:'Cabin',Helvetica, Arial, sans-serif;color:#484848;word-break:normal;line-height:1.2;\"><strong>Note : </strong>" + SplNote + " </p>" +
+                                                         "</th></tr></table>"+
+                                                         "<div><table class=\"row\" style=\"border-spacing:0;border-collapse:collapse;text-align:left;vertical-align:top;padding:0;width:100%;position:relative;display:table\">" +
+                                                         "<tr class=\"\" style=\"padding:0;vertical-align:top;text-align:left\">" +
+                                                         "<th class=\"small-12 large-12 columns first last\" style=\"font-size:16px;padding:0;text-align:left;color:#0a0a0a;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;line-height:1.3;margin:0 auto;padding-bottom:16px;width:564px;padding-left:16px;padding-right:16px\">" +
+                                                         "<hr class=\"full-divider\" style=\"clear:both;max-width:580px;border-right:0;border-top:0;border-left:0;margin:20px auto;border-bottom:1px solid #cacaca;background-color:#dbdbdb;height:1px;border:none;width:100%;margin-top:0;margin-bottom:0\">" +
+                                                         "</th></tr></table></div>";
+                                                         
+
+
+                            string ContactDtls = "<div style=\"padding-top:8px;padding-bottom:8px\" >" +
+                                            "<table class=\"row\" style=\"border-spacing:0;border-collapse:collapse;text-align:left;vertical-align:top;padding:0;width:100%;position:relative;display:table\">" +
+                                            "<tr class=\"\" style=\"padding:0;vertical-align:top;text-align:left\">" +
+                                            "<th class=\"small-7 large-7 columns first\" style=\"font-size:16px;text-align:left;line-height:1.3;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;color:#0a0a0a;padding-right:8px;margin:0 auto;width:322.33333px;padding-left:16px;vertical-align: top;\">" +
+                                            "<p style = 'margin:0;text-align:left;padding:0;' > Booked by</p>" +
+                                            "<th class=\"small-5 large-5 columns last valign-top\" style=\"font-size:16px;text-align:left;line-height:1.3;color:#0a0a0a;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;vertical-align:top;width:225.66667px;padding-left:16px;margin:0 auto;padding-right:16px\">" +
+                                            "<p style = 'padding:0;margin:0;text-align:right;margin-bottom:0px !important' > " + ds.Tables[2].Rows[0][3].ToString() + " </ p >" +
+                                            "</th>" +
+                                            "</tr><tr class=\"\" style=\"padding:0;vertical-align:top;text-align:left\">" +
+                                            "<th class=\"small-7 large-7 columns first\" style=\"font-size:16px;text-align:left;line-height:1.3;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;color:#0a0a0a;padding-right:8px;margin:0 auto;width:322.33333px;padding-left:16px;vertical-align: top;\">" +
+                                            "<hr>" +
+                                            "<th class=\"small-5 large-5 columns last valign-top\" style=\"font-size:16px;text-align:left;line-height:1.3;color:#0a0a0a;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;vertical-align:top;width:225.66667px;padding-left:16px;margin:0 auto;padding-right:16px\">" +
+                                            "<hr>" +
+                                            "</th>" +
+                                             "</tr><tr class=\"\" style=\"padding:0;vertical-align:top;text-align:left\">" +
+                                            "<th class=\"small-7 large-7 columns first\" style=\"font-size:16px;text-align:left;line-height:1.3;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;color:#0a0a0a;padding-right:8px;margin:0 auto;width:322.33333px;padding-left:16px;vertical-align: top;\">" +
+                                            "<p style = 'margin:0;text-align:left;padding:0;' >Client Request #</p>" +
+                                            "<th class=\"small-5 large-5 columns last valign-top\" style=\"font-size:16px;text-align:left;line-height:1.3;color:#0a0a0a;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;vertical-align:top;width:225.66667px;padding-left:16px;margin:0 auto;padding-right:16px\">" +
+                                            "<p style = 'padding:0;margin:0;text-align:right;margin-bottom:0px !important' > " + ds.Tables[2].Rows[0][13].ToString() + " </ p >" +
+                                            "</th>" +
+                                             "</tr><tr class=\"\" style=\"padding:0;vertical-align:top;text-align:left\">" +
+                                            "<th class=\"small-7 large-7 columns first\" style=\"font-size:16px;text-align:left;line-height:1.3;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;color:#0a0a0a;padding-right:8px;margin:0 auto;width:322.33333px;padding-left:16px;vertical-align: top;\">" +
+                                            "<hr>" +
+                                            "<th class=\"small-5 large-5 columns last valign-top\" style=\"font-size:16px;text-align:left;line-height:1.3;color:#0a0a0a;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;vertical-align:top;width:225.66667px;padding-left:16px;margin:0 auto;padding-right:16px\">" +
+                                            "<hr>" +
+                                            "</th>" +
+                                             "</tr><tr class=\"\" style=\"padding:0;vertical-align:top;text-align:left\">" +
+                                            "<th class=\"small-7 large-7 columns first\" style=\"font-size:16px;text-align:left;line-height:1.3;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;color:#0a0a0a;padding-right:8px;margin:0 auto;width:322.33333px;padding-left:16px;vertical-align: top;\">" +
+                                            "<p style = 'margin:0;text-align:left;padding:0;' >Issues / feedbacks</p>" +
+                                            "<th class=\"small-5 large-5 columns last valign-top\" style=\"font-size:16px;text-align:left;line-height:1.3;color:#0a0a0a;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;vertical-align:top;width:225.66667px;padding-left:16px;margin:0 auto;padding-right:16px\">" +
+                                            "<p style = 'padding:0;margin:0;text-align:right;margin-bottom:0px !important' > " + DeskNo + "<br>" + ds.Tables[10].Rows[0][0].ToString() + " </ p >" +
+                                            "</th>" +
+                                            "</tr></table></div>";
+
+                            ContactDtls +="<div>" +
                                                  "<table class=\"row\" style=\"border-spacing:0;border-collapse:collapse;text-align:left;vertical-align:top;padding:0;width:100%;position:relative;display:table\">" +
                                                  "<tr class=\"\" style=\"padding:0;vertical-align:top;text-align:left\">" +
                                                  "<th class=\"small-12 large-12 columns first last\" style=\"font-size:16px;padding:0;text-align:left;color:#0a0a0a;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;line-height:1.3;margin:0 auto;padding-bottom:16px;width:564px;padding-left:16px;padding-right:16px\">" +
@@ -3071,7 +3281,7 @@ namespace ConfirmationEMailWebApi.Controllers
                                                  "</td></tr></table></center></td></tr></table>";
 
                             string EndData = "</body></html>";
-                            MailContent = style + header + ChkInOutDate  + GuestTbl + PayMode + TariffDtls  + PropertyDtls + ContactDtls + EndData;
+                            MailContent = style + header + ChkInOutDate  + GuestTbl + PayMode + TariffDtls  + PropertyDtls + Note + ContactDtls + EndData;
                             message1.Body = MailContent;
                             message1.IsBodyHtml = true;
                           }
