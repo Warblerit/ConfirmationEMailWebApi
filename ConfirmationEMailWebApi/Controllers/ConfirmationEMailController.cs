@@ -1439,10 +1439,8 @@ namespace ConfirmationEMailWebApi.Controllers
 
                         string header_cnt1 = " </th> " +
                                              "<th style=\"font-size:16px;padding:20px 0 20px 0;line-height:28px;\">";
-                        if (ds.Tables[2].Rows[0][15].ToString() != "")
-                        {
-                            header_cnt1 += "<p>Hotel Confirmation:" + ds.Tables[2].Rows[0][15].ToString() + "</p>";
-                        }
+                        header_cnt1 += "<p>Hotel Confirmation:" + ds.Tables[2].Rows[0][15].ToString() + "</p>";
+                        
                         header_cnt1 += "<p>HB Confirmation #: " + ds.Tables[2].Rows[0][2].ToString() + "</p>" +
                                              "</th>" +
                                              "</tr>" +
