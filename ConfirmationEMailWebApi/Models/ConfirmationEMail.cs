@@ -24,6 +24,7 @@ namespace ConfirmationEMailWebApi.Models
         public string CheckinTime { get; set; }
         public string CheckoutTime { get; set; }
         public bool LTIAPIFlag { get; set; }
+        public bool QReserveFlag { get; set; }
 
     }
     public class URLShort

@@ -57,6 +57,8 @@ FROM WRBHBBookingProperty WHERE Id IN (SELECT TOP 1 BookingPropertyTableId FROM 
 	DECLARE @GSTClientId BIGINT,@GSTStateId BIGINT;
 	SELECT @GSTClientId=ClientId,@GSTStateId=StateId FROM WRBHBBooking WHERE Id = @Id
 
+	DECLARE @BookingConfirmBy NVARCHAR(MAX);
+
 	IF @Action = 'RoomBookingConfirmed'                                
 	BEGIN                      
 			DECLARE @PayMode NVARCHAR(100), @BookingPropertyTableId BIGINT;                                
@@ -170,7 +172,8 @@ FROM WRBHBBookingProperty WHERE Id IN (SELECT TOP 1 BookingPropertyTableId FROM 
 		/* -- dataset table 1 */                      
 		DECLARE @PrType NVARCHAR(100), @GType NVARCHAR(100), @Facility NVARCHAR(100), @BOK_Phone NVARCHAR(100);                      
 		SELECT @PrType = BP.PropertyType, @GType = BP.GetType, @Facility = BP.Inclusions,                  
-		@BOK_Phone = (CASE WHEN ISNULL(BP.AvailabilityResponseReferenceKey, '') = '' THEN 'NA' ELSE BP.AvailabilityResponseReferenceKey END)                    
+		@BOK_Phone = (CASE WHEN ISNULL(BP.AvailabilityResponseReferenceKey, '') = '' THEN 'NA' ELSE BP.AvailabilityResponseReferenceKey END),
+		@BookingConfirmBy = ISNULL(BP.Confirmedby,'')                  
 		FROM WRBHBBookingProperty BP                              
 		LEFT OUTER JOIN WRBHBBookingPropertyAssingedGuest BG WITH(NOLOCK)ON BP.BookingId = BG.BookingId AND BP.Id = BG.BookingPropertyTableId AND BP.PropertyId = BG.BookingPropertyId                              
 		WHERE BG.BookingId = @Id;                              
@@ -257,7 +260,8 @@ FROM WRBHBBookingProperty WHERE Id IN (SELECT TOP 1 BookingPropertyTableId FROM 
 			REPLACE(CONVERT(VARCHAR(11), B.BookedDt, 106), ' ', '-'),                                
 			B.SpecialRequirements,B.ClientBookerEmail,B.ExtraCCEmail,B.ClientId,B.RowId,B.Client_RequestNo,ISNULL(C.SupportCPhoneNo,'') AS Deskno,  
 			ISNULL(B.PropertyRefNo,'') AS PropertyRefNo,  
-			ISNULL(C.SupportEmail,'stay@hummingbirdindia.com') AS SupportEmail                                
+			ISNULL(C.SupportEmail,'stay@hummingbirdindia.com') AS SupportEmail,
+			@BookingConfirmBy                               
 			FROM WRBHBBooking B                                
 			LEFT OUTER JOIN WRBHBClientManagement C WITH(NOLOCK) ON  C.Id=B.ClientId                                
 			LEFT OUTER JOIN WrbhbTravelDesk U  WITH(NOLOCK) ON  U.Id=B.BookedUsrId                                
@@ -271,7 +275,8 @@ FROM WRBHBBookingProperty WHERE Id IN (SELECT TOP 1 BookingPropertyTableId FROM 
 			REPLACE(CONVERT(VARCHAR(11), B.BookedDt, 106), ' ', '-'),                                
 			B.SpecialRequirements,B.ClientBookerEmail,B.ExtraCCEmail,B.ClientId,B.RowId,B.Client_RequestNo,ISNULL(C.SupportCPhoneNo,'') AS Deskno,  
 			ISNULL(B.PropertyRefNo,'') AS PropertyRefNo,  
-			ISNULL(C.SupportEmail,'stay@hummingbirdindia.com') AS SupportEmail                               
+			ISNULL(C.SupportEmail,'stay@hummingbirdindia.com') AS SupportEmail,
+			@BookingConfirmBy                               
 			FROM WRBHBBooking B                         
 			LEFT OUTER JOIN WRBHBClientManagement C WITH(NOLOCK) ON  C.Id=B.ClientId                                
 			LEFT OUTER JOIN WRBHBUser U  WITH(NOLOCK) ON  U.Id=B.BookedUsrId                                
@@ -899,18 +904,20 @@ IF @Action = 'BedBookingConfirmed'
   CASE WHEN BA.ServicePaymentMode='Direct' THEN 'Direct<br>(Cash/Card)'                                
        WHEN BA.ServicePaymentMode = 'Bill to Client' THEN 'Bill to '+@ClientName1                                  
        ELSE BA.ServicePaymentMode END AS ServicePaymentMode,                                
-       BA.BedType,'Single',BP.BookingLevel,LEFT(ExpectedChkInTime, 5)+' '+BA.AMPM,convert(varchar, BA.ChkInDt, 107),  
+       BA.BedType,'Shared',BP.BookingLevel,LEFT(ExpectedChkInTime, 5)+' '+BA.AMPM,convert(varchar, BA.ChkInDt, 107),  
     convert(varchar, BA.ChkOutDt, 107),BA.Title,BA.LastName              
   FROM WRBHBBooking BP                                
   LEFT OUTER JOIN dbo.WRBHBBedBookingPropertyAssingedGuest BA                                 
   WITH(NOLOCK)ON BP.Id=BA.BookingId AND BA.IsActive=1 AND BA.IsDeleted=0                                
   WHERE BP.Id=@Id AND BP.IsActive=1 AND BP.IsDeleted=0 AND                            
   BA.RoomShiftingFlag = 0;                                
-                
+     
   /* -- Get Booking Property Id */              
   SET @BookingPropertyId=(SELECT TOP 1 BookingPropertyId                                 
   FROM WRBHBBedBookingPropertyAssingedGuest WHERE IsActive=1 AND IsDeleted=0                                 
-  AND BookingId=@Id);                            
+  AND BookingId=@Id); 
+  
+  SET @BookingConfirmBy='';                           
                 
   /* -- Dataset Table 1 */              
   SELECT BP.Propertaddress+', '+L.Locality+', '+                                
@@ -935,7 +942,7 @@ IF @Action = 'BedBookingConfirmed'
     B.BookingCode,U.FirstName,U.Email,U.Mobile,B.ClientBookerName,              
     REPLACE(CONVERT(VARCHAR(11), B.BookedDt, 106), ' ', '-'),                                
     B.SpecialRequirements,B.ClientBookerEmail,B.ClientId,B.RowId,B.Client_RequestNo,ISNULL(C.SupportCPhoneNo,'') AS Deskno,   
- ISNULL(C.SupportEmail,'stay@hummingbirdindia.com') AS SupportEmail FROM WRBHBBooking B                                
+ ISNULL(C.SupportEmail,'stay@hummingbirdindia.com') AS SupportEmail,@BookingConfirmBy FROM WRBHBBooking B                                
     LEFT OUTER JOIN WRBHBClientManagement C WITH(NOLOCK) ON  C.Id=B.ClientId                                
     LEFT OUTER JOIN WrbhbTravelDesk U  WITH(NOLOCK) ON  U.Id=B.BookedUsrId                                
     WHERE B.Id=@Id;                                
@@ -946,7 +953,7 @@ IF @Action = 'BedBookingConfirmed'
     B.BookingCode,U.FirstName+' ('+ISNULL(U.UserCode,'')+''+')' AS FirstName,U.Email,U.PhoneNumber,B.ClientBookerName,              
     REPLACE(CONVERT(VARCHAR(11), B.BookedDt, 106), ' ', '-'),                                
     B.SpecialRequirements,B.ClientBookerEmail,B.ClientId,B.RowId,B.Client_RequestNo,ISNULL(C.SupportCPhoneNo,'') AS Deskno,   
- ISNULL(C.SupportEmail,'stay@hummingbirdindia.com') AS SupportEmail FROM WRBHBBooking B                                
+ ISNULL(C.SupportEmail,'stay@hummingbirdindia.com') AS SupportEmail,@BookingConfirmBy FROM WRBHBBooking B                                
     LEFT OUTER JOIN WRBHBClientManagement C WITH(NOLOCK) ON  C.Id=B.ClientId                                
     LEFT OUTER JOIN WRBHBUser U  WITH(NOLOCK) ON  U.Id=B.BookedUsrId                                
     WHERE B.Id=@Id;                                
