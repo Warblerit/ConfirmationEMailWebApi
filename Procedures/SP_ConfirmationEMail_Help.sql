@@ -942,7 +942,8 @@ IF @Action = 'BedBookingConfirmed'
     B.BookingCode,U.FirstName,U.Email,U.Mobile,B.ClientBookerName,              
     REPLACE(CONVERT(VARCHAR(11), B.BookedDt, 106), ' ', '-'),                                
     B.SpecialRequirements,B.ClientBookerEmail,B.ClientId,B.RowId,B.Client_RequestNo,ISNULL(C.SupportCPhoneNo,'') AS Deskno,   
- ISNULL(C.SupportEmail,'stay@hummingbirdindia.com') AS SupportEmail,@BookingConfirmBy FROM WRBHBBooking B                                
+ ISNULL(C.SupportEmail,'stay@hummingbirdindia.com') AS SupportEmail,ISNULL(B.PropertyRefNo,'') AS PropertyRefNo,@BookingConfirmBy 
+ FROM WRBHBBooking B                                
     LEFT OUTER JOIN WRBHBClientManagement C WITH(NOLOCK) ON  C.Id=B.ClientId                                
     LEFT OUTER JOIN WrbhbTravelDesk U  WITH(NOLOCK) ON  U.Id=B.BookedUsrId                                
     WHERE B.Id=@Id;                                
@@ -953,7 +954,8 @@ IF @Action = 'BedBookingConfirmed'
     B.BookingCode,U.FirstName+' ('+ISNULL(U.UserCode,'')+''+')' AS FirstName,U.Email,U.PhoneNumber,B.ClientBookerName,              
     REPLACE(CONVERT(VARCHAR(11), B.BookedDt, 106), ' ', '-'),                                
     B.SpecialRequirements,B.ClientBookerEmail,B.ClientId,B.RowId,B.Client_RequestNo,ISNULL(C.SupportCPhoneNo,'') AS Deskno,   
- ISNULL(C.SupportEmail,'stay@hummingbirdindia.com') AS SupportEmail,@BookingConfirmBy FROM WRBHBBooking B                                
+ ISNULL(C.SupportEmail,'stay@hummingbirdindia.com') AS SupportEmail,ISNULL(B.PropertyRefNo,'') AS PropertyRefNo,@BookingConfirmBy 
+ FROM WRBHBBooking B                                
     LEFT OUTER JOIN WRBHBClientManagement C WITH(NOLOCK) ON  C.Id=B.ClientId                                
     LEFT OUTER JOIN WRBHBUser U  WITH(NOLOCK) ON  U.Id=B.BookedUsrId                                
     WHERE B.Id=@Id;                                
