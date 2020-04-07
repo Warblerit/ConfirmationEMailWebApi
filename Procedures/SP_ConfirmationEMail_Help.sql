@@ -95,7 +95,7 @@ FROM WRBHBBookingProperty WHERE Id IN (SELECT TOP 1 BookingPropertyTableId FROM 
 			RoomNo NVARCHAR(100),BookingLevel NVARCHAR(100),ChkInDt1 NVARCHAR(100),ChkOutDt1 NVARCHAR(100),ExpectChkInTime NVARCHAR(100),  
 			NameWthTitle NVARCHAR(100));                                
 			INSERT INTO #QAZ(Name,ChkInDt,ChkOutDt,Tariff,Occupancy,TariffPaymentMode,                                
-			ServicePaymentMode,RoomNo,BookingLevel,ChkInDt1,ChkOutDt1,ExpectChkInTime,NameWthTitle)                                
+			ServicePaymentMode,RoomNo,BookingLevel,ChkInDt1,ChkOutDt1,ExpectChkInTime,NameWthTitle)                
                       
 			SELECT STUFF((SELECT ', '+BA.Title+'. '+BA.FirstName+'  '+BA.LastName                                
 			FROM WRBHBBookingPropertyAssingedGuest BA                            
@@ -180,7 +180,7 @@ FROM WRBHBBookingProperty WHERE Id IN (SELECT TOP 1 BookingPropertyTableId FROM 
                         
 		IF @PrType = 'ExP' AND @GType = 'API'                              
 		BEGIN                            
-			SELECT Propertaddress + ',' + Localityarea + ',' + City + ',' + State + ' - ' + Postal AS ADDRESS, Phone, BP.Directions, '' AS BookingPolicy, CancelPolicy, PropertyName,                              
+			SELECT Propertaddress + ',' + Localityarea + ',' + City + ',' + State + ' - ' + Postal AS ADDRESS,'<b>Phone No: </b>'+ Phone AS Phone, BP.Directions, '' AS BookingPolicy, CancelPolicy, PropertyName,                              
 			'External Property' AS Category, ISNULL('PM', '') AS CheckOutType, ISNULL(12, '') AS CheckIn, ISNULL('PM','') AS CheckInType, ISNULL(12,'') AS CheckOut,                              
 			'External Property' AS PropertyType, ISNULL(@Facilities,'') AS Facility,                               
 			REPLACE(PropertyName, ' ', '+')+'/@'+REPLACE(LatitudeLongitude, ' ', '')+',15z' AS Map,'' AS ExtraNote                              
@@ -189,15 +189,15 @@ FROM WRBHBBookingProperty WHERE Id IN (SELECT TOP 1 BookingPropertyTableId FROM 
 		END                                
 		ELSE IF @PrType = 'CTP'                              
 		BEGIN                              
-			SELECT Errorcode AS ADDRESS, Phone, '' AS Directions, @SecurityPolicy AS BookingPolicy,                                 
+			SELECT Errorcode AS ADDRESS, '<b>Phone No: </b>'+ Phone AS Phone, '' AS Directions, @SecurityPolicy AS BookingPolicy,                                 
 			@CancelationPolicy AS CancelPolicy, PropertyName, 'Clear Trip' Category,                                
 			'' AS CheckOutType, '' AS CheckIn, '' AS CheckInType, '' AS CheckOut, 'ClearTrip Property' AS PropertyType, Inclusions AS Facility,                                
 			PropertyName + '/@' + RatePlanCode + ',15z' AS Map, '' AS ExtraNote                                 
 			FROM dbo.WRBHBBookingProperty bp where BP.Id = @BookingPropertyTableId;                                
 		END                      
-		ELSE IF @PrType = 'TBO'                              
+		ELSE IF @PrType = 'TBO'    
 		BEGIN                              
-			SELECT Locality + ', ' + City + ', '+ Statee +', '+ Country + ', '+ Pincode AS ADDRESS, '' AS Phone, '' AS Directions, @SecurityPolicy AS BookingPolicy,                      
+			SELECT Locality + ', ' + City + ', '+ Statee +', '+ Country + ', '+ Pincode AS ADDRESS, '<b>Phone No: </b>'+'' AS Phone, '' AS Directions, @SecurityPolicy AS BookingPolicy,                      
 			CancellationPolicy AS CancelPolicy, HotelName AS PropertyName, 'Treebo' AS Category,                   
 			'' AS CheckOutType, CheckInTime AS CheckIn, '' AS CheckInType, CheckOutTime AS CheckOut, 'Treebo Property' AS PropertyType, @Facility AS Facility,                      
 			HotelName + '/@' + Latitude + ',' + Longitude + ',15z' AS Map, '' AS ExtraNote                      
@@ -206,7 +206,7 @@ FROM WRBHBBookingProperty WHERE Id IN (SELECT TOP 1 BookingPropertyTableId FROM 
 		END                  
 		ELSE IF @PrType = 'BOK'                              
 		BEGIN                      
-			SELECT address +', '+ postel_code AS ADDRESS, @BOK_Phone AS Phone, hotel_description AS Directions, @SecurityPolicy AS BookingPolicy,                      
+			SELECT address +', '+ postel_code AS ADDRESS,'<b>Phone No: </b>'+@BOK_Phone AS Phone, hotel_description AS Directions, @SecurityPolicy AS BookingPolicy,                      
 			'' AS CancelPolicy, hotel_name AS PropertyName, 'Booking.com' AS Category,                      
 			'' AS CheckOutType, CONVERT(VARCHAR(15), CAST(checkintime AS TIME), 100) AS CheckIn,                      
 			'' AS CheckInType, CONVERT(VARCHAR(15), CAST(checkouttime AS TIME), 100) AS CheckOut, 'Booking.com' AS PropertyType, @Facility AS Facility,                      
@@ -228,7 +228,7 @@ FROM WRBHBBookingProperty WHERE Id IN (SELECT TOP 1 BookingPropertyTableId FROM 
 			WHERE H.Id = @BookingPropertyId AND D.policies LIKE '%Check out%'                              
 			ORDER BY D.Id;                              
                         
-			SELECT Addresss, '' AS Phone, Descriptionn AS Directions, '' AS BookingPolicy, '' AS CancelPolicy, HotelName AS PropertyName, 'OYO Property' AS Category,                              
+			SELECT Addresss, '<b>Phone No: </b>'+'' AS Phone, Descriptionn AS Directions, '' AS BookingPolicy, '' AS CancelPolicy, HotelName AS PropertyName, 'OYO Property' AS Category,                              
 			@CheckOutType AS CheckOutType, '' AS CheckIn, @CheckInType AS CheckInType, '' AS CheckOut, 'OYO' AS PropertyType, @Facilities AS Facility,                              
 			HotelName + '/@' + (Latitude+','+Longitude) + ',15z' AS Map, '' AS ExtraNote                              
 			FROM WRBHBOYORooms                              
@@ -237,7 +237,7 @@ FROM WRBHBBookingProperty WHERE Id IN (SELECT TOP 1 BookingPropertyTableId FROM 
 		ELSE                      
 		BEGIN                      
 			SELECT Propertaddress+','+L.Locality+','+C.CityName+','+S.StateName+' - '+Postal AS ADDRESS,                                
-			BP.Phone,BP.Directions,BookingPolicy,CancelPolicy,bp.PropertyName,                                
+			'<b>Phone No: </b>'+BP.Phone AS Phone,BP.Directions,BookingPolicy,CancelPolicy,bp.PropertyName,                                
 			CASE WHEN BP.Category IN ('Internal Property','External Property') THEN 'Note Removed' ELSE BP.Category END,                            
 			ISNULL(BP.CheckOutType,'') CheckOutType,ISNULL(CheckIn,'') CheckIn,                             
 			ISNULL(CheckInType,'') CheckInType,ISNULL(CheckOut,'') CheckOut,T.PropertyType,ISNULL(@Facilities,'') Facility,                      
@@ -712,7 +712,7 @@ FROM WRBHBBookingProperty WHERE Id IN (SELECT TOP 1 BookingPropertyTableId FROM 
 	FROM dbo.WRBHBClientSMTP                       
 	WHERE IsActive = 1 AND IsDeleted = 0 AND ClientId = (SELECT ClientId FROM WRBHBBooking WHERE Id = @Id) AND BookerFlag = 0;                      
 	END                      
-	ELSE IF EXISTS(SELECT NULL FROM dbo.WRBHBClientSMTP WHERE IsActive = 1 AND IsDeleted = 0 AND                           
+	ELSE IF EXISTS(SELECT NULL FROM dbo.WRBHBClientSMTP WHERE IsActive = 1 AND IsDeleted = 0 AND      
 	ClientId = (SELECT ClientId FROM WRBHBBooking WHERE Id = @Id) AND EmailId = (SELECT ClientBookerEmail FROM WRBHBBooking WHERE Id = @Id) AND BookerFlag = 1) -- BOOKER                      
 	BEGIN                      
 	SELECT CASE WHEN ISNULL(EmailId,'') = '' THEN 'stay@hummingbirdindia.com' ELSE EmailId END,                      
@@ -763,7 +763,7 @@ FROM WRBHBBookingProperty WHERE Id IN (SELECT TOP 1 BookingPropertyTableId FROM 
 	
 	
    
-	SELECT Name,ChkInDt,ChkOutDt,                                
+	SELECT Name,ChkInDt,ChkOutDt,               
 	CASE WHEN  
 	CASE WHEN Occupancy = 'Single' THEN @Single                                
 	WHEN Occupancy = 'Double' THEN @Double                                
@@ -922,7 +922,7 @@ IF @Action = 'BedBookingConfirmed'
   /* -- Dataset Table 1 */              
   SELECT BP.Propertaddress+', '+L.Locality+', '+                                
   C.CityName+', '+S.StateName+' - '+BP.Postal,                      
-  BP.Phone,BP.Directions,BP.BookingPolicy,BP.CancelPolicy,BP.PropertyName,                                
+  '<b>Phone No: </b>'+BP.Phone AS Phone,BP.Directions,BP.BookingPolicy,BP.CancelPolicy,BP.PropertyName,                                
   BP.Category,ISNULL(BP.CheckOutType,'') CheckOutType,                                
   ISNULL(CheckIn,'') CheckIn,ISNULL(CheckInType,'') CheckInType,                                
   ISNULL(CheckOut,'') CheckOut,T.PropertyType,                      
@@ -1095,7 +1095,7 @@ IF @Action = 'BedBookingConfirmed'
  BEGIN                      
  SELECT top 1 'stay@hummingbirdindia.com' AS EmailId,'stay@hummingbirdindia.com' AS PropertyEmail FROM WRBHBClientSMTP;                      
  END                      
-  /* -- Dataset Table 10 End */              
+  /* -- Dataset Table 10 End */           
  END              
   
 END

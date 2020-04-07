@@ -39,7 +39,6 @@ D:\GitHub\ConfirmationEMailWebApi\ConfirmationEMailWebApi\bin\Microsoft.Owin.Sec
 D:\GitHub\ConfirmationEMailWebApi\ConfirmationEMailWebApi\bin\Microsoft.Owin.Security.Twitter.dll
 D:\GitHub\ConfirmationEMailWebApi\ConfirmationEMailWebApi\bin\Microsoft.Web.Infrastructure.dll
 D:\GitHub\ConfirmationEMailWebApi\ConfirmationEMailWebApi\bin\Newtonsoft.Json.dll
-D:\GitHub\ConfirmationEMailWebApi\ConfirmationEMailWebApi\bin\NReco.PdfGenerator.dll
 D:\GitHub\ConfirmationEMailWebApi\ConfirmationEMailWebApi\bin\Owin.dll
 D:\GitHub\ConfirmationEMailWebApi\ConfirmationEMailWebApi\bin\System.Net.Http.Formatting.dll
 D:\GitHub\ConfirmationEMailWebApi\ConfirmationEMailWebApi\bin\System.Web.Helpers.dll
