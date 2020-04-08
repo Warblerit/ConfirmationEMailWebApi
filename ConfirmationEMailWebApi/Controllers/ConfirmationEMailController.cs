@@ -137,18 +137,18 @@ namespace ConfirmationEMailWebApi.Controllers
                                         break;
                                     }
                                 }
-                                if (ds.Tables[8].Rows[0][0].ToString() != "")
-                                {
-                                    try
-                                    {
-                                        message.CC.Add(new System.Net.Mail.MailAddress(ds.Tables[8].Rows[0][0].ToString()));
-                                    }
-                                    catch (Exception ex)
-                                    {
-                                        CreateLogFiles log = new CreateLogFiles();
-                                        log.ErrorLog("=> Confirmation Email API => Bed Email => BookingId => " + All.BookingId + " => Invaild Email => CC =>" + ds.Tables[8].Rows[0][0].ToString());
-                                    }
-                                }
+                                ////if (ds.Tables[8].Rows[0][0].ToString() != "")
+                                ////{
+                                ////    try
+                                ////    {
+                                ////        message.CC.Add(new System.Net.Mail.MailAddress(ds.Tables[8].Rows[0][0].ToString()));
+                                ////    }
+                                ////    catch (Exception ex)
+                                ////    {
+                                ////        CreateLogFiles log = new CreateLogFiles();
+                                ////        log.ErrorLog("=> Confirmation Email API => Bed Email => BookingId => " + All.BookingId + " => Invaild Email => CC =>" + ds.Tables[8].Rows[0][0].ToString());
+                                ////    }
+                                ////}
                             }
                             //////Extra CC
                             ////for (int i = 0; i < ds.Tables[7].Rows.Count; i++)
@@ -934,20 +934,20 @@ namespace ConfirmationEMailWebApi.Controllers
                                         break;
                                     }
                                 }
-                                if (ds.Tables[8].Rows[0][0].ToString() != "")
-                                {
-                                    try
-                                    {
-                                        message.CC.Add(new System.Net.Mail.MailAddress(ds.Tables[8].Rows[0][0].ToString()));
-                                    }
-                                    catch (Exception wer)
-                                    {
-                                        CreateLogFiles log = new CreateLogFiles();
-                                        log.ErrorLog("=> Confirmation Email API => Room Email => Invalid Email => CC => " + ds.Tables[8].Rows[0][0].ToString() +
-                                            " => BookingId => " + All.BookingId + ", Err Msg => " + wer.Message);
-                                    }
+                                ////if (ds.Tables[8].Rows[0][0].ToString() != "")
+                                ////{
+                                ////    try
+                                ////    {
+                                ////        message.CC.Add(new System.Net.Mail.MailAddress(ds.Tables[8].Rows[0][0].ToString()));
+                                ////    }
+                                ////    catch (Exception wer)
+                                ////    {
+                                ////        CreateLogFiles log = new CreateLogFiles();
+                                ////        log.ErrorLog("=> Confirmation Email API => Room Email => Invalid Email => CC => " + ds.Tables[8].Rows[0][0].ToString() +
+                                ////            " => BookingId => " + All.BookingId + ", Err Msg => " + wer.Message);
+                                ////    }
 
-                                }
+                                ////}
                             }
                             //////Extra CC
                             ////for (int i = 0; i < ds.Tables[7].Rows.Count; i++)
