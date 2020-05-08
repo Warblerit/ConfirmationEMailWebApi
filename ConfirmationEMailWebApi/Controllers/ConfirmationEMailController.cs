@@ -204,7 +204,7 @@ namespace ConfirmationEMailWebApi.Controllers
                             ////message.Bcc.Add(new System.Net.Mail.MailAddress("bookingbcc@staysimplyfied.com"));
                             ////message.Bcc.Add(new System.Net.Mail.MailAddress("hbconf17@gmail.com"));
                         }
-                        message.Bcc.Add(new System.Net.Mail.MailAddress("prabakaran@warblerit.com"));
+                        message.Bcc.Add(new System.Net.Mail.MailAddress("nandhu@warblerit.com"));
 
                         message.Subject = "Booking Confirmation - " + ds.Tables[2].Rows[0][2].ToString();
 
@@ -1009,7 +1009,7 @@ namespace ConfirmationEMailWebApi.Controllers
                             ////}
                             ////message.Bcc.Add(new System.Net.Mail.MailAddress("hbconf17@gmail.com"));
                         }
-                        message.Bcc.Add(new System.Net.Mail.MailAddress("prabakaran@warblerit.com"));
+                        message.Bcc.Add(new System.Net.Mail.MailAddress("nandhu@warblerit.com"));
 
                         message.Subject = "Booking Confirmation - " + ds.Tables[2].Rows[0][2].ToString();
                         string typeofpty = ds.Tables[4].Rows[0][8].ToString();
@@ -1924,7 +1924,7 @@ namespace ConfirmationEMailWebApi.Controllers
                                     ////message1.Bcc.Add(new System.Net.Mail.MailAddress("hbconf17@gmail.com"));
 
                                 }
-                                message1.Bcc.Add(new System.Net.Mail.MailAddress("prabakaran@warblerit.com"));
+                                message1.Bcc.Add(new System.Net.Mail.MailAddress("nandhu@warblerit.com"));
 
                                 message1.Subject = "Booking Confirmation - " + ds.Tables[2].Rows[0][2].ToString();
 
@@ -2658,7 +2658,7 @@ namespace ConfirmationEMailWebApi.Controllers
                                 ////}
                                 ////message1.Bcc.Add(new System.Net.Mail.MailAddress("hbconf17@gmail.com"));
                             }
-                            message1.Bcc.Add(new System.Net.Mail.MailAddress("prabakaran@warblerit.com"));
+                            message1.Bcc.Add(new System.Net.Mail.MailAddress("nandhu@warblerit.com"));
 
                             message1.Subject = "Booking Confirmation - " + ds.Tables[2].Rows[0][2].ToString();
 
