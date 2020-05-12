@@ -1,4 +1,7 @@
 ﻿using ConfirmationEMailWebApi.Models;
+using Microsoft.Azure;
+using Microsoft.WindowsAzure.Storage;
+using Microsoft.WindowsAzure.Storage.Blob;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -9,6 +12,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Mail;
+using System.Threading.Tasks;
 using System.Web.Http;
 
 namespace ConfirmationEMailWebApi.Controllers
@@ -29,7 +33,8 @@ namespace ConfirmationEMailWebApi.Controllers
                 string Response = "";
                 string Response1 = "Failure";
                 string Response2 = "Failure";
-
+                string Newid = "";
+                String AzureBlobPdfURl = "";
                 SqlCommand command5 = new SqlCommand();
                 DataSet ds5 = new DataSet();
                 command5.CommandText = "SP_SMTPMailSetting_Help";
@@ -635,7 +640,7 @@ namespace ConfirmationEMailWebApi.Controllers
                         string header_cnt1 = " </th> " +
                                              "<th style=\"font-size:16px;padding:20px 0 20px 0;line-height:28px;\">";
 
-                            if (ds.Tables[2].Rows[0][15].ToString() != "")
+                        if (ds.Tables[2].Rows[0][15].ToString() != "")
                         {
                             header_cnt1 += "<p>Hotel Confirmation #: " + ds.Tables[2].Rows[0][15].ToString() + "</p>";
                         }
@@ -833,36 +838,58 @@ namespace ConfirmationEMailWebApi.Controllers
                         MailContent = style + header + header_cnt1 + HotelName + ChkInOutDate + TablHdr + Note + Address + BookerDtls + EndData;
                         var PdfContent = header + header_cnt1 + HotelName + ChkInOutDate + TablHdr + Note + Address + BookerDtls;
 
-                        ////var htmlContent = String.Format(PdfContent, DateTime.Now);
-                        ////var htmlToPdf = new NReco.PdfGenerator.HtmlToPdfConverter();
-                        ////var pdfBytes = htmlToPdf.GeneratePdf(htmlContent);
-                        ////string path = @"D:\home\site\wwwroot\Confirmations\";
+                        var htmlContent = String.Format(PdfContent, DateTime.Now);
+                        var htmlToPdf = new NReco.PdfGenerator.HtmlToPdfConverter();
+                        var pdfBytes = htmlToPdf.GeneratePdf(htmlContent);
+                        string path = @"D:\home\site\wwwroot\Confirmations\";
 
-                        ////if (Directory.Exists(path))
-                        ////{
-                        ////    var FileName = path + "Booking Confirmation - " + ds.Tables[2].Rows[0][2].ToString() + ".pdf";
-                        ////    if (File.Exists(FileName))
-                        ////    {
-                        ////        var AttachmentName = "Booking Confirmation - " + ds.Tables[2].Rows[0][2].ToString() + ".pdf";
-                        ////        long ticks = DateTime.Now.Ticks;
-                        ////        byte[] bytes = BitConverter.GetBytes(ticks);
-                        ////        string Newid = Convert.ToBase64String(bytes).Replace('+', '_').Replace('/', '-').TrimEnd('=');
-                        ////        File.WriteAllBytes(path + "Booking Confirmation - " + Newid + " - " + ds.Tables[2].Rows[0][2].ToString() + ".pdf", pdfBytes);
-                        ////        System.Net.Mail.Attachment att1 = new Attachment(@"D:\home\site\wwwroot\Confirmations\" + "Booking Confirmation - " + Newid + " - " + ds.Tables[2].Rows[0][2].ToString() + ".pdf");
-                        ////        att1.Name = AttachmentName;
-                        ////        message.Attachments.Add(att1);
-                        ////    }
-                        ////    else
-                        ////    {
-                        ////        File.WriteAllBytes(path + "Booking Confirmation - " + ds.Tables[2].Rows[0][2].ToString() + ".pdf", pdfBytes);
-                        ////        message.Attachments.Add(new Attachment(@"D:\home\site\wwwroot\Confirmations\" + "Booking Confirmation - " + ds.Tables[2].Rows[0][2].ToString() + ".pdf"));
-                        ////    }
-                        ////}
-                        ////else
-                        ////{
-                        ////    DirectoryInfo di = Directory.CreateDirectory(path);
-                        ////    File.WriteAllBytes(path + "Booking Confirmation - " + ds.Tables[2].Rows[0][2].ToString() + ".pdf", pdfBytes);
-                        ////}
+                        if (Directory.Exists(path))
+                        {
+                            var FileName = path + "Booking Confirmation - " + ds.Tables[2].Rows[0][2].ToString() + ".pdf";
+                            if (File.Exists(FileName))
+                            {
+                                var AttachmentName = "Booking Confirmation - " + ds.Tables[2].Rows[0][2].ToString() + ".pdf";
+                                long ticks = DateTime.Now.Ticks;
+                                byte[] bytes = BitConverter.GetBytes(ticks);
+                                Newid = Convert.ToBase64String(bytes).Replace('+', '_').Replace('/', '-').TrimEnd('=');
+                                File.WriteAllBytes(path + "Booking Confirmation - " + Newid + " - " + ds.Tables[2].Rows[0][2].ToString() + ".pdf", pdfBytes);
+                                System.Net.Mail.Attachment att1 = new Attachment(@"D:\home\site\wwwroot\Confirmations\" + "Booking Confirmation - " + Newid + " - " + ds.Tables[2].Rows[0][2].ToString() + ".pdf");
+                                att1.Name = AttachmentName;
+                                message.Attachments.Add(att1);
+                            }
+                            else
+                            {
+                                File.WriteAllBytes(path + "Booking Confirmation - " + ds.Tables[2].Rows[0][2].ToString() + ".pdf", pdfBytes);
+                                message.Attachments.Add(new Attachment(@"D:\home\site\wwwroot\Confirmations\" + "Booking Confirmation - " + ds.Tables[2].Rows[0][2].ToString() + ".pdf"));
+                            }
+                        }
+                        else
+                        {
+                            DirectoryInfo di = Directory.CreateDirectory(path);
+                            File.WriteAllBytes(path + "Booking Confirmation - " + ds.Tables[2].Rows[0][2].ToString() + ".pdf", pdfBytes);
+                        }
+                        CloudStorageAccount storageAccount = CloudStorageAccount.Parse(
+                        CloudConfigurationManager.GetSetting("StorageConnectionString"));
+                        CloudBlobClient blobClient = storageAccount.CreateCloudBlobClient();
+                        CloudBlobContainer container = blobClient.GetContainerReference("bookingconfirmations");
+                        var blob = container.GetBlockBlobReference("Booking Confirmation - " + ds.Tables[2].Rows[0][2].ToString() + ".pdf");
+                        try
+                        {
+                            using (var filestream = File.OpenRead(@"D:\home\site\wwwroot\Confirmations\" + "Booking Confirmation - " + Newid + " - " + ds.Tables[2].Rows[0][2].ToString() + ".pdf"))
+                            {
+                                blob.Properties.ContentType = "application/pdf";
+                                blob.UploadFromStream(filestream);
+                            }
+                            //File.Delete(path);
+
+                            AzureBlobPdfURl = blob.SnapshotQualifiedUri.AbsoluteUri;
+
+
+                        }
+                        catch (System.Exception e)
+                        {
+                            throw e;
+                        }
                         message.Body = MailContent;
                         message.IsBodyHtml = true;
 
@@ -907,7 +934,7 @@ namespace ConfirmationEMailWebApi.Controllers
                                     log.ErrorLog("=> Confirmation Email API => Resend Guest Email => BookingId => " + All.BookingId + " => Invaild Email => To =>" + All.UserEmail);
                                 }
                             }
-                           message.Bcc.Add(new System.Net.Mail.MailAddress("hbconf17@gmail.com"));
+                            message.Bcc.Add(new System.Net.Mail.MailAddress("hbconf17@gmail.com"));
                         }
                         else
                         {
@@ -1737,37 +1764,37 @@ namespace ConfirmationEMailWebApi.Controllers
                             MailContent = style + header + header_cnt1 + HotelName + ChkInOutDate + TablHdr + Inclusions + Note + Address + BookerDtls + FooterDtls + EndData;
                             PdfContent = header + header_cnt1 + HotelName + ChkInOutDate + TablHdr + Inclusions + Note + Address + BookerDtls + FooterDtls;
                         }
+                        
+                        var htmlContent = String.Format(PdfContent, DateTime.Now);
+                        var htmlToPdf = new NReco.PdfGenerator.HtmlToPdfConverter();
+                        var pdfBytes = htmlToPdf.GeneratePdf(htmlContent);
+                        string path = @"D:\home\site\wwwroot\Confirmations\";
+                        if (Directory.Exists(path))
+                        {
+                            var FileName = path + "Booking Confirmation - " + ds.Tables[2].Rows[0][2].ToString() + ".pdf";
+                            if (File.Exists(FileName))
+                            {
+                                var AttachmentName = "Booking Confirmation - " + ds.Tables[2].Rows[0][2].ToString() + ".pdf";
+                                long ticks = DateTime.Now.Ticks;
+                                byte[] bytes = BitConverter.GetBytes(ticks);
+                                Newid = Convert.ToBase64String(bytes).Replace('+', '_').Replace('/', '-').TrimEnd('=');
+                                File.WriteAllBytes(path + "Booking Confirmation - " + Newid + " - " + ds.Tables[2].Rows[0][2].ToString() + ".pdf", pdfBytes);
+                                System.Net.Mail.Attachment att1 = new Attachment(@"D:\home\site\wwwroot\Confirmations\" + "Booking Confirmation - " + Newid + " - " + ds.Tables[2].Rows[0][2].ToString() + ".pdf");
+                                att1.Name = AttachmentName;
+                                message.Attachments.Add(att1);
 
-                        ////var htmlContent = String.Format(PdfContent, DateTime.Now);
-                        ////var htmlToPdf = new NReco.PdfGenerator.HtmlToPdfConverter();
-                        ////var pdfBytes = htmlToPdf.GeneratePdf(htmlContent);
-                        ////string path = @"D:\home\site\wwwroot\Confirmations\";
-                        ////if (Directory.Exists(path))
-                        ////{
-                        ////    var FileName = path + "Booking Confirmation - " + ds.Tables[2].Rows[0][2].ToString() + ".pdf";
-                        ////    if (File.Exists(FileName))
-                        ////    {
-                        ////        var AttachmentName = "Booking Confirmation - " + ds.Tables[2].Rows[0][2].ToString() + ".pdf";
-                        ////        long ticks = DateTime.Now.Ticks;
-                        ////        byte[] bytes = BitConverter.GetBytes(ticks);
-                        ////        string Newid = Convert.ToBase64String(bytes).Replace('+', '_').Replace('/', '-').TrimEnd('=');
-                        ////        File.WriteAllBytes(path + "Booking Confirmation - " + Newid + " - " + ds.Tables[2].Rows[0][2].ToString() + ".pdf", pdfBytes);
-                        ////        System.Net.Mail.Attachment att1 = new Attachment(@"D:\home\site\wwwroot\Confirmations\" + "Booking Confirmation - " + Newid + " - " + ds.Tables[2].Rows[0][2].ToString() + ".pdf");
-                        ////        att1.Name = AttachmentName;
-                        ////        message.Attachments.Add(att1);
-
-                        ////    }
-                        ////    else
-                        ////    {
-                        ////        File.WriteAllBytes(path + "Booking Confirmation - " + ds.Tables[2].Rows[0][2].ToString() + ".pdf", pdfBytes);
-                        ////        message.Attachments.Add(new Attachment(@"D:\home\site\wwwroot\Confirmations\" + "Booking Confirmation - " + ds.Tables[2].Rows[0][2].ToString() + ".pdf"));
-                        ////    }
-                        ////}
-                        ////else
-                        ////{
-                        ////    DirectoryInfo di = Directory.CreateDirectory(path);
-                        ////    File.WriteAllBytes(path + "Booking Confirmation - " + ds.Tables[2].Rows[0][2].ToString() + ".pdf", pdfBytes);
-                        ////}
+                            }
+                            else
+                            {
+                                File.WriteAllBytes(path + "Booking Confirmation - " + ds.Tables[2].Rows[0][2].ToString() + ".pdf", pdfBytes);
+                                message.Attachments.Add(new Attachment(@"D:\home\site\wwwroot\Confirmations\" + "Booking Confirmation - " + ds.Tables[2].Rows[0][2].ToString() + ".pdf"));
+                            }
+                        }
+                        else
+                        {
+                            DirectoryInfo di = Directory.CreateDirectory(path);
+                            File.WriteAllBytes(path + "Booking Confirmation - " + ds.Tables[2].Rows[0][2].ToString() + ".pdf", pdfBytes);
+                        }
                         message.Body = MailContent;
                         message.IsBodyHtml = true;
                         if (ds.Tables[2].Rows[0][11].ToString() == "218" && ds.Tables[0].Rows[0][5].ToString() == "Direct<br>(Cash/Card)")
@@ -1775,7 +1802,28 @@ namespace ConfirmationEMailWebApi.Controllers
                             message.Attachments.Add(new Attachment(@"D:\home\site\wwwroot\Confirmations\" + "icici_letter.pdf"));
                         }
 
-
+                        CloudStorageAccount storageAccount = CloudStorageAccount.Parse(
+                        CloudConfigurationManager.GetSetting("StorageConnectionString"));
+                        CloudBlobClient blobClient = storageAccount.CreateCloudBlobClient();
+                        CloudBlobContainer container = blobClient.GetContainerReference("bookingconfirmations");
+                        var blob = container.GetBlockBlobReference("Booking Confirmation - " + ds.Tables[2].Rows[0][2].ToString() + ".pdf");
+                        try
+                        {
+                            using (var filestream = File.OpenRead(@"D:\home\site\wwwroot\Confirmations\" + "Booking Confirmation - " + Newid + " - " + ds.Tables[2].Rows[0][2].ToString() + ".pdf"))
+                            {
+                                blob.Properties.ContentType = "application/pdf";
+                                blob.UploadFromStream(filestream);
+                            }
+                            var FileNames = @"D:\home\site\wwwroot\Confirmations\" + "Booking Confirmation - " + Newid + " - " + ds.Tables[2].Rows[0][2].ToString() + ".pdf";
+                            //File.Delete(FileNames);                            
+                            AzureBlobPdfURl = blob.SnapshotQualifiedUri.AbsoluteUri;
+                           
+                            
+                        }
+                        catch (System.Exception e)
+                        {
+                            throw e;
+                        }
                     }
                     #endregion
 
@@ -1872,7 +1920,7 @@ namespace ConfirmationEMailWebApi.Controllers
                                     }
 
 
-                                   message1.Bcc.Add(new System.Net.Mail.MailAddress("hbconf17@gmail.com"));
+                                    message1.Bcc.Add(new System.Net.Mail.MailAddress("hbconf17@gmail.com"));
 
                                 }
                                 else
@@ -3094,7 +3142,7 @@ namespace ConfirmationEMailWebApi.Controllers
                                 "<th class=\"small-12 large-12 columns first last\" style=\"font-size:16px;text-align:left;line-height:1.3;color:#0a0a0a;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;width:564px;margin:0 auto;padding-left:16px;padding-right:16px;padding-bottom:0px !important\">" +
                                 "<p class=\"body  body-lg body-link-rausch light text-left   \" style=\"font-family: 'Cabin', Helvetica, Arial, sans-serif;padding:0;margin:0;line-height:1.4;font-weight:300;color:#484848;font-size:24px;hyphens:none;-ms-hyphens:none;-webkit-hyphens:none;-moz-hyphens:none;text-align:left;margin-bottom:0px !important;color:#0a0a0a;\">" + ds.Tables[2].Rows[0][1].ToString();
 
-                            if(All.QReserveFlag == true)
+                            if (All.QReserveFlag == true)
                             {
                                 header += "<br /><span style=\"float: right;font-size:20px;\">Quick Reservation Confirmed</span>";
                             }
@@ -3102,11 +3150,11 @@ namespace ConfirmationEMailWebApi.Controllers
                             {
                                 header += "<br /><span style=\"float: right;font-size:20px;\">Reservation Confirmed</span>";
                             }
-                           
 
 
-                             header += "</p>" +
-                                "</th></tr></table></div></div>";
+
+                            header += "</p>" +
+                               "</th></tr></table></div></div>";
 
                             string ChkInOutDate = "";
                             if (All.LTIAPIFlag == true)
@@ -3363,6 +3411,10 @@ namespace ConfirmationEMailWebApi.Controllers
                 {
                     string PaymentMode = "";
                     string Maplink = "";
+                    string WhatsappFileName = "Booking Confirmation -" + ds.Tables[2].Rows[0][2].ToString();
+                    string paths123 = @"D:\home\site\wwwroot\Confirmations\";
+                    var FileName = paths123 + "Booking Confirmation - " + ds.Tables[2].Rows[0][2].ToString() + ".pdf";
+                    string WhatsappPdfUrl = AzureBlobPdfURl;
                     if (ds.Tables[0].Rows[0][8].ToString() == "Bed")
                     {
                         PaymentMode = ds.Tables[0].Rows[0][4].ToString();
@@ -3397,6 +3449,8 @@ namespace ConfirmationEMailWebApi.Controllers
                             Bookingcode = r.Field<string>("PropertyId"),
                             RowId = r.Field<string>("RatePlanCode"),
                             Caretaker = r.Field<long>("Caretaker"),
+                            MobileNo = r.Field<string>("MobileNo"),
+                            WhatsAppMsg = r.Field<string>("WhatsAppMsg")
 
                         });
                         Msg = myData.ToList();
@@ -3456,6 +3510,7 @@ namespace ConfirmationEMailWebApi.Controllers
 
                                 }
                                 //Short URL End0
+                                
                                 if (Msg[i].Caretaker == 0)
                                 {
                                     if (PaymentMode == "Bill to Company (BTC)")
@@ -3493,6 +3548,26 @@ namespace ConfirmationEMailWebApi.Controllers
                                             Msg[i].CityCode = Msg[i].CityCode.Replace("relbraw", ".Map:" + " " + FinalMap + " ."); //+ Msg[i].ShortPath removed by Pooranam
                                         }
                                     }
+                                }
+                                if (Msg[i].MobileNo !="" && All.GuestMailChk == true)
+                                {
+                                    try
+                                    {
+                                        WhatsappObj WhatsappData = new WhatsappObj();
+                                        WhatsappData.MobileNo = Msg[i].MobileNo;
+                                        WhatsappData.Msg = Msg[i].WhatsAppMsg;
+                                        WhatsappData.WhatsappFileName = WhatsappFileName;
+                                        WhatsappData.WhatsappPdfUrl = WhatsappPdfUrl;
+                                        Task.Factory.StartNew(() => WhatsappAPI(WhatsappData));
+                                    }
+                                    catch(Exception Ex)
+                                    {
+                                        CreateLogFiles log = new CreateLogFiles();
+                                        log.ErrorLog(" => Confirmation WhatsAPP API => Booking Confirmation WhatsApp => BookingId => " + All.BookingId + " => Err Msg => " + Ex.Message);
+
+                                    }
+
+
                                 }
                                 WebRequest request = HttpWebRequest.Create(Msg[i].CityCode);
                                 HttpWebResponse response = (HttpWebResponse)request.GetResponse();
@@ -3542,6 +3617,62 @@ namespace ConfirmationEMailWebApi.Controllers
                 log.ErrorLog(" => Confirmation Email API => BookingId => " + All.BookingId + "=>" + Ex.Message);
                 return Json(new { Code = "400", EmailResponse = "Confirmation Email not Sent - " + Ex.Message });
             }
+        }
+
+        
+        public string WhatsappAPI(WhatsappObj Details)
+        {
+            Details.MobileNo = Details.MobileNo.Replace("+","");
+            if(Details.MobileNo.Length ==10)
+            {
+                Details.MobileNo = "91" + Details.MobileNo;
+            }
+            
+            string RR1 = "Success";
+            WebClient client = new WebClient();
+            client.Headers.Add("Content-Type", "application/json");
+            string body = "{\"@VER\": \"1.2\","+
+        "\"USER\": {"+
+    "\"@USERNAME\": \"hummingWA\","+
+    "\"@PASSWORD\": \"humng891\","+
+    "\"@UNIXTIMESTAMP\": \"\""+
+  "},"+
+  "\"DLR\": {"+
+  "\"@URL\": \"\""+
+  "},"+
+  "\"SMS\": ["+
+    "{"+
+      "\"@UDH\": \"0\","+
+      "\"@CODING\": \"1\"," +
+      "\"@TEXT\": \""+Details.Msg+"\"," +
+      "\"@MEDIADATA\": \""+Details.WhatsappPdfUrl+"\"," +
+      "\"@MSGTYPE\": \"3\"," +
+      "\"@TYPE\": \"document~"+Details.WhatsappFileName+"\"," +
+      "\"@PROPERTY\": \"0\"," +
+      "\"@ID\": \"1\"," +
+      "\"ADDRESS\": [" +
+        "{" +
+          "\"@FROM\": \"918884854455\"," +
+          "\"@TO\": \""+ Details.MobileNo + "\"," +
+          "\"@SEQ\": \"1\"," +
+          "\"@TAG\": \"\"" +
+        "}" +
+      "]" +
+    "}" +
+  "]" +
+"}";
+            try
+            {
+                var WhatappResponse = client.UploadString("https://api.myvaluefirst.com/psms/servlet/psms.JsonEservice", "POST", body);
+                log = new CreateLogFiles();
+                log.ErrorLog(" => WhatappMsg Response => " + WhatappResponse);
+            }
+            catch(Exception ex)
+            {
+                log = new CreateLogFiles();
+                log.ErrorLog(" => WhatappMsg Response => " + ex.Message);
+            }
+                return RR1;
         }
     }
 }

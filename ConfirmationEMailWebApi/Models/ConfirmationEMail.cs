@@ -25,10 +25,27 @@ namespace ConfirmationEMailWebApi.Models
         public string CheckoutTime { get; set; }
         public bool LTIAPIFlag { get; set; }
         public bool QReserveFlag { get; set; }
+        public string MobileNo { get; set; }
+        public string WhatsAppMsg { get; set; }
+
+    }
+    public class WhatsappObj
+    {
+        public string Msg { get; set; }
+        public string MobileNo { get; set; }
+        public string BookingConfirmationPdf { get; set; }
+        public string WhatsappFileName { get; set; }
+        public string WhatsappPdfUrl { get; set; }
 
     }
     public class URLShort
     {
         public string longUrl { get; set; }
+    }
+    public class Whatsapp
+    {
+        public string Msg { get; set; }
+        public string MobileNo { get; set; }
+
     }
 }
