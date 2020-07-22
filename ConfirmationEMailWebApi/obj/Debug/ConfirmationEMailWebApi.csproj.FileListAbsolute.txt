@@ -86,7 +86,6 @@ D:\GitHub\ConfirmationEMailWebApi\ConfirmationEMailWebApi\bin\Microsoft.Owin.Sec
 D:\GitHub\ConfirmationEMailWebApi\ConfirmationEMailWebApi\bin\Microsoft.Owin.Security.Twitter.xml
 D:\GitHub\ConfirmationEMailWebApi\ConfirmationEMailWebApi\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
 D:\GitHub\ConfirmationEMailWebApi\ConfirmationEMailWebApi\bin\System.Web.Http.Owin.xml
-D:\GitHub\ConfirmationEMailWebApi\ConfirmationEMailWebApi\obj\Debug\ConfirmationEMailWebApi.csprojResolveAssemblyReference.cache
 D:\GitHub\ConfirmationEMailWebApi\ConfirmationEMailWebApi\obj\Debug\ConfirmationEMailWebApi.dll
 D:\GitHub\ConfirmationEMailWebApi\ConfirmationEMailWebApi\obj\Debug\ConfirmationEMailWebApi.pdb
 D:\Projects\ConfirmationEMailWebApi\ConfirmationEMailWebApi\bin\ApplicationInsights.config
@@ -187,3 +186,13 @@ D:\Projects\ConfirmationEMailWebApi\ConfirmationEMailWebApi\bin\Microsoft.Azure.
 D:\Projects\ConfirmationEMailWebApi\ConfirmationEMailWebApi\bin\Microsoft.WindowsAzure.Configuration.xml
 D:\Projects\ConfirmationEMailWebApi\ConfirmationEMailWebApi\bin\Microsoft.WindowsAzure.Storage.pdb
 D:\Projects\ConfirmationEMailWebApi\ConfirmationEMailWebApi\bin\Microsoft.WindowsAzure.Storage.xml
+D:\GitHub\ConfirmationEMailWebApi\ConfirmationEMailWebApi\bin\Microsoft.Azure.KeyVault.Core.dll
+D:\GitHub\ConfirmationEMailWebApi\ConfirmationEMailWebApi\bin\Microsoft.WindowsAzure.Configuration.dll
+D:\GitHub\ConfirmationEMailWebApi\ConfirmationEMailWebApi\bin\Microsoft.WindowsAzure.Storage.dll
+D:\GitHub\ConfirmationEMailWebApi\ConfirmationEMailWebApi\bin\Microsoft.Azure.KeyVault.Core.xml
+D:\GitHub\ConfirmationEMailWebApi\ConfirmationEMailWebApi\bin\Microsoft.WindowsAzure.Configuration.xml
+D:\GitHub\ConfirmationEMailWebApi\ConfirmationEMailWebApi\bin\Microsoft.WindowsAzure.Storage.pdb
+D:\GitHub\ConfirmationEMailWebApi\ConfirmationEMailWebApi\bin\Microsoft.WindowsAzure.Storage.xml
+D:\GitHub\ConfirmationEMailWebApi\ConfirmationEMailWebApi\obj\Debug\ConfirmationEMailWebApi.csprojAssemblyReference.cache
+D:\GitHub\ConfirmationEMailWebApi\ConfirmationEMailWebApi\obj\Debug\ConfirmationEMailWebApi.csproj.CoreCompileInputs.cache
+D:\GitHub\ConfirmationEMailWebApi\ConfirmationEMailWebApi\obj\Debug\ConfirmationEMailWebApi.csproj.CopyComplete
