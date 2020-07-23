@@ -208,7 +208,7 @@ namespace ConfirmationEMailWebApi.Controllers
                             ////message.Bcc.Add(new System.Net.Mail.MailAddress("bookingbcc@staysimplyfied.com"));
                             ////message.Bcc.Add(new System.Net.Mail.MailAddress("hbconf17@gmail.com"));
                         }
-                        message.Bcc.Add(new System.Net.Mail.MailAddress("nandhu@warblerit.com"));
+                        message.Bcc.Add(new System.Net.Mail.MailAddress("anbu@warblerit.com"));
 
                         message.Subject = "Booking Confirmation - " + ds.Tables[2].Rows[0][2].ToString();
 
@@ -1035,7 +1035,7 @@ namespace ConfirmationEMailWebApi.Controllers
                             ////}
                             ////message.Bcc.Add(new System.Net.Mail.MailAddress("hbconf17@gmail.com"));
                         }
-                        message.Bcc.Add(new System.Net.Mail.MailAddress("nandhu@warblerit.com"));
+                        message.Bcc.Add(new System.Net.Mail.MailAddress("anbu@warblerit.com"));
 
                         message.Subject = "Booking Confirmation - " + ds.Tables[2].Rows[0][2].ToString();
                         string typeofpty = ds.Tables[4].Rows[0][8].ToString();
@@ -1971,7 +1971,7 @@ namespace ConfirmationEMailWebApi.Controllers
                                     ////message1.Bcc.Add(new System.Net.Mail.MailAddress("hbconf17@gmail.com"));
 
                                 }
-                                message1.Bcc.Add(new System.Net.Mail.MailAddress("nandhu@warblerit.com"));
+                                message1.Bcc.Add(new System.Net.Mail.MailAddress("anbu@warblerit.com"));
 
                                 message1.Subject = "Booking Confirmation - " + ds.Tables[2].Rows[0][2].ToString();
 
@@ -2705,7 +2705,7 @@ namespace ConfirmationEMailWebApi.Controllers
                                 ////}
                                 ////message1.Bcc.Add(new System.Net.Mail.MailAddress("hbconf17@gmail.com"));
                             }
-                            message1.Bcc.Add(new System.Net.Mail.MailAddress("nandhu@warblerit.com"));
+                            message1.Bcc.Add(new System.Net.Mail.MailAddress("anbu@warblerit.com"));
 
                             message1.Subject = "Booking Confirmation - " + ds.Tables[2].Rows[0][2].ToString();
 
@@ -3804,7 +3804,7 @@ namespace ConfirmationEMailWebApi.Controllers
                             ////message.Bcc.Add(new System.Net.Mail.MailAddress("bookingbcc@staysimplyfied.com"));
                             ////message.Bcc.Add(new System.Net.Mail.MailAddress("hbconf17@gmail.com"));
                         }
-                        message.Bcc.Add(new System.Net.Mail.MailAddress("nandhu@warblerit.com"));
+                        message.Bcc.Add(new System.Net.Mail.MailAddress("anbu@warblerit.com"));
 
                         message.Subject = "Booking Confirmation - " + ds.Tables[2].Rows[0][2].ToString();
 
@@ -3947,7 +3947,7 @@ namespace ConfirmationEMailWebApi.Controllers
                             "</tr></tbody></table></div></div>";
 
                         var PdfContent = "";
-                      
+
                         MailContent = header + BookingDetails + HotelDetails + OtherDetails;
                         PdfContent = header + BookingDetails + HotelDetails + OtherDetails;
 
@@ -4155,7 +4155,7 @@ namespace ConfirmationEMailWebApi.Controllers
                             ////}
                             ////message.Bcc.Add(new System.Net.Mail.MailAddress("hbconf17@gmail.com"));
                         }
-                        message.Bcc.Add(new System.Net.Mail.MailAddress("nandhu@warblerit.com"));
+                        message.Bcc.Add(new System.Net.Mail.MailAddress("anbu@warblerit.com"));
 
                         message.Subject = "Booking Confirmation - " + ds.Tables[2].Rows[0][2].ToString();
                         string typeofpty = ds.Tables[4].Rows[0][8].ToString();
@@ -4228,8 +4228,10 @@ namespace ConfirmationEMailWebApi.Controllers
                     "<div style =\"width:39%;display:inline-block;text-align:right;vertical-align:text-bottom\"><img align =\"center\" alt=\"" + Imagealt + "\" class=\"center standard-header\" src=\"" + Imagelocation + "\" style=\"max-width: 200px\" ></a></div>" +
                     "</div></div>";
 
-
-                        string BookingDetails = "<div style =\"border-bottom:2px solid #808080;margin:5px 0px 20px 0px\" >" +
+                        string BookingDetails = "";
+                        if (All.LTIAPIFlag == true)
+                        {
+                            BookingDetails = "<div style =\"border-bottom:2px solid #808080;margin:5px 0px 20px 0px\" >" +
                         "<h3 style =\"margin:0;font-family:&#39;Open Sans&#39;;font-size:14px;padding:10px 0;text-align:center;color:#0000ff;font-weight:bold\">Booking Details<u></u></h3>" +
                         "</ div >" +
                         "<table style =\"border-collapse:collapse\">" +
@@ -4247,8 +4249,8 @@ namespace ConfirmationEMailWebApi.Controllers
                         "<tr style =\"font-style:normal;font-weight:normal;border-bottom:1px solid #ebebeb\">" +
                         "<td style =\"vertical-align:middle;text-align:center\"> " + ds.Tables[0].Rows[0][0].ToString() + " </td>" +
                         "<td style =\"vertical-align:middle;text-align:center\"> " + ds.Tables[0].Rows[0][7].ToString() + " </td>" +
-                        "<td style =\"vertical-align:middle;text-align:center\"> " + ds.Tables[0].Rows[0][1].ToString() + " </td>" +
-                        "<td style =\"vertical-align:middle;text-align:center\"> " + ds.Tables[0].Rows[0][2].ToString() + " </td>" +
+                        "<td style =\"vertical-align:middle;text-align:center\"> " + ds.Tables[0].Rows[0][9].ToString() + " </td>" +
+                        "<td style =\"vertical-align:middle;text-align:center\"> " + ds.Tables[0].Rows[0][10].ToString() + " </td>" +
                         "<td style =\"vertical-align:middle;text-align:center\"> " + ds.Tables[0].Rows[0][3].ToString() + " / -</td>" +
                         "<td style =\"vertical-align:middle;text-align:center\"> " + ds.Tables[0].Rows[0][5].ToString() + "</td>" +
                         "<td style =\"vertical-align:middle;text-align:center\"> " + ds.Tables[0].Rows[0][6].ToString() + "</td>" +
@@ -4257,7 +4259,38 @@ namespace ConfirmationEMailWebApi.Controllers
                         "<h3 style =\"margin:0;font-family:&#39;Open Sans&#39;;font-size:14px;padding:10px 0;text-align:center;font-weight:bold\"><u></u></h3>" +
                         "</div>" +
                         "<h3 style =\"margin:0;font-family:&#39;Open Sans&#39;;font-size:15px;padding:10px 0\"> Note :" + ds.Tables[2].Rows[0][8].ToString() + "</h3>";
-
+                        }
+                        else
+                        {
+                            BookingDetails = "<div style =\"border-bottom:2px solid #808080;margin:5px 0px 20px 0px\" >" +
+                            "<h3 style =\"margin:0;font-family:&#39;Open Sans&#39;;font-size:14px;padding:10px 0;text-align:center;color:#0000ff;font-weight:bold\">Booking Details<u></u></h3>" +
+                            "</ div >" +
+                            "<table style =\"border-collapse:collapse\">" +
+                            "<tbody>" +
+                            "" +
+                            "<tr style =\"border-bottom:2px solid yellow\">" +
+                            "<td style =\"font-size:13px;width:13%\" valign =\"top\" align =\"center\"><strong> Guest Name </strong></td>" +
+                            "<td style =\"font-size:13px;width:12%\" valign =\"top\" align =\"center\"><strong> Room Type / Occupancy </strong></td >" +
+                            "<td style =\"font-size:13px;width:12%\" valign =\"top\" align =\"center\"><strong> Check In </strong></td>" +
+                            "<td style =\"font-size:13px;width:12%\" valign =\"top\" align =\"center\"><strong> Check Out </strong></td >" +
+                            "<td style =\"font-size:13px;width:13%\" valign =\"top\" align =\"center\"><strong> Tariff </strong></td >" +
+                            "<td style =\"font-size:13px;width:13%\" valign =\"top\" align =\"center\"><strong> Room Tariff </strong></td>" +
+                            "<td style =\"font-size:13px;width:13%\" valign =\"top\" align =\"center\"><strong> Services </strong></td>" +
+                            "</tr>" +
+                            "<tr style =\"font-style:normal;font-weight:normal;border-bottom:1px solid #ebebeb\">" +
+                            "<td style =\"vertical-align:middle;text-align:center\"> " + ds.Tables[0].Rows[0][0].ToString() + " </td>" +
+                            "<td style =\"vertical-align:middle;text-align:center\"> " + ds.Tables[0].Rows[0][7].ToString() + " </td>" +
+                            "<td style =\"vertical-align:middle;text-align:center\"> " + ds.Tables[0].Rows[0][1].ToString() + " </td>" +
+                            "<td style =\"vertical-align:middle;text-align:center\"> " + ds.Tables[0].Rows[0][2].ToString() + " </td>" +
+                            "<td style =\"vertical-align:middle;text-align:center\"> " + ds.Tables[0].Rows[0][3].ToString() + " / -</td>" +
+                            "<td style =\"vertical-align:middle;text-align:center\"> " + ds.Tables[0].Rows[0][5].ToString() + "</td>" +
+                            "<td style =\"vertical-align:middle;text-align:center\"> " + ds.Tables[0].Rows[0][6].ToString() + "</td>" +
+                            "</tr></tbody></table>" +
+                            "<div style =\"border-bottom:2px solid #808080;margin:5px 0px 20px 0px\">" +
+                            "<h3 style =\"margin:0;font-family:&#39;Open Sans&#39;;font-size:14px;padding:10px 0;text-align:center;font-weight:bold\"><u></u></h3>" +
+                            "</div>" +
+                            "<h3 style =\"margin:0;font-family:&#39;Open Sans&#39;;font-size:15px;padding:10px 0\"> Note :" + ds.Tables[2].Rows[0][8].ToString() + "</h3>";
+                        }
                         string HotelDetails = "<div style =\"border-bottom:2px solid #808080;margin:5px 0px 20px 0px\">" +
                             "<h3 style =\"margin:0;font-family:&#39;Open Sans&#39;;font-size:14px;padding:10px 0;text-align:center;color:#0000ff;font-weight:bold\"> Hotel Details <u></u></h3>" +
                             "</div>" +
@@ -4509,7 +4542,7 @@ namespace ConfirmationEMailWebApi.Controllers
                                     ////message1.Bcc.Add(new System.Net.Mail.MailAddress("hbconf17@gmail.com"));
 
                                 }
-                                message1.Bcc.Add(new System.Net.Mail.MailAddress("nandhu@warblerit.com"));
+                                message1.Bcc.Add(new System.Net.Mail.MailAddress("anbu@warblerit.com"));
 
                                 message1.Subject = "Booking Confirmation - " + ds.Tables[2].Rows[0][2].ToString();
 
@@ -4544,119 +4577,582 @@ namespace ConfirmationEMailWebApi.Controllers
                                 {
                                     MobileNo = " - NA - ";
                                 }
+
+
                                 // Spl Note
                                 string SplNote = ds.Tables[2].Rows[0][8].ToString();
                                 if (SplNote == "")
                                 {
                                     SplNote = "- NA -";
                                 }
-                                // Map Link
-                                string MapLink = "";
-                                if (ds.Tables[1].Rows[0][13].ToString() != "")
-                                {
-                                    MapLink = "https://www.google.co.in/maps/place/" + ds.Tables[1].Rows[0][13].ToString();
-                                }
-                                else
-                                {
-                                    MapLink = "#";
-                                }
+
                                 // View in browser Link
                                 string id = ds.Tables[2].Rows[0][11].ToString();
                                 string link = "http://mybooking.hummingbirdindia.com/?redirect=BookingPropertyConfirmation&B=B&R=" + id;
 
-                                string header = "<div style =\"background - color:#f9fafc\" >" +
-                                "<div style =\"background-color:#ffffff;width:800px;margin:0 auto\" >" +
-                                "<div style =\"padding:10px 40px\">" +
-                                "<div style =\"width:60%;display:inline-block\">" +
-                                "<div style =\"border-radius:20px;padding:10px 10px;\">" +
-                                "<h3 style =\"margin:0;font-family:&#39;Open Sans&#39;;font-size:25px;padding:10px 0\">Confirmation Voucher</h3>" +
-                                "<p style =\"margin:0;font-family:&#39;Open Sans&#39;;font-size:16px;text-align:justify;line-height:125%;word-spacing:125%;padding:5px 0\" > Hummingbird Booking ID - <b>" + ds.Tables[2].Rows[0][2].ToString() + " </b></p>" +
-                                "<p style =\"margin:0;font-family:&#39;Open Sans&#39;;font-size:16px;text-align:justify;line-height:125%;word-spacing:125%;padding:5px 0\" > Hotel Confirmation / Ref No -<b>" + ds.Tables[2].Rows[0][15].ToString() + "</b></p>" +
-                                "<p style =\"margin:0;font-family:&#39;Open Sans&#39;;font-size:13px;text-align:justify;line-height:125%;word-spacing:125%;padding:5px 0\" > " + ds.Tables[2].Rows[0][7].ToString() + "</p>" +
-                                "</div></div>" +
-                                "<div style =\"width:39%;display:inline-block;text-align:right;vertical-align:text-bottom\"><img align =\"center\" alt=\"" + Imagealt1 + "\" class=\"center standard-header\" src=\"" + Imagelocation1 + "\" style=\"max-width: 200px\" ></a></div>" +
-                                "</div></div>";
+
+                                string style = @"<!DOCTYPE html PUBLIC ""-//W3C//DTD XHTML 1.0 Strict//EN"" ""http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"">
+                                                <html xmlns=""http://www.w3.org/1999/xhtml"" style=""min-height:100%;background:#f3f3f3"">
+                                                <head><meta http-equiv=""Content-Type"" content=""text/html; charset=UTF-8""></head>
+                                                <body style=""font-size:16px;min-width:100%;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;-moz-box-sizing:border-box;-webkit-box-sizing:border-box;box-sizing:border-box;font-family:'Circular', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;margin:0;line-height:1.3;color:#0a0a0a;text-align:left;width:100% !important"">
+                                                <div class=""preheader"" style=""mso-hide:all;visibility:hidden;opacity:0;color:transparent;font-size:0px;width:0;height:0;display:none !important""></div>
+                                                <meta http-equiv=""Content-Type"" content=""text/html; charset=utf-8"">
+                                                <meta name=""viewport"" content=""width=device-width"">
+                                                <link href=""https://fonts.googleapis.com/css?family=Cabin&display=swap"" rel=""stylesheet"">
+                                                <style data-roadie-ignore data-immutable=""true"">
+                                                    @media only screen and (max-width: 596px) {
+                                                      .small-float-center {
+                                                        margin: 0 auto !important;
+                                                        float: none !important;
+                                                        text-align: center !important;
+                                                      }
+                                                      .small-text-center {
+                                                        text-align: center !important;
+                                                      }
+                                                      .small-text-left {
+                                                        text-align: left !important;
+                                                      }
+                                                      .small-text-right {
+                                                        text-align: right !important;
+                                                      }
+                                                    }
+                                                    @media only screen and (max-width: 596px) {
+                                                      table.body table.container .hide-for-large {
+                                                        display: block !important;
+                                                        width: auto !important;
+                                                        overflow: visible !important;
+                                                        max-height: none !important;
+                                                      }
+                                                    }
+                                                    @media only screen and (max-width: 596px) {
+                                                      table.body table.container .row.hide-for-large,
+                                                      table.body table.container .row.hide-for-large {
+                                                        display: table !important;
+                                                        width: 100% !important;
+                                                      }
+                                                    }
+    
+                                                    @media only screen and (max-width: 596px) {
+                                                      table.body table.container .show-for-large {
+                                                        display: none !important;
+                                                        width: 0;
+                                                        mso-hide: all;
+                                                        overflow: hidden;
+                                                      }
+                                                    }
+                                                    @media only screen and (max-width: 596px) {
+                                                      table.body img {
+                                                        width: auto !important;
+                                                        height: auto !important;
+                                                      }
+                                                      table.body center {
+                                                        min-width: 0 !important;
+                                                      }
+                                                      table.body .container {
+                                                        width: 95% !important;
+                                                      }
+                                                      table.body .columns,
+                                                      table.body .column {
+                                                        height: auto !important;
+                                                        -moz-box-sizing: border-box;
+                                                        -webkit-box-sizing: border-box;
+                                                        box-sizing: border-box;
+                                                        padding-left: 16px !important;
+                                                        padding-right: 16px !important;
+                                                      }
+                                                      table.body .columns .column,
+                                                      table.body .columns .columns,
+                                                      table.body .column .column,
+                                                      table.body .column .columns {
+                                                        padding-left: 0 !important;
+                                                        padding-right: 0 !important;
+                                                      }
+                                                      table.body .collapse .columns,
+                                                      table.body .collapse .column {
+                                                        padding-left: 0 !important;
+                                                        padding-right: 0 !important;
+                                                      }
+                                                      td.small-1,
+                                                      th.small-1 {
+                                                        display: inline-block !important;
+                                                        width: 8.33333% !important;
+                                                      }
+                                                      td.small-2,
+                                                      th.small-2 {
+                                                        display: inline-block !important;
+                                                        width: 16.66667% !important;
+                                                      }
+                                                      td.small-3,
+                                                      th.small-3 {
+                                                        display: inline-block !important;
+                                                        width: 25% !important;
+                                                      }
+                                                      td.small-4,
+                                                      th.small-4 {
+                                                        display: inline-block !important;
+                                                        width: 33.33333% !important;
+                                                      }
+                                                      td.small-5,
+                                                      th.small-5 {
+                                                        display: inline-block !important;
+                                                        width: 41.66667% !important;
+                                                      }
+                                                      td.small-6,
+                                                      th.small-6 {
+                                                        display: inline-block !important;
+                                                        width: 50% !important;
+                                                      }
+                                                      td.small-7,
+                                                      th.small-7 {
+                                                        display: inline-block !important;
+                                                        width: 58.33333% !important;
+                                                      }
+                                                      td.small-8,
+                                                      th.small-8 {
+                                                        display: inline-block !important;
+                                                        width: 66.66667% !important;
+                                                      }
+                                                      td.small-9,
+                                                      th.small-9 {
+                                                        display: inline-block !important;
+                                                        width: 75% !important;
+                                                      }
+                                                      td.small-10,
+                                                      th.small-10 {
+                                                        display: inline-block !important;
+                                                        width: 83.33333% !important;
+                                                      }
+                                                      td.small-11,
+                                                      th.small-11 {
+                                                        display: inline-block !important;
+                                                        width: 91.66667% !important;
+                                                      }
+                                                      td.small-12,
+                                                      th.small-12 {
+                                                        display: inline-block !important;
+                                                        width: 100% !important;
+                                                      }
+                                                      .columns td.small-12,
+                                                      .column td.small-12,
+                                                      .columns th.small-12,
+                                                      .column th.small-12 {
+                                                        display: block !important;
+                                                        width: 100% !important;
+                                                      }
+                                                      .body .columns td.small-1,
+                                                      .body .column td.small-1,
+                                                      td.small-1 center,
+                                                      .body .columns th.small-1,
+                                                      .body .column th.small-1,
+                                                      th.small-1 center {
+                                                        display: inline-block !important;
+                                                        width: 8.33333% !important;
+                                                      }
+                                                      .body .columns td.small-2,
+                                                      .body .column td.small-2,
+                                                      td.small-2 center,
+                                                      .body .columns th.small-2,
+                                                      .body .column th.small-2,
+                                                      th.small-2 center {
+                                                        display: inline-block !important;
+                                                        width: 16.66667% !important;
+                                                      }
+                                                      .body .columns td.small-3,
+                                                      .body .column td.small-3,
+                                                      td.small-3 center,
+                                                      .body .columns th.small-3,
+                                                      .body .column th.small-3,
+                                                      th.small-3 center {
+                                                        display: inline-block !important;
+                                                        width: 25% !important;
+                                                      }
+                                                      .body .columns td.small-4,
+                                                      .body .column td.small-4,
+                                                      td.small-4 center,
+                                                      .body .columns th.small-4,
+                                                      .body .column th.small-4,
+                                                      th.small-4 center {
+                                                        display: inline-block !important;
+                                                        width: 33.33333% !important;
+                                                      }
+                                                      .body .columns td.small-5,
+                                                      .body .column td.small-5,
+                                                      td.small-5 center,
+                                                      .body .columns th.small-5,
+                                                      .body .column th.small-5,
+                                                      th.small-5 center {
+                                                        display: inline-block !important;
+                                                        width: 41.66667% !important;
+                                                      }
+                                                      .body .columns td.small-6,
+                                                      .body .column td.small-6,
+                                                      td.small-6 center,
+                                                      .body .columns th.small-6,
+                                                      .body .column th.small-6,
+                                                      th.small-6 center {
+                                                        display: inline-block !important;
+                                                        width: 50% !important;
+                                                      }
+                                                      .body .columns td.small-7,
+                                                      .body .column td.small-7,
+                                                      td.small-7 center,
+                                                      .body .columns th.small-7,
+                                                      .body .column th.small-7,
+                                                      th.small-7 center {
+                                                        display: inline-block !important;
+                                                        width: 58.33333% !important;
+                                                      }
+                                                      .body .columns td.small-8,
+                                                      .body .column td.small-8,
+                                                      td.small-8 center,
+                                                      .body .columns th.small-8,
+                                                      .body .column th.small-8,
+                                                      th.small-8 center {
+                                                        display: inline-block !important;
+                                                        width: 66.66667% !important;
+                                                      }
+                                                      .body .columns td.small-9,
+                                                      .body .column td.small-9,
+                                                      td.small-9 center,
+                                                      .body .columns th.small-9,
+                                                      .body .column th.small-9,
+                                                      th.small-9 center {
+                                                        display: inline-block !important;
+                                                        width: 75% !important;
+                                                      }
+                                                      .body .columns td.small-10,
+                                                      .body .column td.small-10,
+                                                      td.small-10 center,
+                                                      .body .columns th.small-10,
+                                                      .body .column th.small-10,
+                                                      th.small-10 center {
+                                                        display: inline-block !important;
+                                                        width: 83.33333% !important;
+                                                      }
+                                                      .body .columns td.small-11,
+                                                      .body .column td.small-11,
+                                                      td.small-11 center,
+                                                      .body .columns th.small-11,
+                                                      .body .column th.small-11,
+                                                      th.small-11 center {
+                                                        display: inline-block !important;
+                                                        width: 91.66667% !important;
+                                                      }
+                                                      table.body td.small-offset-1,
+                                                      table.body th.small-offset-1 {
+                                                        margin-left: 8.33333% !important;
+                                                        margin-left: 8.33333% !important;
+                                                      }
+                                                      table.body td.small-offset-2,
+                                                      table.body th.small-offset-2 {
+                                                        margin-left: 16.66667% !important;
+                                                        margin-left: 16.66667% !important;
+                                                      }
+                                                      table.body td.small-offset-3,
+                                                      table.body th.small-offset-3 {
+                                                        margin-left: 25% !important;
+                                                        margin-left: 25% !important;
+                                                      }
+                                                      table.body td.small-offset-4,
+                                                      table.body th.small-offset-4 {
+                                                        margin-left: 33.33333% !important;
+                                                        margin-left: 33.33333% !important;
+                                                      }
+                                                      table.body td.small-offset-5,
+                                                      table.body th.small-offset-5 {
+                                                        margin-left: 41.66667% !important;
+                                                        margin-left: 41.66667% !important;
+                                                      }
+                                                      table.body td.small-offset-6,
+                                                      table.body th.small-offset-6 {
+                                                        margin-left: 50% !important;
+                                                        margin-left: 50% !important;
+                                                      }
+                                                      table.body td.small-offset-7,
+                                                      table.body th.small-offset-7 {
+                                                        margin-left: 58.33333% !important;
+                                                        margin-left: 58.33333% !important;
+                                                      }
+                                                      table.body td.small-offset-8,
+                                                      table.body th.small-offset-8 {
+                                                        margin-left: 66.66667% !important;
+                                                        margin-left: 66.66667% !important;
+                                                      }
+                                                      table.body td.small-offset-9,
+                                                      table.body th.small-offset-9 {
+                                                        margin-left: 75% !important;
+                                                        margin-left: 75% !important;
+                                                      }
+                                                      table.body td.small-offset-10,
+                                                      table.body th.small-offset-10 {
+                                                        margin-left: 83.33333% !important;
+                                                        margin-left: 83.33333% !important;
+                                                      }
+                                                      table.body td.small-offset-11,
+                                                      table.body th.small-offset-11 {
+                                                        margin-left: 91.66667% !important;
+                                                        margin-left: 91.66667% !important;
+                                                      }
+                                                      table.body table.columns td.expander,
+                                                      table.body table.columns th.expander {
+                                                        display: none !important;
+                                                      }
+                                                      table.body .right-text-pad,
+                                                      table.body .text-pad-right {
+                                                        padding-left: 10px !important;
+                                                      }
+                                                      table.body .left-text-pad,
+                                                      table.body .text-pad-left {
+                                                        padding-right: 10px !important;
+                                                      }
+                                                      table.menu {
+                                                        width: 100% !important;
+                                                      }
+                                                      table.menu td,
+                                                      table.menu th {
+                                                        width: auto !important;
+                                                        display: inline-block !important;
+                                                      }
+                                                      table.menu.vertical td,
+                                                      table.menu.vertical th,
+                                                      table.menu.small-vertical td,
+                                                      table.menu.small-vertical th {
+                                                        display: block !important;
+                                                      }
+                                                      table.menu[align=""center""] {
+                                                        width: auto !important;
+                                                      }
+                                                      table.button.expand {
+                                                        width: 100% !important;
+                                                      }
+                                                    }
+                                                    @media only screen and (max-width: 596px) {
+                                                      .calendar-content {
+                                                        padding: 0px !important;
+                                                        width: 288px !important;
+                                                      }
+                                                      .not-available-day,
+                                                      .calendar-today,
+                                                      .available-day {
+                                                        height: 40px !important;
+                                                        width: 40px !important;
+                                                      }
+                                                      .day-label {
+                                                        margin-left: 10% !important;
+                                                        margin-top: 0% !important;
+                                                        font-size: 15px;
+                                                      }
+	                                                  .p
+	                                                  {
+	                                                  font-size:16px
+	                                                  font-size:4vw
+	                                                  }
+                                                    }
+                                                  </style>";
+
+                                string header = "<table class=\"body\" style=\"border-spacing:0;border-collapse:collapse;vertical-align:top;-webkit-hyphens:none;-moz-hyphens:none;hyphens:none;-ms-hyphens:none;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;margin:0;text-align:left;font-size:16px;line-height:19px;background:#f3f3f3;padding:0;width:100%;height:100%;color:#0a0a0a;margin-bottom:0px !important;background-color: white\">" +
+                                                "<tr style=\"padding:0;vertical-align:top;text-align:left\">" +
+                                                "<td class=\"center\" align=\"center\" valign=\"top\" style=\"font-size:16px;word-wrap:break-word;-webkit-hyphens:auto;-moz-hyphens:auto;hyphens:auto;vertical-align:top;text-align:left;line-height:1.3;color:#0a0a0a;font-family: 'Cabin', Helvetica, Arial, sans-serif;padding:0;margin:0;font-weight:normal;border-collapse:collapse !important\">" +
+                                                "<center style=\"width:100%;min-width:580px\">" +
+                                                "<table class=\"container\" style=\"border-spacing:0;border-collapse:collapse;padding:0;vertical-align:top;background:#fefefe;width:580px;margin:0 auto;text-align:inherit;max-width:580px;\">" +
+                                                "<tr style=\"padding:0;vertical-align:top;text-align:left\">" +
+                                                "<td style=\"font-size:16px;word-wrap:break-word;-webkit-hyphens:auto;-moz-hyphens:auto;hyphens:auto;vertical-align:top;text-align:left;line-height:1.3;color:#0a0a0a;font-family: 'Cabin', Helvetica, Arial, sans-serif;padding:0;margin:0;font-weight:normal;border-collapse:collapse !important\">" +
+                                                "<div style=\"padding-top:10px\">" +
+                                                "<table class=\"row\" style=\"border-spacing:0;border-collapse:collapse;text-align:left;vertical-align:top;padding:0;width:100%;position:relative;display:table\">" +
+                                                "<tr class=\"\" style=\"padding:0;vertical-align:top;text-align:left\">" +
+                                                "<th style=\"width: 40%;>" +
+                                                "<a href=\"https://www.hummingbirdindia.com\" target=\"_blank\" style=\"padding:0;margin:0;text-align:left;line-height:1.3;color:#2199e8;text-decoration:none\">" +
+                                                "<img align=\"center\" alt=\"" + Imagealt1 + "\" class=\"center standard-header\" src=\"" + Imagelocation1 + "\" style=\"max-width: 120px\" >" +
+                                                "</a></th><th style=\"font-size:16px;padding:20px 0 20px 0;line-height:28px\"> " +
+                                                "<p>HB Confirmation #: " + ds.Tables[2].Rows[0][2].ToString() + "</p>" +
+                                                "</th></tr></table></div><div>" +
+                                                "<div class=\"headline-body\" style=\"padding-bottom:15px\">" +
+                                                "<table class=\"row\" style=\"border-spacing:0;border-collapse:collapse;text-align:left;vertical-align:top;padding:0;width:100%;position:relative;display:table\">" +
+                                                "<tr class=\"\" style=\"padding:0;vertical-align:top;text-align:left\">" +
+                                                "<th class=\"small-12 large-12 columns first last\" style=\"font-size:16px;text-align:left;line-height:1.3;color:#0a0a0a;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;width:564px;margin:0 auto;padding-left:16px;padding-right:16px;padding-bottom:0px !important\">" +
+                                                "<p class=\"body  body-lg body-link-rausch light text-left   \" style=\"font-family: 'Cabin', Helvetica, Arial, sans-serif;padding:0;margin:0;line-height:1.4;font-weight:300;color:#484848;font-size:24px;hyphens:none;-ms-hyphens:none;-webkit-hyphens:none;-moz-hyphens:none;text-align:left;margin-bottom:0px !important;color:#0a0a0a;\">" + ds.Tables[2].Rows[0][1].ToString();
+
+                                if (All.QReserveFlag == true)
+                                {
+                                    header += "<br /><span style=\"float: right;font-size:20px;\">Quick Reservation Confirmed</span>";
+                                }
+                                else
+                                {
+                                    header += "<br /><span style=\"float: right;font-size:20px;\">Reservation Confirmed</span>";
+                                }
+
+                                header += "</p></th></tr></table></div></div>";
+
+                                string ChkInOutDate = "";
+                                if (All.LTIAPIFlag == true)
+                                {
+                                    ChkInOutDate = "<div><div><table class=\"row\" style=\"border-spacing:0;border-collapse:collapse;text-align:left;vertical-align:top;padding:0;width:100%;position:relative;display:table\">" +
+                                     "<tr style=\"padding:0;vertical-align:top;text-align:left\">" +
+                                     "<th class=\"small-5 large-5 columns first\" style=\"font-size:16px;text-align:left;line-height:1.3;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;color:#0a0a0a;padding-right:8px;margin:0 auto;padding-bottom:16px;width:225.66667px;padding-left:16px\">" +
+                                     "<p class=\"body-text-lg light\" style='margin:0;text-align:left;padding:0;font-weight:300;font-family:\"Circular\", \"Helvetica\", Helvetica, Arial, sans-serif;color:#484848;word-break:normal;line-height:1.2;font-size:17px;margin-bottom:0px !important'>‌" + All.CheckinDate + " ‌</p>" +
+                                     "<p class=\"body-text light\" style='margin:0;text-align:left;padding:0;font-weight:300;font-family:\"Circular\", \"Helvetica\", Helvetica, Arial, sans-serif;color:#484848;word-break:normal;line-height:1.4;font-size:16px;margin-bottom:0px !important'>Check-in " + All.CheckinTime + "‌</p>" +
+                                     "</th><th class=\"small-2 large-2 columns\" style=\"font-size:16px;color:#0a0a0a;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;text-align:left;line-height:1.3;padding-right:8px;width:80.66667px;padding-bottom:16px;padding-left:16px;margin:0 auto\">" +
+                                     "<img alt=\"\" class=\"slash text-center\" src=\"https://endpoint887127.azureedge.net/img/slash.png\" style=\"outline:none;text-decoration:none;-ms-interpolation-mode:bicubic;display:block;clear:both;max-width:40px;width:40px;text-align:center;float:none;margin:0 auto\">" +
+                                     "</th><th class=\"small-5 large-5 columns last\" style=\"font-size:16px;text-align:left;color:#0a0a0a;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;line-height:1.3;width:225.66667px;padding-left:16px;margin:0 auto;padding-bottom:16px;padding-right:16px\">" +
+                                     "<p class=\"body-text-lg light text-right\" style='padding:0;margin:0;font-size:17px;font-weight:300;font-family:\"Circular\", \"Helvetica\", Helvetica, Arial, sans-serif;color:#484848;word-break:normal;line-height:1.2;text-align:right;margin-bottom:0px !important'>‌" + All.CheckoutDate + "</p>" +
+                                     "<p class=\"body-text light text-right\" style='padding:0;margin:0;font-size:16px;font-weight:300;font-family:\"Circular\", \"Helvetica\", Helvetica, Arial, sans-serif;color:#484848;word-break:normal;line-height:1.4;text-align:right;margin-bottom:0px !important'>Check-out</p>" +
+                                     "</th></tr></table></div><div>" +
+                                     "<table class=\"row\" style=\"border-spacing:0;border-collapse:collapse;text-align:left;vertical-align:top;padding:0;width:100%;position:relative;display:table\">" +
+                                     "<tr class=\"\" style=\"padding:0;vertical-align:top;text-align:left\">" +
+                                     "<th class=\"small-12 large-12 columns first last\" style=\"padding-bottom:5px;width:564px;padding-left:16px;padding-right:16px\">" +
+                                     "<hr class=\"full-divider\" style=\"clear:both;max-width:580px;border-right:0;border-top:0;border-left:0;margin:20px auto;border-bottom:1px solid #cacaca;background-color:#dbdbdb;height:1px;border:none;width:100%;margin-top:0;margin-bottom:0\">" +
+                                     "</th></tr></table></div>";
+                                }
+                                else
+                                {
+                                    ChkInOutDate = "<div><div><table class=\"row\" style=\"border-spacing:0;border-collapse:collapse;text-align:left;vertical-align:top;padding:0;width:100%;position:relative;display:table\">" +
+                                     "<tr style=\"padding:0;vertical-align:top;text-align:left\">" +
+                                     "<th class=\"small-5 large-5 columns first\" style=\"font-size:16px;text-align:left;line-height:1.3;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;color:#0a0a0a;padding-right:8px;margin:0 auto;padding-bottom:16px;width:225.66667px;padding-left:16px\">" +
+                                     "<p class=\"body-text-lg light\" style='margin:0;text-align:left;padding:0;font-weight:300;font-family:\"Circular\", \"Helvetica\", Helvetica, Arial, sans-serif;color:#484848;word-break:normal;line-height:1.2;font-size:17px;margin-bottom:0px !important'>‌" + ds.Tables[0].Rows[0][10].ToString() + " ‌</p>" +
+                                     "<p class=\"body-text light\" style='margin:0;text-align:left;padding:0;font-weight:300;font-family:\"Circular\", \"Helvetica\", Helvetica, Arial, sans-serif;color:#484848;word-break:normal;line-height:1.4;font-size:16px;margin-bottom:0px !important'>Check-in " + ds.Tables[0].Rows[0][9].ToString() + "‌</p>" +
+                                     "</th><th class=\"small-2 large-2 columns\" style=\"font-size:16px;color:#0a0a0a;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;text-align:left;line-height:1.3;padding-right:8px;width:80.66667px;padding-bottom:16px;padding-left:16px;margin:0 auto\">" +
+                                     "<img alt=\"\" class=\"slash text-center\" src=\"https://endpoint887127.azureedge.net/img/slash.png\" style=\"outline:none;text-decoration:none;-ms-interpolation-mode:bicubic;display:block;clear:both;max-width:40px;width:40px;text-align:center;float:none;margin:0 auto\">" +
+                                     "</th><th class=\"small-5 large-5 columns last\" style=\"font-size:16px;text-align:left;color:#0a0a0a;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;line-height:1.3;width:225.66667px;padding-left:16px;margin:0 auto;padding-bottom:16px;padding-right:16px\">" +
+                                     "<p class=\"body-text-lg light text-right\" style='padding:0;margin:0;font-size:17px;font-weight:300;font-family:\"Circular\", \"Helvetica\", Helvetica, Arial, sans-serif;color:#484848;word-break:normal;line-height:1.2;text-align:right;margin-bottom:0px !important'>‌" + ds.Tables[0].Rows[0][11].ToString() + "</p>" +
+                                     "<p class=\"body-text light text-right\" style='padding:0;margin:0;font-size:16px;font-weight:300;font-family:\"Circular\", \"Helvetica\", Helvetica, Arial, sans-serif;color:#484848;word-break:normal;line-height:1.4;text-align:right;margin-bottom:0px !important'>Check-out</p>" +
+                                     "</th></tr></table></div><div>" +
+                                     "<table class=\"row\" style=\"border-spacing:0;border-collapse:collapse;text-align:left;vertical-align:top;padding:0;width:100%;position:relative;display:table\">" +
+                                     "<tr class=\"\" style=\"padding:0;vertical-align:top;text-align:left\">" +
+                                     "<th class=\"small-12 large-12 columns first last\" style=\"padding-bottom:5px;width:564px;padding-left:16px;padding-right:16px\">" +
+                                     "<hr class=\"full-divider\" style=\"clear:both;max-width:580px;border-right:0;border-top:0;border-left:0;margin:20px auto;border-bottom:1px solid #cacaca;background-color:#dbdbdb;height:1px;border:none;width:100%;margin-top:0;margin-bottom:0\">" +
+                                     "</th></tr></table></div>";
+                                }
 
 
-                                string BookingDetails = "<div style =\"border-bottom:2px solid #808080;margin:5px 0px 20px 0px\" >" +
-                                "<h3 style =\"margin:0;font-family:&#39;Open Sans&#39;;font-size:14px;padding:10px 0;text-align:center;color:#0000ff;font-weight:bold\">Booking Details<u></u></h3>" +
-                                "</ div >" +
-                                "<table style =\"border-collapse:collapse\">" +
-                                "<tbody>" +
-                                "" +
-                                "<tr style =\"border-bottom:2px solid yellow\">" +
-                                "<td style =\"font-size:13px;width:13%\" valign =\"top\" align =\"center\"><strong> Guest Name </strong></td>" +
-                                "<td style =\"font-size:13px;width:12%\" valign =\"top\" align =\"center\"><strong> Room Type / Occupancy </strong></td >" +
-                                "<td style =\"font-size:13px;width:12%\" valign =\"top\" align =\"center\"><strong> Check In </strong></td>" +
-                                "<td style =\"font-size:13px;width:12%\" valign =\"top\" align =\"center\"><strong> Check Out </strong></td >" +
-                                "<td style =\"font-size:13px;width:13%\" valign =\"top\" align =\"center\"><strong> Tariff </strong></td >" +
-                                "<td style =\"font-size:13px;width:13%\" valign =\"top\" align =\"center\"><strong> Room Tariff </strong></td>" +
-                                "<td style =\"font-size:13px;width:13%\" valign =\"top\" align =\"center\"><strong> Services </strong></td>" +
-                                "</tr>" +
-                                "<tr style =\"font-style:normal;font-weight:normal;border-bottom:1px solid #ebebeb\">" +
-                                "<td style =\"vertical-align:middle;text-align:center\"> " + ds.Tables[0].Rows[0][0].ToString() + " </td>" +
-                                "<td style =\"vertical-align:middle;text-align:center\"> " + ds.Tables[0].Rows[0][7].ToString() + " </td>" +
-                                "<td style =\"vertical-align:middle;text-align:center\"> " + ds.Tables[0].Rows[0][1].ToString() + " </td>" +
-                                "<td style =\"vertical-align:middle;text-align:center\"> " + ds.Tables[0].Rows[0][2].ToString() + " </td>" +
-                                "<td style =\"vertical-align:middle;text-align:center\"> " + ds.Tables[0].Rows[0][3].ToString() + " / -</td>" +
-                                "<td style =\"vertical-align:middle;text-align:center\"> " + ds.Tables[0].Rows[0][5].ToString() + "</td>" +
-                                "<td style =\"vertical-align:middle;text-align:center\"> " + ds.Tables[0].Rows[0][6].ToString() + "</td>" +
-                                "</tr></tbody></table>" +
-                                "<div style =\"border-bottom:2px solid #808080;margin:5px 0px 20px 0px\">" +
-                                "<h3 style =\"margin:0;font-family:&#39;Open Sans&#39;;font-size:14px;padding:10px 0;text-align:center;font-weight:bold\"><u></u></h3>" +
-                                "</div>" +
-                                "<h3 style =\"margin:0;font-family:&#39;Open Sans&#39;;font-size:15px;padding:10px 0\"> Note :" + ds.Tables[2].Rows[0][8].ToString() + "</h3>";
 
-                                string HotelDetails = "<div style =\"border-bottom:2px solid #808080;margin:5px 0px 20px 0px\">" +
-                                    "<h3 style =\"margin:0;font-family:&#39;Open Sans&#39;;font-size:14px;padding:10px 0;text-align:center;color:#0000ff;font-weight:bold\"> Hotel Details <u></u></h3>" +
-                                    "</div>" +
-                                    "<table style =\"border:#dbdbdb\"><tbody><tr>" +
-                                    "<td style =\"font-size:13px;width:14%\" valign = \"top\" align =\"center\"><strong></strong></td>" +
-                                    "<td style =\"font-size:13px;width:18%\" valign =\"top\" align =\"center\"><strong></strong></td>" +
-                                    "</tr><tr></tr>" +
-                                    "<tr style =\"font-style:normal;font-weight:normal\">" +
-                                    "<td style =\"vertical-align:middle;text-align:left\"><strong> Hotel Name:</strong>" + ds.Tables[1].Rows[0][5].ToString() + "<strong> Address : </strong> " + ds.Tables[1].Rows[0][0].ToString() + "<b> " + ds.Tables[1].Rows[0][1].ToString() + " </b> </ td >" +
-                                    "<td style =\"vertical-align:middle;text-align:center\" ><a href =" + MapLink + " target =\"_blank\" ><img src =\"https://portalvhds4prl9ymlwxnt8.blob.core.windows.net/img/Google_Maps_Icon.png\" ></a><a href = " + link + " target =\"_blank\"><span style =\"font-family:&#39;Cabin&#39;,Helvetica,Arial,sans-serif;padding:10px 0 10px 16px;margin:0;text-align:left;line-height:1.3;text-decoration:none;font-weight:300;color:#d9242c!important\"> Security / Cancellation Policy </span></a></td>" +
-                                    "</tr></tbody></table>";
+                                string GuestTbl = "<div style=\"padding-top:8px;padding-bottom:8px\">" +
+                                                  "<table class=\"row\" style=\"border-spacing:0;border-collapse:collapse;text-align:left;vertical-align:top;padding:0;width:100%;position:relative;display:table\">" +
+                                                  "<tr style=\"padding:0;vertical-align:top;text-align:left\">" +
+                                                  "<th class=\"col-pad-left-2 col-pad-right-2\" style =\"padding:0;margin:0;padding-left:16px;padding-right:16px\">" +
+                                                  "<div style=\"margin:0;-webkit-border-radius:8px;border-radius:8px;display:block;border-color:#d9242c;border-width:2px;border-style:dotted dashed;\">" +
+                                                  "<p class=\"text-center\" style='font-weight:normal;padding:0;margin:0;text-align:center;font-family:\"Circular\", \"Helvetica\", Helvetica, Arial, sans-serif;font-size:24px;line-height:32px;margin-bottom:0px !important'>Guest Details</p>" +
+                                                  "</div></th></tr></table></div>" +
+                                                  "<div style=\"padding-top:8px;padding-bottom:8px;padding-left:16px;padding-right:16px;\">" +
+                                                  "<table rules=\"rows\" style =\"border:#dbdbdb\">" +
+                                                  "<tr><td style=\"font-size:13px; width:16%;\" valign=\"top\" align=\"center\" ><strong> Guest Name </strong></td > " +
+                                                  "<td style=\"font-size:13px; width:16%;\" valign=\"top\" align=\"center\" ><strong> Room No / Occupancy </strong ></td > " +
+                                                  "<td style=\"font-size:13px; width:16%;\" valign=\"top\" align=\"center\" ><strong> Tariff / <br> Room / Day </strong ></td > " +
+                                                  "</tr><tr></tr>";
+                                for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                                {
+                                    GuestTbl += "<tr style=\"font-style:normal;font-weight:normal;\" class=\"ng-scope\">" +
+                                            "<td class=\"padd ng-binding\" style=\"vertical-align:middle;text-align:center\">" + ds.Tables[0].Rows[i][12].ToString() + ". " + ds.Tables[0].Rows[i][0].ToString() + " " + ds.Tables[0].Rows[i][13].ToString() + "</td>" +
+                                            "<td class=\"padd ng-binding\" style=\"vertical-align: middle; text-align: center;\">" + ds.Tables[0].Rows[i][6].ToString() + " / " + ds.Tables[0].Rows[i][7].ToString() + "</td>" +
+                                            "<td class=\"padd ng-binding\" style=\"vertical-align: middle; text-align: center;\">INR " + ds.Tables[0].Rows[i][3].ToString() + "</td>" +
+                                            "</tr>";
+                                }
+                                GuestTbl += "</table>";
 
-                                string GSTDetails = "<div style =\"border-bottom:2px solid #808080;margin:5px 0px 20px 0px\">" +
-                                    "<h3 style =\"margin:0;font-family:&#39;Open Sans&#39;;font-size:14px;padding:10px 0;text-align:center;color:#0000ff;font-weight:bold\"> GST Details<u></u></h3>" +
-                                    "</div>" +
-                                    "<table style =\"border-collapse:collapse\">" +
-                                    "<tbody>" +
-                                    "<tr style =\"border-bottom:2px solid yellow\">" +
-                                    "<td style =\"font-size:13px;width:16%\" valign =\"top\" align =\"center\"><strong> GST Number </strong></td>" +
-                                    "<td style =\"font-size:13px;width:16%\" valign =\"top\" align =\"center\"><strong> Legal Name </strong></td>" +
-                                    "<td style =\"font-size:13px;width:16%\" valign =\"top\" align =\"center\"><strong> Address </strong></td>" +
-                                    "</tr>" +
-                                    "<tr style =\"font-style:normal;font-weight:normal;border-bottom:1px solid #ebebeb\">" +
-                                    "<td style =\"vertical-align:middle;text-align:center\">" + ds.Tables[12].Rows[0][1].ToString() + "</td>" +
-                                    "<td style =\"vertical-align:middle;text-align:center\">" + ds.Tables[12].Rows[0][0].ToString() + "</td>" +
-                                    "<td style =\"vertical-align:middle;text-align:center\">" + ds.Tables[12].Rows[0][2].ToString() + "</td>" +
-                                    "</tr></tbody></table>";
-                                string OtherDetails = "<div style =\"border-bottom:2px solid #808080;margin:5px 0px 20px 0px\">" +
-                                    "<h3 style =\"margin:0;font-family:&#39;Open Sans&#39;;font-size:14px;padding:10px 0;text-align:center;color:#0000ff;font-weight:bold\">Other Details<u></u></h3>" +
-                                    "</div>" +
-                                    "<table style =\"border-collapse:collapse;width:800px;\">" +
-                                    "<tbody>" +
-                                    "<tr style =\"border-bottom:2px solid yellow\">" +
-                                    "<td style =\"font-size:13px;width:33%\" valign =\"top\" align =\"center\"><strong> Client Ref No</strong></td>" +
-                                    "<td style =\"font-size:13px;width:33%\" valign =\"top\" align =\"center\"><strong> Booker </strong></td>" +
-                                    "<td style =\"font-size:13px;width:33%\" valign =\"top\" align =\"center\"><strong> Issues / Feedback </strong></td>" +
-                                    "</tr>" +
-                                    "<tr style =\"font-style:normal;font-weight:normal;border-bottom:1px solid #ebebeb\">" +
-                                    "<td style =\"vertical-align:middle;text-align:center\">" + ds.Tables[2].Rows[0][13].ToString() + "</td>" +
-                                    "<td style =\"vertical-align:middle;text-align:center\">" + ds.Tables[2].Rows[0][3].ToString() + "</td>" +
-                                    "<td style =\"vertical-align:middle;text-align:center\">" + ds.Tables[2].Rows[0][14].ToString() + " </td>" +
-                                    "</tr></tbody></table>" +
-                                    "<table><tbody><tr>" +
-                                    "<td style =\"font-size:13px;width:16%\" valign =\"top\" align =\"center\"><strong></strong></td>" +
-                                    "<td style =\"font-size:13px;width:16%\" valign =\"top\" align =\"right\" ><strong> Powered by <a href =\"http://hummingbirdindia.com\" target =\"_blank\">hummingbirdindia.com</a><u></u></strong></td>" +
-                                    "</tr></tbody></table></div></div>";
+                                string PayMode = "<div><div class=\"row-pad-bot-1\" style=\"padding-bottom:8px !important;padding-top:6px;\"></div>" +
+                                                  "<table class=\"row\" style=\"border-spacing:0;border-collapse:collapse;text-align:left;vertical-align:top;padding:0;width:100%;position:relative;display:table\">" +
+                                                  "<tr style=\"padding:0;vertical-align:top;text-align:left\">" +
+                                                  "<th class=\"small-5 large-5 columns first\" style=\"font-size:16px;text-align:left;line-height:1.3;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;color:#0a0a0a;padding-right:8px;margin:0 auto;padding-bottom:16px;width:225.66667px;padding-left:16px\">" +
+                                                  "<p class=\"body-text light\" style='margin:0;text-align:left;padding:0;font-weight:300;font-family:\"Circular\", \"Helvetica\", Helvetica, Arial, sans-serif;color:#484848;word-break:normal;line-height:1.4;font-size:18px;margin-bottom:0px !important'>Tariff Payment: " + ds.Tables[0].Rows[0][4].ToString() + "</p>" +
+                                                  "</th><th class=\"small-2 large-2 columns\" style=\"font-size:16px;color:#0a0a0a;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;text-align:left;line-height:1.3;padding-right:8px;width:80.66667px;padding-bottom:16px;padding-left:16px;margin:0 auto\">" +
+                                                  "<img alt=\"\" class=\"slash text-center\" src=\"https://endpoint887127.azureedge.net/img/slash.png\" style=\"outline:none;text-decoration:none;-ms-interpolation-mode:bicubic;display:block;clear:both;max-width:40px;width:40px;text-align:center;float:none;margin:0 auto\">" +
+                                                  "</th><th class=\"small-5 large-5 columns last\" style=\"font-size:16px;text-align:left;color:#0a0a0a;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;line-height:1.3;width:225.66667px;padding-left:16px;margin:0 auto;padding-bottom:16px;padding-right:16px\">" +
+                                                  "<p class=\"body-text light text-right\" style='padding:0;margin:0;font-size:18px;font-weight:300;font-family:\"Circular\", \"Helvetica\", Helvetica, Arial, sans-serif;color:#484848;word-break:normal;line-height:1.4;text-align:right;margin-bottom:0px !important'>Service Payment: " + ds.Tables[0].Rows[0][5].ToString() + "</p>" +
+                                                  "</th></tr></table></div></div><div>" +
+                                                  "<table class=\"row\" style=\"border-spacing:0;border-collapse:collapse;text-align:left;vertical-align:top;padding:0;width:100%;position:relative;display:table\">" +
+                                                  "<tr class=\"\" style=\"padding:0;vertical-align:top;text-align:left\">" +
+                                                  "<th class=\"small-12 large-12 columns first last\" style=\"font-size:16px;padding:0;text-align:left;color:#0a0a0a;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;line-height:1.3;margin:0 auto;padding-bottom:3px;width:564px;padding-left:16px;padding-right:16px\">" +
+                                                  "<hr class=\"full-divider\" style=\"clear:both;max-width:580px;border-right:0;border-top:0;border-left:0;margin:20px auto;border-bottom:1px solid #cacaca;background-color:#dbdbdb;height:1px;border:none;width:100%;margin-top:0;margin-bottom:0\">" +
+                                                  "</th></tr></table></div>";
 
-                                var PdfContent = "";
-                                MailContent = header + BookingDetails + HotelDetails + OtherDetails;
-                                PdfContent = header + BookingDetails + HotelDetails + OtherDetails;
+                                string TariffDtls = "<div style=\"padding-top:8px;padding-bottom:8px\">" +
+                                                    "<table class=\"row\" style=\"border-spacing:0;border-collapse:collapse;text-align:left;vertical-align:top;padding:0;width:100%;position:relative;display:table\">" +
+                                                    "<th class=\"small-5 large-5 columns last valign-top\" style=\"font-size:16px;text-align:left;line-height:1.3;color:#0a0a0a;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;vertical-align:top;width:225.66667px;padding-left:16px;margin:0 auto;padding-right:16px\">" +
+                                                    "<p class=\"body-text-lg light color-rausch text-right\" style='padding:0;margin:0;word-break:normal;font-weight:300;font-family:\"Cabin\", \"Helvetica\", Helvetica, Arial, sans-serif;line-height:1.2;font-size:18px;text-align:center;color:#d9242c !important;margin-bottom:0px !important'>Guest Contacts</p>" +
+                                                    "<p class=\"body-text light\" style='margin:0;text-align:left;padding:0;font-weight:300;font-family:\"Cabin\", \"Helvetica\", Helvetica, Arial, sans-serif;color:#484848;word-break:normal;line-height:1.4;font-size:16px;margin-bottom:0px !important'>" +
+                                                     MobileNo +
+                                                    "</p></th></table></div><div>" +
+                                                    "<table class=\"row\" style=\"border-spacing:0;border-collapse:collapse;text-align:left;vertical-align:top;padding:0;width:100%;position:relative;display:table\">" +
+                                                    "<tr class=\"\" style=\"padding:0;vertical-align:top;text-align:left\">" +
+                                                    "<th class=\"small-12 large-12 columns first last\" style=\"font-size:16px;padding:0;text-align:left;color:#0a0a0a;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;line-height:1.3;margin:0 auto;padding-bottom:16px;width:564px;padding-left:16px;padding-right:16px\">" +
+                                                    "<hr class=\"full-divider\" style=\"clear:both;max-width:580px;border-right:0;border-top:0;border-left:0;margin:20px auto;border-bottom:1px solid #cacaca;background-color:#dbdbdb;height:1px;border:none;width:100%;margin-top:0;margin-bottom:0\">" +
+                                                    "</th></tr></table></div>";
+
+
+                                string PropertyDtls = "<table class=\"row\" style=\"border-spacing:0;border-collapse:collapse;text-align:left;vertical-align:top;padding:0;width:100%;position:relative;display:table;\">" +
+                                        "<tr style=\"padding:0;vertical-align:top;text-align:left\">" +
+                                        "<th class=\"small-5 large-5 columns first\" style=\"font-size:16px;text-align:left;line-height:1.3;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;color:#0a0a0a;padding-right:8px;margin:0 auto;padding-bottom:16px;padding-left:16px\">" +
+                                        "<p class=\"body-text-lg light row-pad-bot-1\" style=\"padding:0;margin:0 0 5px 0;text-align:center;font-size:16px;font-weight:300;font-family:'Cabin',Helvetica, Arial, sans-serif;color:#484848;word-break:normal;line-height:1.2;font-weight: bold;\">Property Name : " + ds.Tables[1].Rows[0][5].ToString() + " </p>" +
+                                        "<p class=\"body-text-lg light row-pad-bot-1\" style=\"padding:0;margin:0 0 5px 0;text-align:center;font-size:13px;font-weight:300;font-family:'Cabin',Helvetica, Arial, sans-serif;color:#484848;word-break:normal;line-height:1.2;\">" + ds.Tables[1].Rows[0][0].ToString() + " </p>" +
+                                        "</th></tr></table>" +
+                                        "<div><table class=\"row\" style=\"border-spacing:0;border-collapse:collapse;text-align:left;vertical-align:top;padding:0;width:100%;position:relative;display:table\">" +
+                                        "<tr class=\"\" style=\"padding:0;vertical-align:top;text-align:left\">" +
+                                        "<th class=\"small-12 large-12 columns first last\" style=\"font-size:16px;padding:0;text-align:left;color:#0a0a0a;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;line-height:1.3;margin:0 auto;padding-bottom:16px;width:564px;padding-left:16px;padding-right:16px\">" +
+                                        "<hr class=\"full-divider\" style=\"clear:both;max-width:580px;border-right:0;border-top:0;border-left:0;margin:20px auto;border-bottom:1px solid #cacaca;background-color:#dbdbdb;height:1px;border:none;width:100%;margin-top:0;margin-bottom:0\">" +
+                                        "</th></tr></table></div>";
+
+                                string Note = "<table class=\"row\" style=\"border-spacing:0;border-collapse:collapse;text-align:left;vertical-align:top;padding:0;width:100%;position:relative;display:table\">" +
+                                            "<tr style=\"padding:0;vertical-align:top;text-align:left\">" +
+                                            "<th class=\"small-5 large-5 columns first\" style=\"font-size:16px;text-align:left;line-height:1.3;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;color:#0a0a0a;padding-right:8px;margin:0 auto;padding-bottom:16px;padding-left:16px\">" +
+                                            "<p class=\"body-text-lg light row-pad-bot-1\" style=\"padding:0;margin:0 0 5px 0;text-align:center;font-size:14px;font-family:'Cabin',Helvetica, Arial, sans-serif;color:#484848;word-break:normal;line-height:1.2;\"><strong>Note : </strong>" + SplNote + " </p>" +
+                                            "</th></tr></table>" +
+                                            "<div><table class=\"row\" style=\"border-spacing:0;border-collapse:collapse;text-align:left;vertical-align:top;padding:0;width:100%;position:relative;display:table\">" +
+                                            "<tr class=\"\" style=\"padding:0;vertical-align:top;text-align:left\">" +
+                                            "<th class=\"small-12 large-12 columns first last\" style=\"font-size:16px;padding:0;text-align:left;color:#0a0a0a;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;line-height:1.3;margin:0 auto;padding-bottom:16px;width:564px;padding-left:16px;padding-right:16px\">" +
+                                            "<hr class=\"full-divider\" style=\"clear:both;max-width:580px;border-right:0;border-top:0;border-left:0;margin:20px auto;border-bottom:1px solid #cacaca;background-color:#dbdbdb;height:1px;border:none;width:100%;margin-top:0;margin-bottom:0\">" +
+                                            "</th></tr></table></div>";
+
+                                string ContactDtls = "<div style=\"padding-top:8px;padding-bottom:8px\" >" +
+                                            "<table class=\"row\" style=\"border-spacing:0;border-collapse:collapse;text-align:left;vertical-align:top;padding:0;width:100%;position:relative;display:table\">" +
+                                            "<tr class=\"\" style=\"padding:0;vertical-align:top;text-align:left\">" +
+                                            "<th class=\"small-7 large-7 columns first\" style=\"font-size:16px;text-align:left;line-height:1.3;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;color:#0a0a0a;padding-right:8px;margin:0 auto;width:322.33333px;padding-left:16px;vertical-align: top;\">" +
+                                            "<p style = 'margin:0;text-align:left;padding:0;' > Booked by</p>" +
+                                            "<th class=\"small-5 large-5 columns last valign-top\" style=\"font-size:16px;text-align:left;line-height:1.3;color:#0a0a0a;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;vertical-align:top;width:225.66667px;padding-left:16px;margin:0 auto;padding-right:16px\">" +
+                                            "<p style = 'padding:0;margin:0;text-align:right;margin-bottom:0px !important' > " + ds.Tables[2].Rows[0][3].ToString() + " </ p >" +
+                                            "</th>" +
+                                            "</tr><tr class=\"\" style=\"padding:0;vertical-align:top;text-align:left\">" +
+                                            "<th class=\"small-7 large-7 columns first\" style=\"font-size:16px;text-align:left;line-height:1.3;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;color:#0a0a0a;padding-right:8px;margin:0 auto;width:322.33333px;padding-left:16px;vertical-align: top;\">" +
+                                            "<hr>" +
+                                            "<th class=\"small-5 large-5 columns last valign-top\" style=\"font-size:16px;text-align:left;line-height:1.3;color:#0a0a0a;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;vertical-align:top;width:225.66667px;padding-left:16px;margin:0 auto;padding-right:16px\">" +
+                                            "<hr>" +
+                                            "</th>" +
+                                             "</tr><tr class=\"\" style=\"padding:0;vertical-align:top;text-align:left\">" +
+                                            "<th class=\"small-7 large-7 columns first\" style=\"font-size:16px;text-align:left;line-height:1.3;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;color:#0a0a0a;padding-right:8px;margin:0 auto;width:322.33333px;padding-left:16px;vertical-align: top;\">" +
+                                            "<p style = 'margin:0;text-align:left;padding:0;' >Client Request #</p>" +
+                                            "<th class=\"small-5 large-5 columns last valign-top\" style=\"font-size:16px;text-align:left;line-height:1.3;color:#0a0a0a;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;vertical-align:top;width:225.66667px;padding-left:16px;margin:0 auto;padding-right:16px\">" +
+                                            "<p style = 'padding:0;margin:0;text-align:right;margin-bottom:0px !important' > " + ds.Tables[2].Rows[0][12].ToString() + " </ p >" +
+                                            "</th>" +
+                                             "</tr><tr class=\"\" style=\"padding:0;vertical-align:top;text-align:left\">" +
+                                            "<th class=\"small-7 large-7 columns first\" style=\"font-size:16px;text-align:left;line-height:1.3;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;color:#0a0a0a;padding-right:8px;margin:0 auto;width:322.33333px;padding-left:16px;vertical-align: top;\">" +
+                                            "<hr>" +
+                                            "<th class=\"small-5 large-5 columns last valign-top\" style=\"font-size:16px;text-align:left;line-height:1.3;color:#0a0a0a;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;vertical-align:top;width:225.66667px;padding-left:16px;margin:0 auto;padding-right:16px\">" +
+                                            "<hr>" +
+                                            "</th>" +
+                                             "</tr><tr class=\"\" style=\"padding:0;vertical-align:top;text-align:left\">" +
+                                            "<th class=\"small-7 large-7 columns first\" style=\"font-size:16px;text-align:left;line-height:1.3;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;color:#0a0a0a;padding-right:8px;margin:0 auto;width:322.33333px;padding-left:16px;vertical-align: top;\">" +
+                                            "<p style = 'margin:0;text-align:left;padding:0;' >Issues / feedbacks</p>" +
+                                            "<th class=\"small-5 large-5 columns last valign-top\" style=\"font-size:16px;text-align:left;line-height:1.3;color:#0a0a0a;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;vertical-align:top;width:225.66667px;padding-left:16px;margin:0 auto;padding-right:16px\">" +
+                                            "<p style = 'padding:0;margin:0;text-align:right;margin-bottom:0px !important' > " + DeskNo + "<br>" + ds.Tables[10].Rows[0][1].ToString() + " </ p >" +
+                                            "</th>" +
+                                            "</tr></table></div>";
+
+
+
+                                ContactDtls += "<div>" +
+                                            "<table class=\"row\" style=\"border-spacing:0;border-collapse:collapse;text-align:left;vertical-align:top;padding:0;width:100%;position:relative;display:table\">" +
+                                            "<tr class=\"\" style=\"padding:0;vertical-align:top;text-align:left\">" +
+                                            "<th class=\"small-12 large-12 columns first last\" style=\"font-size:16px;padding:0;text-align:left;color:#0a0a0a;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;line-height:1.3;margin:0 auto;padding-bottom:16px;width:564px;padding-left:16px;padding-right:16px\">" +
+                                            "<hr class=\"full-divider\" style=\"clear:both;max-width:580px;border-right:0;border-top:0;border-left:0;margin:20px auto;border-bottom:1px solid #cacaca;background-color:#dbdbdb;height:1px;border:none;width:100%;margin-top:0;margin-bottom:0\">" +
+                                            "</th></tr></table></div><div style=\"padding-top:2px\">" +
+                                            "<table class=\"row\" style=\"border-spacing:0;border-collapse:collapse;text-align:left;padding:0;width:100%;position:relative;display:table\">" +
+                                            "<tr class=\"\" style=\"padding:0;text-align:left\"><th style=\"width: 60%;\">" +
+                                            "<a href=\"" + link + "\" target=\"_blank\"><span style=\"font-family: 'Cabin', Helvetica, Arial, sans-serif;padding:10px 0 10px 16px;margin:0;text-align:left;line-height:1.3;text-decoration:none;font-weight:300;color:#d9242c !important\">Security/Cancellation Policy</span></a>" +
+                                            "</th><th style=\"font-size:10px;padding:10px 16px 10px 0;line-height:28px;text-align:right;\">" +
+                                            "<p>Powered by Staysimplyfied.com</p>" +
+                                            "</th></tr></table></div></tr></table></div>" +
+                                            "</td></tr></table></center></td></tr></table>";
+
+                                string EndData = "</body></html>";
+                                MailContent = style + header + ChkInOutDate + GuestTbl + PayMode + TariffDtls + PropertyDtls + Note + ContactDtls + EndData;
                                 message1.Body = MailContent;
                                 message1.IsBodyHtml = true;
 
@@ -4780,7 +5276,7 @@ namespace ConfirmationEMailWebApi.Controllers
                                 ////}
                                 ////message1.Bcc.Add(new System.Net.Mail.MailAddress("hbconf17@gmail.com"));
                             }
-                            message1.Bcc.Add(new System.Net.Mail.MailAddress("nandhu@warblerit.com"));
+                            message1.Bcc.Add(new System.Net.Mail.MailAddress("anbu@warblerit.com"));
 
                             message1.Subject = "Booking Confirmation - " + ds.Tables[2].Rows[0][2].ToString();
 
@@ -4821,112 +5317,638 @@ namespace ConfirmationEMailWebApi.Controllers
                                 SplNote = "- NA -";
                             }
 
-                            // Map Link
-                            string MapLink = "";
-                            if (ds.Tables[1].Rows[0][13].ToString() != "")
-                            {
-                                MapLink = "https://www.google.co.in/maps/place/" + ds.Tables[1].Rows[0][13].ToString();
-                            }
-                            else
-                            {
-                                MapLink = "#";
-                            }
+
                             // View in browser Link
                             string id = ds.Tables[2].Rows[0][12].ToString();
                             string link = "http://mybooking.hummingbirdindia.com/?redirect=BookingPropertyConfirmation&B=R&R=" + id;
 
 
-                            string header = "<div style =\"background - color:#f9fafc\" >" +
-                            "<div style =\"background-color:#ffffff;width:800px;margin:0 auto\" >" +
-                            "<div style =\"padding:10px 40px\">" +
-                            "<div style =\"width:60%;display:inline-block\">" +
-                            "<div style =\"border-radius:20px;padding:10px 10px;\">" +
-                            "<h3 style =\"margin:0;font-family:&#39;Open Sans&#39;;font-size:25px;padding:10px 0\">Confirmation Voucher</h3>" +
-                            "<p style =\"margin:0;font-family:&#39;Open Sans&#39;;font-size:16px;text-align:justify;line-height:125%;word-spacing:125%;padding:5px 0\" > Hummingbird Booking ID - <b>" + ds.Tables[2].Rows[0][2].ToString() + " </b></p>" +
-                            "<p style =\"margin:0;font-family:&#39;Open Sans&#39;;font-size:16px;text-align:justify;line-height:125%;word-spacing:125%;padding:5px 0\" > Hotel Confirmation / Ref No -<b>" + ds.Tables[2].Rows[0][15].ToString() + "</b></p>" +
-                            "<p style =\"margin:0;font-family:&#39;Open Sans&#39;;font-size:13px;text-align:justify;line-height:125%;word-spacing:125%;padding:5px 0\" > " + ds.Tables[2].Rows[0][7].ToString() + "</p>" +
-                            "</div></div>" +
-                            "<div style =\"width:39%;display:inline-block;text-align:right;vertical-align:text-bottom\"><img align =\"center\" alt=\"" + Imagealt1 + "\" class=\"center standard-header\" src=\"" + Imagelocation1 + "\" style=\"max-width: 200px\" ></a></div>" +
-                            "</div></div>";
+                            string style = @"<!DOCTYPE html PUBLIC ""-//W3C//DTD XHTML 1.0 Strict//EN"" ""http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"">
+                                                <html xmlns=""http://www.w3.org/1999/xhtml"" style=""min-height:100%;background:#f3f3f3"">
+                                                <head><meta http-equiv=""Content-Type"" content=""text/html; charset=UTF-8""></head>
+                                                <body style=""font-size:16px;min-width:100%;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;-moz-box-sizing:border-box;-webkit-box-sizing:border-box;box-sizing:border-box;font-family:'Circular', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;margin:0;line-height:1.3;color:#0a0a0a;text-align:left;width:100% !important"">
+                                                <div class=""preheader"" style=""mso-hide:all;visibility:hidden;opacity:0;color:transparent;font-size:0px;width:0;height:0;display:none !important""></div>
+                                                <meta http-equiv=""Content-Type"" content=""text/html; charset=utf-8"">
+                                                <meta name=""viewport"" content=""width=device-width"">
+                                                <link href=""https://fonts.googleapis.com/css?family=Cabin&display=swap"" rel=""stylesheet"">
+                                                <style data-roadie-ignore data-immutable=""true"">
+                                                    @media only screen and (max-width: 596px) {
+                                                      .small-float-center {
+                                                        margin: 0 auto !important;
+                                                        float: none !important;
+                                                        text-align: center !important;
+                                                      }
+                                                      .small-text-center {
+                                                        text-align: center !important;
+                                                      }
+                                                      .small-text-left {
+                                                        text-align: left !important;
+                                                      }
+                                                      .small-text-right {
+                                                        text-align: right !important;
+                                                      }
+                                                    }
+                                                    @media only screen and (max-width: 596px) {
+                                                      table.body table.container .hide-for-large {
+                                                        display: block !important;
+                                                        width: auto !important;
+                                                        overflow: visible !important;
+                                                        max-height: none !important;
+                                                      }
+                                                    }
+                                                    @media only screen and (max-width: 596px) {
+                                                      table.body table.container .row.hide-for-large,
+                                                      table.body table.container .row.hide-for-large {
+                                                        display: table !important;
+                                                        width: 100% !important;
+                                                      }
+                                                    }
+    
+                                                    @media only screen and (max-width: 596px) {
+                                                      table.body table.container .show-for-large {
+                                                        display: none !important;
+                                                        width: 0;
+                                                        mso-hide: all;
+                                                        overflow: hidden;
+                                                      }
+                                                    }
+                                                    @media only screen and (max-width: 596px) {
+                                                      table.body img {
+                                                        width: auto !important;
+                                                        height: auto !important;
+                                                      }
+                                                      table.body center {
+                                                        min-width: 0 !important;
+                                                      }
+                                                      table.body .container {
+                                                        width: 95% !important;
+                                                      }
+                                                      table.body .columns,
+                                                      table.body .column {
+                                                        height: auto !important;
+                                                        -moz-box-sizing: border-box;
+                                                        -webkit-box-sizing: border-box;
+                                                        box-sizing: border-box;
+                                                        padding-left: 16px !important;
+                                                        padding-right: 16px !important;
+                                                      }
+                                                      table.body .columns .column,
+                                                      table.body .columns .columns,
+                                                      table.body .column .column,
+                                                      table.body .column .columns {
+                                                        padding-left: 0 !important;
+                                                        padding-right: 0 !important;
+                                                      }
+                                                      table.body .collapse .columns,
+                                                      table.body .collapse .column {
+                                                        padding-left: 0 !important;
+                                                        padding-right: 0 !important;
+                                                      }
+                                                      td.small-1,
+                                                      th.small-1 {
+                                                        display: inline-block !important;
+                                                        width: 8.33333% !important;
+                                                      }
+                                                      td.small-2,
+                                                      th.small-2 {
+                                                        display: inline-block !important;
+                                                        width: 16.66667% !important;
+                                                      }
+                                                      td.small-3,
+                                                      th.small-3 {
+                                                        display: inline-block !important;
+                                                        width: 25% !important;
+                                                      }
+                                                      td.small-4,
+                                                      th.small-4 {
+                                                        display: inline-block !important;
+                                                        width: 33.33333% !important;
+                                                      }
+                                                      td.small-5,
+                                                      th.small-5 {
+                                                        display: inline-block !important;
+                                                        width: 41.66667% !important;
+                                                      }
+                                                      td.small-6,
+                                                      th.small-6 {
+                                                        display: inline-block !important;
+                                                        width: 50% !important;
+                                                      }
+                                                      td.small-7,
+                                                      th.small-7 {
+                                                        display: inline-block !important;
+                                                        width: 58.33333% !important;
+                                                      }
+                                                      td.small-8,
+                                                      th.small-8 {
+                                                        display: inline-block !important;
+                                                        width: 66.66667% !important;
+                                                      }
+                                                      td.small-9,
+                                                      th.small-9 {
+                                                        display: inline-block !important;
+                                                        width: 75% !important;
+                                                      }
+                                                      td.small-10,
+                                                      th.small-10 {
+                                                        display: inline-block !important;
+                                                        width: 83.33333% !important;
+                                                      }
+                                                      td.small-11,
+                                                      th.small-11 {
+                                                        display: inline-block !important;
+                                                        width: 91.66667% !important;
+                                                      }
+                                                      td.small-12,
+                                                      th.small-12 {
+                                                        display: inline-block !important;
+                                                        width: 100% !important;
+                                                      }
+                                                      .columns td.small-12,
+                                                      .column td.small-12,
+                                                      .columns th.small-12,
+                                                      .column th.small-12 {
+                                                        display: block !important;
+                                                        width: 100% !important;
+                                                      }
+                                                      .body .columns td.small-1,
+                                                      .body .column td.small-1,
+                                                      td.small-1 center,
+                                                      .body .columns th.small-1,
+                                                      .body .column th.small-1,
+                                                      th.small-1 center {
+                                                        display: inline-block !important;
+                                                        width: 8.33333% !important;
+                                                      }
+                                                      .body .columns td.small-2,
+                                                      .body .column td.small-2,
+                                                      td.small-2 center,
+                                                      .body .columns th.small-2,
+                                                      .body .column th.small-2,
+                                                      th.small-2 center {
+                                                        display: inline-block !important;
+                                                        width: 16.66667% !important;
+                                                      }
+                                                      .body .columns td.small-3,
+                                                      .body .column td.small-3,
+                                                      td.small-3 center,
+                                                      .body .columns th.small-3,
+                                                      .body .column th.small-3,
+                                                      th.small-3 center {
+                                                        display: inline-block !important;
+                                                        width: 25% !important;
+                                                      }
+                                                      .body .columns td.small-4,
+                                                      .body .column td.small-4,
+                                                      td.small-4 center,
+                                                      .body .columns th.small-4,
+                                                      .body .column th.small-4,
+                                                      th.small-4 center {
+                                                        display: inline-block !important;
+                                                        width: 33.33333% !important;
+                                                      }
+                                                      .body .columns td.small-5,
+                                                      .body .column td.small-5,
+                                                      td.small-5 center,
+                                                      .body .columns th.small-5,
+                                                      .body .column th.small-5,
+                                                      th.small-5 center {
+                                                        display: inline-block !important;
+                                                        width: 41.66667% !important;
+                                                      }
+                                                      .body .columns td.small-6,
+                                                      .body .column td.small-6,
+                                                      td.small-6 center,
+                                                      .body .columns th.small-6,
+                                                      .body .column th.small-6,
+                                                      th.small-6 center {
+                                                        display: inline-block !important;
+                                                        width: 50% !important;
+                                                      }
+                                                      .body .columns td.small-7,
+                                                      .body .column td.small-7,
+                                                      td.small-7 center,
+                                                      .body .columns th.small-7,
+                                                      .body .column th.small-7,
+                                                      th.small-7 center {
+                                                        display: inline-block !important;
+                                                        width: 58.33333% !important;
+                                                      }
+                                                      .body .columns td.small-8,
+                                                      .body .column td.small-8,
+                                                      td.small-8 center,
+                                                      .body .columns th.small-8,
+                                                      .body .column th.small-8,
+                                                      th.small-8 center {
+                                                        display: inline-block !important;
+                                                        width: 66.66667% !important;
+                                                      }
+                                                      .body .columns td.small-9,
+                                                      .body .column td.small-9,
+                                                      td.small-9 center,
+                                                      .body .columns th.small-9,
+                                                      .body .column th.small-9,
+                                                      th.small-9 center {
+                                                        display: inline-block !important;
+                                                        width: 75% !important;
+                                                      }
+                                                      .body .columns td.small-10,
+                                                      .body .column td.small-10,
+                                                      td.small-10 center,
+                                                      .body .columns th.small-10,
+                                                      .body .column th.small-10,
+                                                      th.small-10 center {
+                                                        display: inline-block !important;
+                                                        width: 83.33333% !important;
+                                                      }
+                                                      .body .columns td.small-11,
+                                                      .body .column td.small-11,
+                                                      td.small-11 center,
+                                                      .body .columns th.small-11,
+                                                      .body .column th.small-11,
+                                                      th.small-11 center {
+                                                        display: inline-block !important;
+                                                        width: 91.66667% !important;
+                                                      }
+                                                      table.body td.small-offset-1,
+                                                      table.body th.small-offset-1 {
+                                                        margin-left: 8.33333% !important;
+                                                        margin-left: 8.33333% !important;
+                                                      }
+                                                      table.body td.small-offset-2,
+                                                      table.body th.small-offset-2 {
+                                                        margin-left: 16.66667% !important;
+                                                        margin-left: 16.66667% !important;
+                                                      }
+                                                      table.body td.small-offset-3,
+                                                      table.body th.small-offset-3 {
+                                                        margin-left: 25% !important;
+                                                        margin-left: 25% !important;
+                                                      }
+                                                      table.body td.small-offset-4,
+                                                      table.body th.small-offset-4 {
+                                                        margin-left: 33.33333% !important;
+                                                        margin-left: 33.33333% !important;
+                                                      }
+                                                      table.body td.small-offset-5,
+                                                      table.body th.small-offset-5 {
+                                                        margin-left: 41.66667% !important;
+                                                        margin-left: 41.66667% !important;
+                                                      }
+                                                      table.body td.small-offset-6,
+                                                      table.body th.small-offset-6 {
+                                                        margin-left: 50% !important;
+                                                        margin-left: 50% !important;
+                                                      }
+                                                      table.body td.small-offset-7,
+                                                      table.body th.small-offset-7 {
+                                                        margin-left: 58.33333% !important;
+                                                        margin-left: 58.33333% !important;
+                                                      }
+                                                      table.body td.small-offset-8,
+                                                      table.body th.small-offset-8 {
+                                                        margin-left: 66.66667% !important;
+                                                        margin-left: 66.66667% !important;
+                                                      }
+                                                      table.body td.small-offset-9,
+                                                      table.body th.small-offset-9 {
+                                                        margin-left: 75% !important;
+                                                        margin-left: 75% !important;
+                                                      }
+                                                      table.body td.small-offset-10,
+                                                      table.body th.small-offset-10 {
+                                                        margin-left: 83.33333% !important;
+                                                        margin-left: 83.33333% !important;
+                                                      }
+                                                      table.body td.small-offset-11,
+                                                      table.body th.small-offset-11 {
+                                                        margin-left: 91.66667% !important;
+                                                        margin-left: 91.66667% !important;
+                                                      }
+                                                      table.body table.columns td.expander,
+                                                      table.body table.columns th.expander {
+                                                        display: none !important;
+                                                      }
+                                                      table.body .right-text-pad,
+                                                      table.body .text-pad-right {
+                                                        padding-left: 10px !important;
+                                                      }
+                                                      table.body .left-text-pad,
+                                                      table.body .text-pad-left {
+                                                        padding-right: 10px !important;
+                                                      }
+                                                      table.menu {
+                                                        width: 100% !important;
+                                                      }
+                                                      table.menu td,
+                                                      table.menu th {
+                                                        width: auto !important;
+                                                        display: inline-block !important;
+                                                      }
+                                                      table.menu.vertical td,
+                                                      table.menu.vertical th,
+                                                      table.menu.small-vertical td,
+                                                      table.menu.small-vertical th {
+                                                        display: block !important;
+                                                      }
+                                                      table.menu[align=""center""] {
+                                                        width: auto !important;
+                                                      }
+                                                      table.button.expand {
+                                                        width: 100% !important;
+                                                      }
+                                                    }
+                                                    @media only screen and (max-width: 596px) {
+                                                      .calendar-content {
+                                                        padding: 0px !important;
+                                                        width: 288px !important;
+                                                      }
+                                                      .not-available-day,
+                                                      .calendar-today,
+                                                      .available-day {
+                                                        height: 40px !important;
+                                                        width: 40px !important;
+                                                      }
+                                                      .day-label {
+                                                        margin-left: 10% !important;
+                                                        margin-top: 0% !important;
+                                                        font-size: 15px;
+                                                      }
+	                                                  .p
+	                                                  {
+	                                                  font-size:16px
+	                                                  font-size:4vw
+	                                                  }
+                                                    }
+                                                  </style>";
+
+                            string header = "<table class=\"body\" style=\"border-spacing:0;border-collapse:collapse;vertical-align:top;-webkit-hyphens:none;-moz-hyphens:none;hyphens:none;-ms-hyphens:none;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;margin:0;text-align:left;font-size:16px;line-height:19px;background:#f3f3f3;padding:0;width:100%;height:100%;color:#0a0a0a;margin-bottom:0px !important;background-color: white\">" +
+                                            "<tr style=\"padding:0;vertical-align:top;text-align:left\">" +
+                                            "<td class=\"center\" align=\"center\" valign=\"top\" style=\"font-size:16px;word-wrap:break-word;-webkit-hyphens:auto;-moz-hyphens:auto;hyphens:auto;vertical-align:top;text-align:left;line-height:1.3;color:#0a0a0a;font-family: 'Cabin', Helvetica, Arial, sans-serif;padding:0;margin:0;font-weight:normal;border-collapse:collapse !important\">" +
+                                            "<center style=\"width:100%;min-width:580px\">" +
+                                            "<table class=\"container\" style=\"border-spacing:0;border-collapse:collapse;padding:0;vertical-align:top;background:#fefefe;width:580px;margin:0 auto;text-align:inherit;max-width:580px;\">" +
+                                            "<tr style=\"padding:0;vertical-align:top;text-align:left\">" +
+                                            "<td style=\"font-size:16px;word-wrap:break-word;-webkit-hyphens:auto;-moz-hyphens:auto;hyphens:auto;vertical-align:top;text-align:left;line-height:1.3;color:#0a0a0a;font-family: 'Cabin', Helvetica, Arial, sans-serif;padding:0;margin:0;font-weight:normal;border-collapse:collapse !important\">" +
+                                            "<div style=\"padding-top:10px\">" +
+                                            "<table class=\"row\" style=\"border-spacing:0;border-collapse:collapse;text-align:left;vertical-align:top;padding:0;width:100%;position:relative;display:table\">" +
+                                            "<tr class=\"\" style=\"padding:0;vertical-align:top;text-align:left\">" +
+                                            "<th style=\"width: 40%;>" +
+                                            "<a href=\"https://www.hummingbirdindia.com\" target=\"_blank\" style=\"padding:0;margin:0;text-align:left;line-height:1.3;color:#2199e8;text-decoration:none\">" +
+                                            "<img align=\"center\" alt=\"" + Imagealt1 + "\" class=\"center standard-header\" src=\"" + Imagelocation1 + "\" style=\"max-width: 120px\" >" +
+                                            "</a></th><th style=\"font-size:16px;padding:20px 0 20px 0;line-height:28px\"> " +
+                                            "<p>HB Confirmation #: " + ds.Tables[2].Rows[0][2].ToString() + "</p>";
+
+                            if (ds.Tables[4].Rows[0][19].ToString() != "")
+                            {
+                                header += "<p>Confirmed by: " + ds.Tables[4].Rows[0][19].ToString() + "</p>";
+                            }
 
 
-                            string BookingDetails = "<div style =\"border-bottom:2px solid #808080;margin:5px 0px 20px 0px\" >" +
-                            "<h3 style =\"margin:0;font-family:&#39;Open Sans&#39;;font-size:14px;padding:10px 0;text-align:center;color:#0000ff;font-weight:bold\">Booking Details<u></u></h3>" +
-                            "</ div >" +
-                            "<table style =\"border-collapse:collapse\">" +
-                            "<tbody>" +
-                            "" +
-                            "<tr style =\"border-bottom:2px solid yellow\">" +
-                            "<td style =\"font-size:13px;width:13%\" valign =\"top\" align =\"center\"><strong> Guest Name </strong></td>" +
-                            "<td style =\"font-size:13px;width:12%\" valign =\"top\" align =\"center\"><strong> Room Type / Occupancy </strong></td >" +
-                            "<td style =\"font-size:13px;width:12%\" valign =\"top\" align =\"center\"><strong> Check In </strong></td>" +
-                            "<td style =\"font-size:13px;width:12%\" valign =\"top\" align =\"center\"><strong> Check Out </strong></td >" +
-                            "<td style =\"font-size:13px;width:13%\" valign =\"top\" align =\"center\"><strong> Tariff </strong></td >" +
-                            "<td style =\"font-size:13px;width:13%\" valign =\"top\" align =\"center\"><strong> Room Tariff </strong></td>" +
-                            "<td style =\"font-size:13px;width:13%\" valign =\"top\" align =\"center\"><strong> Services </strong></td>" +
-                            "</tr>" +
-                            "<tr style =\"font-style:normal;font-weight:normal;border-bottom:1px solid #ebebeb\">" +
-                            "<td style =\"vertical-align:middle;text-align:center\"> " + ds.Tables[0].Rows[0][0].ToString() + " </td>" +
-                            "<td style =\"vertical-align:middle;text-align:center\"> " + ds.Tables[0].Rows[0][7].ToString() + " </td>" +
-                            "<td style =\"vertical-align:middle;text-align:center\"> " + ds.Tables[0].Rows[0][1].ToString() + " </td>" +
-                            "<td style =\"vertical-align:middle;text-align:center\"> " + ds.Tables[0].Rows[0][2].ToString() + " </td>" +
-                            "<td style =\"vertical-align:middle;text-align:center\"> " + ds.Tables[0].Rows[0][3].ToString() + " / -</td>" +
-                            "<td style =\"vertical-align:middle;text-align:center\"> " + ds.Tables[0].Rows[0][5].ToString() + "</td>" +
-                            "<td style =\"vertical-align:middle;text-align:center\"> " + ds.Tables[0].Rows[0][6].ToString() + "</td>" +
-                            "</tr></tbody></table>" +
-                            "<div style =\"border-bottom:2px solid #808080;margin:5px 0px 20px 0px\">" +
-                            "<h3 style =\"margin:0;font-family:&#39;Open Sans&#39;;font-size:14px;padding:10px 0;text-align:center;font-weight:bold\"><u></u></h3>" +
-                            "</div>" +
-                            "<h3 style =\"margin:0;font-family:&#39;Open Sans&#39;;font-size:15px;padding:10px 0\"> Note :" + ds.Tables[2].Rows[0][8].ToString() + "</h3>";
 
-                            string HotelDetails = "<div style =\"border-bottom:2px solid #808080;margin:5px 0px 20px 0px\">" +
-                                "<h3 style =\"margin:0;font-family:&#39;Open Sans&#39;;font-size:14px;padding:10px 0;text-align:center;color:#0000ff;font-weight:bold\"> Hotel Details <u></u></h3>" +
-                                "</div>" +
-                                "<table style =\"border:#dbdbdb\"><tbody><tr>" +
-                                "<td style =\"font-size:13px;width:14%\" valign = \"top\" align =\"center\"><strong></strong></td>" +
-                                "<td style =\"font-size:13px;width:18%\" valign =\"top\" align =\"center\"><strong></strong></td>" +
-                                "</tr><tr></tr>" +
-                                "<tr style =\"font-style:normal;font-weight:normal\">" +
-                                "<td style =\"vertical-align:middle;text-align:left\"><strong> Hotel Name:</strong>" + ds.Tables[1].Rows[0][5].ToString() + "<strong> Address : </strong> " + ds.Tables[1].Rows[0][0].ToString() + "<b> " + ds.Tables[1].Rows[0][1].ToString() + " </b> </ td >" +
-                                "<td style =\"vertical-align:middle;text-align:center\" ><a href =" + MapLink + " target =\"_blank\" ><img src =\"https://portalvhds4prl9ymlwxnt8.blob.core.windows.net/img/Google_Maps_Icon.png\" ></a><a href = " + link + " target =\"_blank\"><span style =\"font-family:&#39;Cabin&#39;,Helvetica,Arial,sans-serif;padding:10px 0 10px 16px;margin:0;text-align:left;line-height:1.3;text-decoration:none;font-weight:300;color:#d9242c!important\"> Security / Cancellation Policy </span></a></td>" +
-                                "</tr></tbody></table>";
+                            header += "</th></tr></table></div><div>" +
+                                "<div class=\"headline-body\" style=\"padding-bottom:15px\">" +
+                                "<table class=\"row\" style=\"border-spacing:0;border-collapse:collapse;text-align:left;vertical-align:top;padding:0;width:100%;position:relative;display:table\">" +
+                                "<tr class=\"\" style=\"padding:0;vertical-align:top;text-align:left\">" +
+                                "<th class=\"small-12 large-12 columns first last\" style=\"font-size:16px;text-align:left;line-height:1.3;color:#0a0a0a;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;width:564px;margin:0 auto;padding-left:16px;padding-right:16px;padding-bottom:0px !important\">" +
+                                "<p class=\"body  body-lg body-link-rausch light text-left   \" style=\"font-family: 'Cabin', Helvetica, Arial, sans-serif;padding:0;margin:0;line-height:1.4;font-weight:300;color:#484848;font-size:24px;hyphens:none;-ms-hyphens:none;-webkit-hyphens:none;-moz-hyphens:none;text-align:left;margin-bottom:0px !important;color:#0a0a0a;\">" + ds.Tables[2].Rows[0][1].ToString();
 
-                            string GSTDetails = "<div style =\"border-bottom:2px solid #808080;margin:5px 0px 20px 0px\">" +
-                                "<h3 style =\"margin:0;font-family:&#39;Open Sans&#39;;font-size:14px;padding:10px 0;text-align:center;color:#0000ff;font-weight:bold\"> GST Details<u></u></h3>" +
-                                "</div>" +
-                                "<table style =\"border-collapse:collapse\">" +
-                                "<tbody>" +
-                                "<tr style =\"border-bottom:2px solid yellow\">" +
-                                "<td style =\"font-size:13px;width:16%\" valign =\"top\" align =\"center\"><strong> GST Number </strong></td>" +
-                                "<td style =\"font-size:13px;width:16%\" valign =\"top\" align =\"center\"><strong> Legal Name </strong></td>" +
-                                "<td style =\"font-size:13px;width:16%\" valign =\"top\" align =\"center\"><strong> Address </strong></td>" +
-                                "</tr>" +
-                                "<tr style =\"font-style:normal;font-weight:normal;border-bottom:1px solid #ebebeb\">" +
-                                "<td style =\"vertical-align:middle;text-align:center\">" + ds.Tables[12].Rows[0][1].ToString() + "</td>" +
-                                "<td style =\"vertical-align:middle;text-align:center\">" + ds.Tables[12].Rows[0][0].ToString() + "</td>" +
-                                "<td style =\"vertical-align:middle;text-align:center\">" + ds.Tables[12].Rows[0][2].ToString() + "</td>" +
-                                "</tr></tbody></table>";
-                            string OtherDetails = "<div style =\"border-bottom:2px solid #808080;margin:5px 0px 20px 0px\">" +
-                                "<h3 style =\"margin:0;font-family:&#39;Open Sans&#39;;font-size:14px;padding:10px 0;text-align:center;color:#0000ff;font-weight:bold\">Other Details<u></u></h3>" +
-                                "</div>" +
-                                "<table style =\"border-collapse:collapse;width:800px;\">" +
-                                "<tbody>" +
-                                "<tr style =\"border-bottom:2px solid yellow\">" +
-                                "<td style =\"font-size:13px;width:33%\" valign =\"top\" align =\"center\"><strong> Client Ref No</strong></td>" +
-                                "<td style =\"font-size:13px;width:33%\" valign =\"top\" align =\"center\"><strong> Booker </strong></td>" +
-                                "<td style =\"font-size:13px;width:33%\" valign =\"top\" align =\"center\"><strong> Issues / Feedback </strong></td>" +
-                                "</tr>" +
-                                "<tr style =\"font-style:normal;font-weight:normal;border-bottom:1px solid #ebebeb\">" +
-                                "<td style =\"vertical-align:middle;text-align:center\">" + ds.Tables[2].Rows[0][13].ToString() + "</td>" +
-                                "<td style =\"vertical-align:middle;text-align:center\">" + ds.Tables[2].Rows[0][3].ToString() + "</td>" +
-                                "<td style =\"vertical-align:middle;text-align:center\">" + ds.Tables[2].Rows[0][14].ToString() + " </td>" +
-                                "</tr></tbody></table>" +
-                                "<table><tbody><tr>" +
-                                "<td style =\"font-size:13px;width:16%\" valign =\"top\" align =\"center\"><strong></strong></td>" +
-                                "<td style =\"font-size:13px;width:16%\" valign =\"top\" align =\"right\" ><strong> Powered by <a href =\"http://hummingbirdindia.com\" target =\"_blank\">hummingbirdindia.com</a><u></u></strong></td>" +
-                                "</tr></tbody></table></div></div>";
+                            if (All.QReserveFlag == true)
+                            {
+                                header += "<br /><span style=\"float: right;font-size:20px;\">Quick Reservation Confirmed</span>";
+                            }
+                            else
+                            {
+                                header += "<br /><span style=\"float: right;font-size:20px;\">Reservation Confirmed</span>";
+                            }
 
-                            MailContent = header + BookingDetails + HotelDetails + GSTDetails + OtherDetails;
+
+
+                            header += "</p>" +
+                               "</th></tr></table></div></div>";
+
+                            string ChkInOutDate = "";
+                            if (All.LTIAPIFlag == true)
+                            {
+
+                                ChkInOutDate = "<div><div><table class=\"row\" style=\"border-spacing:0;border-collapse:collapse;text-align:left;vertical-align:top;padding:0;width:100%;position:relative;display:table\">" +
+                                                  "<tr style=\"padding:0;vertical-align:top;text-align:left\">" +
+                                                  "<th class=\"small-5 large-5 columns first\" style=\"font-size:16px;text-align:left;line-height:1.3;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;color:#0a0a0a;padding-right:8px;margin:0 auto;padding-bottom:16px;width:225.66667px;padding-left:16px\">" +
+                                                  "<p class=\"body-text-lg light\" style='margin:0;text-align:left;padding:0;font-weight:300;font-family:\"Circular\", \"Helvetica\", Helvetica, Arial, sans-serif;color:#484848;word-break:normal;line-height:1.2;font-size:17px;margin-bottom:0px !important'>‌" + All.CheckinDate + " ‌</p>" +
+                                                  "<p class=\"body-text light\" style='margin:0;text-align:left;padding:0;font-weight:300;font-family:\"Circular\", \"Helvetica\", Helvetica, Arial, sans-serif;color:#484848;word-break:normal;line-height:1.4;font-size:16px;margin-bottom:0px !important'>Check-in " + All.CheckinTime + "‌</p>" +
+                                                  "</th><th class=\"small-2 large-2 columns\" style=\"font-size:16px;color:#0a0a0a;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;text-align:left;line-height:1.3;padding-right:8px;width:80.66667px;padding-bottom:16px;padding-left:16px;margin:0 auto\">" +
+                                                  "<img alt=\"\" class=\"slash text-center\" src=\"https://endpoint887127.azureedge.net/img/slash.png\" style=\"outline:none;text-decoration:none;-ms-interpolation-mode:bicubic;display:block;clear:both;max-width:40px;width:40px;text-align:center;float:none;margin:0 auto\">" +
+                                                  "</th><th class=\"small-5 large-5 columns last\" style=\"font-size:16px;text-align:left;color:#0a0a0a;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;line-height:1.3;width:225.66667px;padding-left:16px;margin:0 auto;padding-bottom:16px;padding-right:16px\">" +
+                                                  "<p class=\"body-text-lg light text-right\" style='padding:0;margin:0;font-size:17px;font-weight:300;font-family:\"Circular\", \"Helvetica\", Helvetica, Arial, sans-serif;color:#484848;word-break:normal;line-height:1.2;text-align:right;margin-bottom:0px !important'>‌" + All.CheckoutDate + "</p>" +
+                                                  "<p class=\"body-text light text-right\" style='padding:0;margin:0;font-size:16px;font-weight:300;font-family:\"Circular\", \"Helvetica\", Helvetica, Arial, sans-serif;color:#484848;word-break:normal;line-height:1.4;text-align:right;margin-bottom:0px !important'>Check-out</p>" +
+                                                  "</th></tr></table></div><div>" +
+                                                  "<table class=\"row\" style=\"border-spacing:0;border-collapse:collapse;text-align:left;vertical-align:top;padding:0;width:100%;position:relative;display:table\">" +
+                                                  "<tr class=\"\" style=\"padding:0;vertical-align:top;text-align:left\">" +
+                                                  "<th class=\"small-12 large-12 columns first last\" style=\"padding-bottom:5px;width:564px;padding-left:16px;padding-right:16px\">" +
+                                                  "<hr class=\"full-divider\" style=\"clear:both;max-width:580px;border-right:0;border-top:0;border-left:0;margin:20px auto;border-bottom:1px solid #cacaca;background-color:#dbdbdb;height:1px;border:none;width:100%;margin-top:0;margin-bottom:0\">" +
+                                                  "</th></tr></table></div>";
+                            }
+                            else
+                            {
+                                ChkInOutDate = "<div><div><table class=\"row\" style=\"border-spacing:0;border-collapse:collapse;text-align:left;vertical-align:top;padding:0;width:100%;position:relative;display:table\">" +
+                                                  "<tr style=\"padding:0;vertical-align:top;text-align:left\">" +
+                                                  "<th class=\"small-5 large-5 columns first\" style=\"font-size:16px;text-align:left;line-height:1.3;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;color:#0a0a0a;padding-right:8px;margin:0 auto;padding-bottom:16px;width:225.66667px;padding-left:16px\">" +
+                                                  "<p class=\"body-text-lg light\" style='margin:0;text-align:left;padding:0;font-weight:300;font-family:\"Circular\", \"Helvetica\", Helvetica, Arial, sans-serif;color:#484848;word-break:normal;line-height:1.2;font-size:17px;margin-bottom:0px !important'>‌" + ds.Tables[0].Rows[0][9].ToString() + " ‌</p>" +
+                                                  "<p class=\"body-text light\" style='margin:0;text-align:left;padding:0;font-weight:300;font-family:\"Circular\", \"Helvetica\", Helvetica, Arial, sans-serif;color:#484848;word-break:normal;line-height:1.4;font-size:16px;margin-bottom:0px !important'>Check-in " + ds.Tables[0].Rows[0][11].ToString() + "‌</p>" +
+                                                  "</th><th class=\"small-2 large-2 columns\" style=\"font-size:16px;color:#0a0a0a;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;text-align:left;line-height:1.3;padding-right:8px;width:80.66667px;padding-bottom:16px;padding-left:16px;margin:0 auto\">" +
+                                                  "<img alt=\"\" class=\"slash text-center\" src=\"https://endpoint887127.azureedge.net/img/slash.png\" style=\"outline:none;text-decoration:none;-ms-interpolation-mode:bicubic;display:block;clear:both;max-width:40px;width:40px;text-align:center;float:none;margin:0 auto\">" +
+                                                  "</th><th class=\"small-5 large-5 columns last\" style=\"font-size:16px;text-align:left;color:#0a0a0a;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;line-height:1.3;width:225.66667px;padding-left:16px;margin:0 auto;padding-bottom:16px;padding-right:16px\">" +
+                                                  "<p class=\"body-text-lg light text-right\" style='padding:0;margin:0;font-size:17px;font-weight:300;font-family:\"Circular\", \"Helvetica\", Helvetica, Arial, sans-serif;color:#484848;word-break:normal;line-height:1.2;text-align:right;margin-bottom:0px !important'>‌" + ds.Tables[0].Rows[0][10].ToString() + "</p>" +
+                                                  "<p class=\"body-text light text-right\" style='padding:0;margin:0;font-size:16px;font-weight:300;font-family:\"Circular\", \"Helvetica\", Helvetica, Arial, sans-serif;color:#484848;word-break:normal;line-height:1.4;text-align:right;margin-bottom:0px !important'>Check-out</p>" +
+                                                  "</th></tr></table></div><div>" +
+                                                  "<table class=\"row\" style=\"border-spacing:0;border-collapse:collapse;text-align:left;vertical-align:top;padding:0;width:100%;position:relative;display:table\">" +
+                                                  "<tr class=\"\" style=\"padding:0;vertical-align:top;text-align:left\">" +
+                                                  "<th class=\"small-12 large-12 columns first last\" style=\"padding-bottom:5px;width:564px;padding-left:16px;padding-right:16px\">" +
+                                                  "<hr class=\"full-divider\" style=\"clear:both;max-width:580px;border-right:0;border-top:0;border-left:0;margin:20px auto;border-bottom:1px solid #cacaca;background-color:#dbdbdb;height:1px;border:none;width:100%;margin-top:0;margin-bottom:0\">" +
+                                                  "</th></tr></table></div>";
+                            }
+
+
+
+
+
+
+                            string GuestTbl = "<div style=\"padding-top:8px;padding-bottom:8px\">" +
+                                              "<table class=\"row\" style=\"border-spacing:0;border-collapse:collapse;text-align:left;vertical-align:top;padding:0;width:100%;position:relative;display:table\">" +
+                                              "<tr style=\"padding:0;vertical-align:top;text-align:left\">" +
+                                              "<th class=\"col-pad-left-2 col-pad-right-2\" style =\"padding:0;margin:0;padding-left:16px;padding-right:16px\">" +
+                                              "<div style=\"margin:0;-webkit-border-radius:8px;border-radius:8px;display:block;border-color:#d9242c;border-width:2px;border-style:dotted dashed;\">" +
+                                              "<p class=\"text-center\" style='font-weight:normal;padding:0;margin:0;text-align:center;font-family:\"Circular\", \"Helvetica\", Helvetica, Arial, sans-serif;font-size:24px;line-height:32px;margin-bottom:0px !important'>Guest Details</p>" +
+                                              "</div></th></tr></table></div>" +
+                                              "<div style=\"padding-top:8px;padding-bottom:8px;padding-left:16px;padding-right:16px;\">" +
+                                              "<table rules=\"rows\" style =\"border:#dbdbdb\">" +
+                                              "<tr><td style=\"font-size:13px; width:16%;\" valign=\"top\" align=\"center\" ><strong> Guest Name </strong></td > " +
+                                              "<td style=\"font-size:13px; width:16%;\" valign=\"top\" align=\"center\" ><strong> Room No / Occupancy </strong ></td > " +
+                                              "<td style=\"font-size:13px; width:16%;\" valign=\"top\" align=\"center\" ><strong> Tariff / <br> Room / Day </strong ></td > " +
+                                              "</tr><tr></tr>";
+                            for (int i = 0; i < ds.Tables[11].Rows.Count; i++)
+                            {
+
+                                if ((typeofpty1 == "MGH") || (typeofpty1 == "DdP"))
+                                {
+                                    GuestTbl += "<tr style=\"font-style:normal;font-weight:normal;\" class=\"ng-scope\">" +
+                                                "<td class=\"padd ng-binding\" style=\"vertical-align:middle;text-align:center\">" + ds.Tables[11].Rows[i][11].ToString() + "</td>" +
+                                                "<td class=\"padd ng-binding\" style=\"vertical-align: middle; text-align: center;\">" + ds.Tables[11].Rows[i][10].ToString() + " / " + ds.Tables[11].Rows[i][4].ToString() + "</td>" +
+                                                "<td class=\"padd ng-binding\" style=\"vertical-align: middle; text-align: center;\">INR " + ds.Tables[11].Rows[i][3].ToString() + "</td>" +
+                                                "</tr>";
+                                }
+                                else
+                                {
+                                    GuestTbl += "<tr style=\"font-style:normal;font-weight:normal;\" class=\"ng-scope\">" +
+                                     "<td class=\"padd ng-binding\" style=\"vertical-align:middle;text-align:center\">" + ds.Tables[11].Rows[i][11].ToString() + "</td>" +
+                                     "<td class=\"padd ng-binding\" style=\"vertical-align: middle; text-align: center;\">" + ds.Tables[4].Rows[0][12].ToString() + " / " + ds.Tables[11].Rows[i][4].ToString() + "</td>" +
+                                     "<td class=\"padd ng-binding\" style=\"vertical-align: middle; text-align: center;\">INR " + ds.Tables[11].Rows[i][3].ToString() + "</td>" +
+                                     "</tr>";
+                                }
+
+
+
+                            }
+                            GuestTbl += "</table>";
+
+                            string PayMode = "<div><div class=\"row-pad-bot-1\" style=\"padding-bottom:8px !important;padding-top:6px;\"></div>" +
+                                              "<table class=\"row\" style=\"border-spacing:0;border-collapse:collapse;text-align:left;vertical-align:top;padding:0;width:100%;position:relative;display:table\">" +
+                                              "<tr style=\"padding:0;vertical-align:top;text-align:left\">" +
+                                              "<th class=\"small-5 large-5 columns first\" style=\"font-size:16px;text-align:left;line-height:1.3;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;color:#0a0a0a;padding-right:8px;margin:0 auto;padding-bottom:16px;width:225.66667px;padding-left:16px\">" +
+                                              "<p class=\"body-text light\" style='margin:0;text-align:left;padding:0;font-weight:300;font-family:\"Circular\", \"Helvetica\", Helvetica, Arial, sans-serif;color:#484848;word-break:normal;line-height:1.4;font-size:18px;margin-bottom:0px !important'>Tariff Payment: " + ds.Tables[11].Rows[0][5].ToString() + "</p>" +
+                                              "</th><th class=\"small-2 large-2 columns\" style=\"font-size:16px;color:#0a0a0a;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;text-align:left;line-height:1.3;padding-right:8px;width:80.66667px;padding-bottom:16px;padding-left:16px;margin:0 auto\">" +
+                                              "<img alt=\"\" class=\"slash text-center\" src=\"https://endpoint887127.azureedge.net/img/slash.png\" style=\"outline:none;text-decoration:none;-ms-interpolation-mode:bicubic;display:block;clear:both;max-width:40px;width:40px;text-align:center;float:none;margin:0 auto\">" +
+                                              "</th><th class=\"small-5 large-5 columns last\" style=\"font-size:16px;text-align:left;color:#0a0a0a;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;line-height:1.3;width:225.66667px;padding-left:16px;margin:0 auto;padding-bottom:16px;padding-right:16px\">" +
+                                              "<p class=\"body-text light text-right\" style='padding:0;margin:0;font-size:18px;font-weight:300;font-family:\"Circular\", \"Helvetica\", Helvetica, Arial, sans-serif;color:#484848;word-break:normal;line-height:1.4;text-align:right;margin-bottom:0px !important'>Service Payment: " + ds.Tables[11].Rows[0][6].ToString() + "</p>" +
+                                              "</th></tr></table></div></div><div>" +
+                                              "<table class=\"row\" style=\"border-spacing:0;border-collapse:collapse;text-align:left;vertical-align:top;padding:0;width:100%;position:relative;display:table\">" +
+                                              "<tr class=\"\" style=\"padding:0;vertical-align:top;text-align:left\">" +
+                                              "<th class=\"small-12 large-12 columns first last\" style=\"font-size:16px;padding:0;text-align:left;color:#0a0a0a;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;line-height:1.3;margin:0 auto;padding-bottom:3px;width:564px;padding-left:16px;padding-right:16px\">" +
+                                              "<hr class=\"full-divider\" style=\"clear:both;max-width:580px;border-right:0;border-top:0;border-left:0;margin:20px auto;border-bottom:1px solid #cacaca;background-color:#dbdbdb;height:1px;border:none;width:100%;margin-top:0;margin-bottom:0\">" +
+                                              "</th></tr></table></div>";
+
+                            string TariffDtls = "<div style=\"padding-top:8px;padding-bottom:8px\">" +
+                                                "<table class=\"row\" style=\"border-spacing:0;border-collapse:collapse;text-align:left;vertical-align:top;padding:0;width:100%;position:relative;display:table\">";
+                            string Stng = ds.Tables[11].Rows[0][8].ToString();
+                            if (ds.Tables[11].Rows[0][7].ToString() == "NOTBTC")
+                            {
+                                if (Stng != "")
+                                {
+                                    TariffDtls +=
+                                                "<th class=\"small-7 large-7 columns first\" style=\"font-size:16px;text-align:left;line-height:1.3;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;color:#0a0a0a;padding-right:8px;margin:0 auto;width:322.33333px;padding-left:16px\">" +
+                                                "<p class=\"body-text-lg light row-pad-bot-1\" style=\"padding:0;margin:0;text-align:center;font-size:18px;font-weight:300;font-family:'Cabin',Helvetica, Arial, sans-serif;color:#d9242c !important;;word-break:normal;line-height:1.2;\">Agreed Tariff</p>" +
+                                    "<p class=\"body-text light\" style='margin:0;text-align:left;padding:0;font-weight:300;font-family:\"Cabin\", \"Helvetica\", Helvetica, Arial, sans-serif;color:#484848;word-break:normal;line-height:1.4;font-size:16px;margin-bottom:0px !important'>" + Stng + "</p>" +
+
+                                                                                                        "</th>";
+                                }
+
+
+                            }
+                            else
+                            {
+                                try
+                                {
+                                    string file = ds.Tables[4].Rows[0][1].ToString();
+                                    System.Net.Mail.Attachment att = new System.Net.Mail.Attachment(file);
+                                    att.Name = ds.Tables[4].Rows[0][2].ToString();
+                                    message1.Attachments.Add(att);
+                                }
+                                catch (Exception ex)
+                                {
+                                    CreateLogFiles log = new CreateLogFiles();
+                                    log.ErrorLog(" => Room Level Property Mail => BookingId => " + All.BookingId + " => PDF Attachment => Err Msg => " + ex.Message);
+                                }
+                                TariffDtls += "<th class=\"small-7 large-7 columns first\" style=\"font-size:16px;text-align:left;line-height:1.3;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;color:#0a0a0a;padding-right:8px;margin:0 auto;width:322.33333px;padding-left:16px\">" +
+                                              "<p class=\"body-text-lg light row-pad-bot-1\" style=\"padding:0;margin:0;text-align:center;font-size:18px;font-weight:300;font-family:'Cabin',Helvetica, Arial, sans-serif;color:#d9242c !important;;word-break:normal;line-height:1.2;\">Agreed Tariff</p>" +
+                                              "<p class=\"body-text light\" style='margin:0;text-align:left;padding:0;font-weight:300;font-family:\"Cabin\", \"Helvetica\", Helvetica, Arial, sans-serif;color:#484848;word-break:normal;line-height:1.4;font-size:16px;margin-bottom:0px !important'>" + Stng + "</p>" +
+                                              "</th>";
+                            }
+                            TariffDtls += "<th class=\"small-5 large-5 columns last valign-top\" style=\"font-size:16px;text-align:left;line-height:1.3;color:#0a0a0a;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;vertical-align:top;width:225.66667px;padding-left:16px;margin:0 auto;padding-right:16px\">" +
+                                                "<p class=\"body-text-lg light color-rausch text-right\" style='padding:0;margin:0;word-break:normal;font-weight:300;font-family:\"Cabin\", \"Helvetica\", Helvetica, Arial, sans-serif;line-height:1.2;font-size:18px;text-align:center;color:#d9242c !important;margin-bottom:0px !important'>Guest Contacts</p>" +
+                                                "<p class=\"body-text light\" style='margin:0;text-align:left;padding:0;font-weight:300;font-family:\"Cabin\", \"Helvetica\", Helvetica, Arial, sans-serif;color:#484848;word-break:normal;line-height:1.4;font-size:16px;margin-bottom:0px !important'>" +
+                                                 MobileNo +
+                                                "</p></th></table></div><div>" +
+                                                "<table class=\"row\" style=\"border-spacing:0;border-collapse:collapse;text-align:left;vertical-align:top;padding:0;width:100%;position:relative;display:table\">" +
+                                                "<tr class=\"\" style=\"padding:0;vertical-align:top;text-align:left\">" +
+                                                "<th class=\"small-12 large-12 columns first last\" style=\"font-size:16px;padding:0;text-align:left;color:#0a0a0a;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;line-height:1.3;margin:0 auto;padding-bottom:16px;width:564px;padding-left:16px;padding-right:16px\">" +
+                                                "<hr class=\"full-divider\" style=\"clear:both;max-width:580px;border-right:0;border-top:0;border-left:0;margin:20px auto;border-bottom:1px solid #cacaca;background-color:#dbdbdb;height:1px;border:none;width:100%;margin-top:0;margin-bottom:0\">" +
+                                                "</th></tr></table></div>";
+
+
+                            string PropertyDtls = "<table class=\"row\" style=\"border-spacing:0;border-collapse:collapse;text-align:left;vertical-align:top;padding:0;width:100%;position:relative;display:table;\">" +
+                                  "<tr style=\"padding:0;vertical-align:top;text-align:left\">" +
+                                  "<th class=\"small-5 large-5 columns first\" style=\"font-size:16px;text-align:left;line-height:1.3;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;color:#0a0a0a;padding-right:8px;margin:0 auto;padding-bottom:16px;padding-left:16px\">" +
+                                  "<p class=\"body-text-lg light row-pad-bot-1\" style=\"padding:0;margin:0 0 5px 0;text-align:center;font-size:16px;font-weight:300;font-family:'Cabin',Helvetica, Arial, sans-serif;color:#484848;word-break:normal;line-height:1.2;font-weight: bold;\">Property Name : " + ds.Tables[1].Rows[0][5].ToString() + " </p>" +
+                                   "<p class=\"body-text-lg light row-pad-bot-1\" style=\"padding:0;margin:0 0 5px 0;text-align:center;font-size:13px;font-weight:300;font-family:'Cabin',Helvetica, Arial, sans-serif;color:#484848;word-break:normal;line-height:1.2;\">" + ds.Tables[1].Rows[0][0].ToString() + " </p>" +
+                                  "</th></tr></table>" +
+                                  "<div><table class=\"row\" style=\"border-spacing:0;border-collapse:collapse;text-align:left;vertical-align:top;padding:0;width:100%;position:relative;display:table\">" +
+                                  "<tr class=\"\" style=\"padding:0;vertical-align:top;text-align:left\">" +
+                                  "<th class=\"small-12 large-12 columns first last\" style=\"font-size:16px;padding:0;text-align:left;color:#0a0a0a;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;line-height:1.3;margin:0 auto;padding-bottom:16px;width:564px;padding-left:16px;padding-right:16px\">" +
+                                  "<hr class=\"full-divider\" style=\"clear:both;max-width:580px;border-right:0;border-top:0;border-left:0;margin:20px auto;border-bottom:1px solid #cacaca;background-color:#dbdbdb;height:1px;border:none;width:100%;margin-top:0;margin-bottom:0\">" +
+                                  "</th></tr></table></div>";
+
+                            string Note = "<table class=\"row\" style=\"border-spacing:0;border-collapse:collapse;text-align:left;vertical-align:top;padding:0;width:100%;position:relative;display:table\">" +
+                                                         "<tr style=\"padding:0;vertical-align:top;text-align:left\">" +
+                                                         "<th class=\"small-5 large-5 columns first\" style=\"font-size:16px;text-align:left;line-height:1.3;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;color:#0a0a0a;padding-right:8px;margin:0 auto;padding-bottom:16px;padding-left:16px\">" +
+                                                         "<p class=\"body-text-lg light row-pad-bot-1\" style=\"padding:0;margin:0 0 5px 0;text-align:center;font-size:14px;font-family:'Cabin',Helvetica, Arial, sans-serif;color:#484848;word-break:normal;line-height:1.2;\"><strong>Note : </strong>" + SplNote + " </p>" +
+                                                         "</th></tr></table>" +
+                                                         "<div><table class=\"row\" style=\"border-spacing:0;border-collapse:collapse;text-align:left;vertical-align:top;padding:0;width:100%;position:relative;display:table\">" +
+                                                         "<tr class=\"\" style=\"padding:0;vertical-align:top;text-align:left\">" +
+                                                         "<th class=\"small-12 large-12 columns first last\" style=\"font-size:16px;padding:0;text-align:left;color:#0a0a0a;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;line-height:1.3;margin:0 auto;padding-bottom:16px;width:564px;padding-left:16px;padding-right:16px\">" +
+                                                         "<hr class=\"full-divider\" style=\"clear:both;max-width:580px;border-right:0;border-top:0;border-left:0;margin:20px auto;border-bottom:1px solid #cacaca;background-color:#dbdbdb;height:1px;border:none;width:100%;margin-top:0;margin-bottom:0\">" +
+                                                         "</th></tr></table></div>";
+
+
+
+                            string ContactDtls = "<div style=\"padding-top:8px;padding-bottom:8px\" >" +
+                                            "<table class=\"row\" style=\"border-spacing:0;border-collapse:collapse;text-align:left;vertical-align:top;padding:0;width:100%;position:relative;display:table\">" +
+                                            "<tr class=\"\" style=\"padding:0;vertical-align:top;text-align:left\">" +
+                                            "<th class=\"small-7 large-7 columns first\" style=\"font-size:16px;text-align:left;line-height:1.3;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;color:#0a0a0a;padding-right:8px;margin:0 auto;width:322.33333px;padding-left:16px;vertical-align: top;\">" +
+                                            "<p style = 'margin:0;text-align:left;padding:0;' > Booked by</p>" +
+                                            "<th class=\"small-5 large-5 columns last valign-top\" style=\"font-size:16px;text-align:left;line-height:1.3;color:#0a0a0a;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;vertical-align:top;width:225.66667px;padding-left:16px;margin:0 auto;padding-right:16px\">" +
+                                            "<p style = 'padding:0;margin:0;text-align:right;margin-bottom:0px !important' > " + ds.Tables[2].Rows[0][3].ToString() + " </ p >" +
+                                            "</th>" +
+                                            "</tr><tr class=\"\" style=\"padding:0;vertical-align:top;text-align:left\">" +
+                                            "<th class=\"small-7 large-7 columns first\" style=\"font-size:16px;text-align:left;line-height:1.3;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;color:#0a0a0a;padding-right:8px;margin:0 auto;width:322.33333px;padding-left:16px;vertical-align: top;\">" +
+                                            "<hr>" +
+                                            "<th class=\"small-5 large-5 columns last valign-top\" style=\"font-size:16px;text-align:left;line-height:1.3;color:#0a0a0a;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;vertical-align:top;width:225.66667px;padding-left:16px;margin:0 auto;padding-right:16px\">" +
+                                            "<hr>" +
+                                            "</th>" +
+                                             "</tr><tr class=\"\" style=\"padding:0;vertical-align:top;text-align:left\">" +
+                                            "<th class=\"small-7 large-7 columns first\" style=\"font-size:16px;text-align:left;line-height:1.3;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;color:#0a0a0a;padding-right:8px;margin:0 auto;width:322.33333px;padding-left:16px;vertical-align: top;\">" +
+                                            "<p style = 'margin:0;text-align:left;padding:0;' >Client Request #</p>" +
+                                            "<th class=\"small-5 large-5 columns last valign-top\" style=\"font-size:16px;text-align:left;line-height:1.3;color:#0a0a0a;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;vertical-align:top;width:225.66667px;padding-left:16px;margin:0 auto;padding-right:16px\">" +
+                                            "<p style = 'padding:0;margin:0;text-align:right;margin-bottom:0px !important' > " + ds.Tables[2].Rows[0][13].ToString() + " </ p >" +
+                                            "</th>" +
+                                             "</tr><tr class=\"\" style=\"padding:0;vertical-align:top;text-align:left\">" +
+                                            "<th class=\"small-7 large-7 columns first\" style=\"font-size:16px;text-align:left;line-height:1.3;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;color:#0a0a0a;padding-right:8px;margin:0 auto;width:322.33333px;padding-left:16px;vertical-align: top;\">" +
+                                            "<hr>" +
+                                            "<th class=\"small-5 large-5 columns last valign-top\" style=\"font-size:16px;text-align:left;line-height:1.3;color:#0a0a0a;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;vertical-align:top;width:225.66667px;padding-left:16px;margin:0 auto;padding-right:16px\">" +
+                                            "<hr>" +
+                                            "</th>" +
+                                             "</tr><tr class=\"\" style=\"padding:0;vertical-align:top;text-align:left\">" +
+                                            "<th class=\"small-7 large-7 columns first\" style=\"font-size:16px;text-align:left;line-height:1.3;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;color:#0a0a0a;padding-right:8px;margin:0 auto;width:322.33333px;padding-left:16px;vertical-align: top;\">" +
+                                            "<p style = 'margin:0;text-align:left;padding:0;' >Issues / feedbacks</p>" +
+                                            "<th class=\"small-5 large-5 columns last valign-top\" style=\"font-size:16px;text-align:left;line-height:1.3;color:#0a0a0a;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;vertical-align:top;width:225.66667px;padding-left:16px;margin:0 auto;padding-right:16px\">" +
+                                            "<p style = 'padding:0;margin:0;text-align:right;margin-bottom:0px !important' > " + DeskNo + "<br>" + ds.Tables[10].Rows[0][0].ToString() + " </ p >" +
+                                            "</th>" +
+                                            "</tr></table></div>";
+
+                            ContactDtls += "<div>" +
+                                                 "<table class=\"row\" style=\"border-spacing:0;border-collapse:collapse;text-align:left;vertical-align:top;padding:0;width:100%;position:relative;display:table\">" +
+                                                 "<tr class=\"\" style=\"padding:0;vertical-align:top;text-align:left\">" +
+                                                 "<th class=\"small-12 large-12 columns first last\" style=\"font-size:16px;padding:0;text-align:left;color:#0a0a0a;font-family: 'Cabin', Helvetica, Arial, sans-serif;font-weight:normal;line-height:1.3;margin:0 auto;padding-bottom:16px;width:564px;padding-left:16px;padding-right:16px\">" +
+                                                 "<hr class=\"full-divider\" style=\"clear:both;max-width:580px;border-right:0;border-top:0;border-left:0;margin:20px auto;border-bottom:1px solid #cacaca;background-color:#dbdbdb;height:1px;border:none;width:100%;margin-top:0;margin-bottom:0\">" +
+                                                 "</th></tr></table></div><div style=\"padding-top:2px\">" +
+                                                 "<table class=\"row\" style=\"border-spacing:0;border-collapse:collapse;text-align:left;padding:0;width:100%;position:relative;display:table\">" +
+                                                 "<tr class=\"\" style=\"padding:0;text-align:left\"><th style=\"width: 60%;\">" +
+                                                 "<a href=\"" + link + "\" target=\"_blank\"><span style=\"font-family: 'Cabin', Helvetica, Arial, sans-serif;padding:10px 0 10px 16px;margin:0;text-align:left;line-height:1.3;text-decoration:none;font-weight:300;color:#d9242c !important\">Security/Cancellation Policy</span></a>" +
+                                                 "</th><th style=\"font-size:10px;padding:10px 16px 10px 0;line-height:28px;text-align:right;\">" +
+                                                 "<p>Powered by Staysimplyfied.com</p>" +
+                                                 "</th></tr></table></div></tr></table></div>" +
+                                                 "</td></tr></table></center></td></tr></table>";
+
+                            string EndData = "</body></html>";
+                            MailContent = style + header + ChkInOutDate + GuestTbl + PayMode + TariffDtls + PropertyDtls + Note + ContactDtls + EndData;
                             message1.Body = MailContent;
                             message1.IsBodyHtml = true;
                         }
