@@ -4397,6 +4397,29 @@ namespace ConfirmationEMailWebApi.Controllers
                             File.WriteAllBytes(path + "Booking Confirmation - " + ds.Tables[2].Rows[0][2].ToString() + ".pdf", pdfBytes);
                             RFilePathWhatsApp = path + "Booking Confirmation - " + ds.Tables[2].Rows[0][2].ToString() + ".pdf";
                         }
+
+                        CloudStorageAccount storageAccount = CloudStorageAccount.Parse(
+                        CloudConfigurationManager.GetSetting("StorageConnectionString"));
+                        CloudBlobClient blobClient = storageAccount.CreateCloudBlobClient();
+                        CloudBlobContainer container = blobClient.GetContainerReference("bookingconfirmations");
+                        var blob = container.GetBlockBlobReference("Booking Confirmation - " + ds.Tables[2].Rows[0][2].ToString() + ".pdf");
+                        try
+                        {
+                            using (var filestream = File.OpenRead(RFilePathWhatsApp))
+                            {
+                                blob.Properties.ContentType = "application/pdf";
+                                blob.UploadFromStream(filestream);
+                            }
+                            //File.Delete(path);
+
+                            AzureBlobPdfURl = blob.SnapshotQualifiedUri.AbsoluteUri;
+
+
+                        }
+                        catch (System.Exception e)
+                        {
+                            throw e;
+                        }
                         message.Body = MailContent;
                         message.IsBodyHtml = true;
                         if (ds.Tables[2].Rows[0][11].ToString() == "218" && ds.Tables[0].Rows[0][5].ToString() == "Direct<br>(Cash/Card)")
@@ -4404,8 +4427,8 @@ namespace ConfirmationEMailWebApi.Controllers
                             message.Attachments.Add(new Attachment(@"D:\home\site\wwwroot\Confirmations\" + "icici_letter.pdf"));
                         }
 
-                        CloudStorageAccount storageAccount = CloudStorageAccount.Parse(
-                        CloudConfigurationManager.GetSetting("StorageConnectionString"));
+                        //CloudStorageAccount storageAccount = CloudStorageAccount.Parse(
+                        //CloudConfigurationManager.GetSetting("StorageConnectionString"));
                     }
                     #endregion
 
@@ -6249,7 +6272,7 @@ namespace ConfirmationEMailWebApi.Controllers
             {
                 var WhatappResponse = client.UploadString("https://api.myvaluefirst.com/psms/servlet/psms.JsonEservice", "POST", body);
                 log = new CreateLogFiles();
-                log.ErrorLog(" => WhatappMsg Response => " + WhatappResponse);
+                log.ErrorLog(" => WhatappMsg Response => " + WhatappResponse+"-"+ body.ToString());
             }
             catch (Exception ex)
             {
