@@ -88,7 +88,6 @@ D:\Projects\ConfirmationEMailWebApi\ConfirmationEMailWebApi\bin\Microsoft.Owin.S
 D:\Projects\ConfirmationEMailWebApi\ConfirmationEMailWebApi\bin\Microsoft.Owin.Security.Twitter.xml
 D:\Projects\ConfirmationEMailWebApi\ConfirmationEMailWebApi\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
 D:\Projects\ConfirmationEMailWebApi\ConfirmationEMailWebApi\bin\System.Web.Http.Owin.xml
-D:\Projects\ConfirmationEMailWebApi\ConfirmationEMailWebApi\obj\Debug\ConfirmationEMailWebApi.csprojResolveAssemblyReference.cache
 D:\Projects\ConfirmationEMailWebApi\ConfirmationEMailWebApi\obj\Debug\ConfirmationEMailWebApi.dll
 D:\Projects\ConfirmationEMailWebApi\ConfirmationEMailWebApi\obj\Debug\ConfirmationEMailWebApi.pdb
 D:\Projects\ConfirmationEMailWebApi\ConfirmationEMailWebApi\bin\Microsoft.Azure.KeyVault.Core.dll
