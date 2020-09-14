@@ -83,10 +83,10 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>06/13/2020 11:34:46</publishTime>
     </File>
     <File Include="bin/ConfirmationEMailWebApi.dll">
-      <publishTime>08/28/2020 17:10:15</publishTime>
+      <publishTime>09/14/2020 12:49:15</publishTime>
     </File>
     <File Include="bin/ConfirmationEMailWebApi.pdb">
-      <publishTime>08/28/2020 17:10:15</publishTime>
+      <publishTime>09/14/2020 12:49:15</publishTime>
     </File>
     <File Include="bin/EntityFramework.dll">
       <publishTime>06/13/2020 11:34:47</publishTime>
@@ -371,7 +371,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>06/13/2020 11:34:46</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>08/28/2020 17:10:16</publishTime>
+      <publishTime>09/14/2020 12:49:16</publishTime>
     </File>
   </ItemGroup>
 </Project>

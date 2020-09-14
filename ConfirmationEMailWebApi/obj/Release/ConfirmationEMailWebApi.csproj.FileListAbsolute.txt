@@ -188,3 +188,13 @@ D:\Projects\ConfirmationEMailWebApi\ConfirmationEMailWebApi\bin\Microsoft.Window
 D:\Projects\ConfirmationEMailWebApi\ConfirmationEMailWebApi\obj\Release\ConfirmationEMailWebApi.csproj.CoreCompileInputs.cache
 D:\Projects\ConfirmationEMailWebApi\ConfirmationEMailWebApi\obj\Release\ConfirmationEMailWebApi.csproj.CopyComplete
 D:\Projects\ConfirmationEMailWebApi\ConfirmationEMailWebApi\obj\Release\ConfirmationEMailWebApi.csprojAssemblyReference.cache
+D:\GitHub\ConfirmationEMailWebApi\ConfirmationEMailWebApi\bin\Microsoft.Azure.KeyVault.Core.dll
+D:\GitHub\ConfirmationEMailWebApi\ConfirmationEMailWebApi\bin\Microsoft.WindowsAzure.Configuration.dll
+D:\GitHub\ConfirmationEMailWebApi\ConfirmationEMailWebApi\bin\Microsoft.WindowsAzure.Storage.dll
+D:\GitHub\ConfirmationEMailWebApi\ConfirmationEMailWebApi\bin\Microsoft.Azure.KeyVault.Core.xml
+D:\GitHub\ConfirmationEMailWebApi\ConfirmationEMailWebApi\bin\Microsoft.WindowsAzure.Configuration.xml
+D:\GitHub\ConfirmationEMailWebApi\ConfirmationEMailWebApi\bin\Microsoft.WindowsAzure.Storage.pdb
+D:\GitHub\ConfirmationEMailWebApi\ConfirmationEMailWebApi\bin\Microsoft.WindowsAzure.Storage.xml
+D:\GitHub\ConfirmationEMailWebApi\ConfirmationEMailWebApi\obj\Release\ConfirmationEMailWebApi.csprojAssemblyReference.cache
+D:\GitHub\ConfirmationEMailWebApi\ConfirmationEMailWebApi\obj\Release\ConfirmationEMailWebApi.csproj.CoreCompileInputs.cache
+D:\GitHub\ConfirmationEMailWebApi\ConfirmationEMailWebApi\obj\Release\ConfirmationEMailWebApi.csproj.CopyComplete

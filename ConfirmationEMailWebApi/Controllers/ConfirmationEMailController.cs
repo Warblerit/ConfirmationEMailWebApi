@@ -6235,12 +6235,7 @@ namespace ConfirmationEMailWebApi.Controllers
             }
         }
 
-
-        public string WhatsappAPI(WhatsappObj Details)
-        {
-            Details.MobileNo = Details.MobileNo.Replace("+", "");
-            if (Details.MobileNo.Length == 10)
-            {
+ 
 
         public string WhatsappAPI(WhatsappObj Details)
         {
