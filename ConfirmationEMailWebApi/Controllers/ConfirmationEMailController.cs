@@ -3884,29 +3884,29 @@ namespace ConfirmationEMailWebApi.Controllers
 
                         BookingDetails = "<div style =\"border-bottom:2px solid #808080;margin:5px 0px 20px 0px\">" +
                         "<h3 style =\"margin:0;font-family:&#39;Open Sans&#39;;font-size:16px;padding:10px 0;text-align:center;color:#0000ff;font-weight:bold\">Booking Details<u></u></h3>" +
-                        "</ div >" +
+                        "</div>" +
                         "<table style =\"border-collapse:collapse\">" +
                         "<tbody>" +
-                        "<tr style =\"border-bottom:2px solid yellow\">" +
-                        "<td style =\"font-size:13px;width:13%\" valign =\"top\" align =\"center\"><strong> Guest Name </strong></td>" +
-                        "<td style =\"font-size:13px;width:12%\" valign =\"top\" align =\"center\"><strong> Room Type / Occupancy </strong></td >" +
-                        "<td style =\"font-size:13px;width:12%\" valign =\"top\" align =\"center\"><strong> Check In </strong></td>" +
-                        "<td style =\"font-size:13px;width:12%\" valign =\"top\" align =\"center\"><strong> Check Out </strong></td >" +
-                        "<td style =\"font-size:13px;width:13%\" valign =\"top\" align =\"center\"><strong> Tariff </strong></td >" +
-                        "<td style =\"font-size:13px;width:13%\" valign =\"top\" align =\"center\"><strong> Room Tariff </strong></td>" +
-                        "<td style =\"font-size:13px;width:13%\" valign =\"top\" align =\"center\"><strong> Services </strong></td>" +
+                        "<tr>" +
+                        "<td style =\"font-size:13px;width:13%;border:1px solid #ebebeb;padding:5px 0;\" valign =\"top\" align =\"center\"><strong> Guest Name </strong></td>" +
+                        "<td style =\"font-size:13px;width:12%;border:1px solid #ebebeb;padding:5px 0;\" valign =\"top\" align =\"center\"><strong> Room Type / Occupancy </strong></td >" +
+                        "<td style =\"font-size:13px;width:12%;border:1px solid #ebebeb;padding:5px 0;\" valign =\"top\" align =\"center\"><strong> Check In </strong></td>" +
+                        "<td style =\"font-size:13px;width:12%;border:1px solid #ebebeb;padding:5px 0;\" valign =\"top\" align =\"center\"><strong> Check Out </strong></td >" +
+                        "<td style =\"font-size:13px;width:13%;border:1px solid #ebebeb;padding:5px 0;\" valign =\"top\" align =\"center\"><strong> Tariff </strong></td >" +
+                        "<td style =\"font-size:13px;width:13%;border:1px solid #ebebeb;padding:5px 0;\" valign =\"top\" align =\"center\"><strong> Room Tariff </strong></td>" +
+                        "<td style =\"font-size:13px;width:13%;border:1px solid #ebebeb;padding:5px 0;\" valign =\"top\" align =\"center\"><strong> Services </strong></td>" +
                         "</tr>";
 
                         for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
                         {
                             BookingDetails += "<tr style =\"font-style:normal;font-weight:normal;border-bottom:1px solid #ebebeb\">" +
-                            "<td style =\"vertical-align:middle;text-align:center\"> " + ds.Tables[0].Rows[i][0].ToString() + " </td>" +
-                            "<td style =\"vertical-align:middle;text-align:center\"> " + ds.Tables[0].Rows[i][7].ToString() + "/" + ds.Tables[0].Rows[i][4].ToString() + " </td>" +
-                            "<td style =\"vertical-align:middle;text-align:center\"> " + ds.Tables[0].Rows[i][1].ToString() + " </td>" +
-                            "<td style =\"vertical-align:middle;text-align:center\"> " + ds.Tables[0].Rows[i][2].ToString() + " </td>" +
-                            "<td style =\"vertical-align:middle;text-align:center\"> " + ds.Tables[0].Rows[i][3].ToString() + " / -</td>" +
-                            "<td style =\"vertical-align:middle;text-align:center\"> " + ds.Tables[0].Rows[i][5].ToString() + "</td>" +
-                            "<td style =\"vertical-align:middle;text-align:center\"> " + ds.Tables[0].Rows[i][6].ToString() + "</td>" +
+                            "<td style =\"vertical-align:middle;text-align:center;border:1px solid #ebebeb;\"> " + ds.Tables[0].Rows[i][0].ToString() + " </td>" +
+                            "<td style =\"vertical-align:middle;text-align:center;border:1px solid #ebebeb;\"> " + ds.Tables[0].Rows[i][7].ToString() + "/" + ds.Tables[0].Rows[i][4].ToString() + " </td>" +
+                            "<td style =\"vertical-align:middle;text-align:center;border:1px solid #ebebeb;\"> " + ds.Tables[0].Rows[i][1].ToString() + " </td>" +
+                            "<td style =\"vertical-align:middle;text-align:center;border:1px solid #ebebeb;\"> " + ds.Tables[0].Rows[i][2].ToString() + " </td>" +
+                            "<td style =\"vertical-align:middle;text-align:center;border:1px solid #ebebeb;\"> " + ds.Tables[0].Rows[i][3].ToString() + " / -</td>" +
+                            "<td style =\"vertical-align:middle;text-align:center;border:1px solid #ebebeb;\"> " + ds.Tables[0].Rows[i][5].ToString() + "</td>" +
+                            "<td style =\"vertical-align:middle;text-align:center;border:1px solid #ebebeb;\"> " + ds.Tables[0].Rows[i][6].ToString() + "</td>" +
                             "</tr></tbody>";
 
                         }
@@ -3933,7 +3933,7 @@ namespace ConfirmationEMailWebApi.Controllers
                             "</div>" +
                             "<table style =\"border-collapse:collapse\">" +
                             "<tbody>" +
-                            "<tr style =\"border-bottom:2px solid yellow\">" +
+                            "<tr style =\"border-bottom:1px solid #808080;width:100%;\">" +
                             "<td style =\"font-size:13px;width:16%\" valign =\"top\" align =\"center\"><strong> GST Number </strong></td>" +
                             "<td style =\"font-size:13px;width:16%\" valign =\"top\" align =\"center\"><strong> Legal Name </strong></td>" +
                             "<td style =\"font-size:13px;width:16%\" valign =\"top\" align =\"center\"><strong> Address </strong></td>" +
@@ -3948,7 +3948,7 @@ namespace ConfirmationEMailWebApi.Controllers
                             "</div>" +
                             "<table style =\"border-collapse:collapse;\">" +
                             "<tbody>" +
-                            "<tr style =\"border-bottom:2px solid yellow;width:800px;\">" +
+                            "<tr style =\"border-bottom:1px solid #808080;width:100%;\">" +
                             "<td style =\"font-size:13px;width:33%\" valign =\"top\" align =\"center\"><strong> Client Ref No</strong></td>" +
                             "<td style =\"font-size:13px;width:33%\" valign =\"top\" align =\"center\"><strong> Booker </strong></td>" +
                             "<td style =\"font-size:13px;width:33%\" valign =\"top\" align =\"center\"><strong> Issues / Feedback </strong></td>" +
@@ -4253,25 +4253,25 @@ namespace ConfirmationEMailWebApi.Controllers
                         "</div>" +
                         "<table style =\"border-collapse:collapse\">" +
                         "<tbody>" +
-                        "<tr style =\"border-bottom:2px solid yellow\">" +
-                        "<td style =\"font-size:13px;width:13%\" valign =\"top\" align =\"center\"><strong> Guest Name </strong></td>" +
-                        "<td style =\"font-size:13px;width:12%\" valign =\"top\" align =\"center\"><strong> Room Type / Occupancy </strong></td >" +
-                        "<td style =\"font-size:13px;width:12%\" valign =\"top\" align =\"center\"><strong> Check In </strong></td>" +
-                        "<td style =\"font-size:13px;width:12%\" valign =\"top\" align =\"center\"><strong> Check Out </strong></td >" +
-                        "<td style =\"font-size:13px;width:13%\" valign =\"top\" align =\"center\"><strong> Tariff </strong></td >" +
-                        "<td style =\"font-size:13px;width:13%\" valign =\"top\" align =\"center\"><strong> Room Tariff </strong></td>" +
-                        "<td style =\"font-size:13px;width:13%\" valign =\"top\" align =\"center\"><strong> Services </strong></td>" +
+                        "<tr>" +
+                        "<td style =\"font-size:13px;width:13%;border:1px solid #ebebeb;padding:5px 0;\" valign =\"top\" align =\"center\"><strong> Guest Name </strong></td>" +
+                        "<td style =\"font-size:13px;width:12%;border:1px solid #ebebeb;padding:5px 0;\" valign =\"top\" align =\"center\"><strong> Room Type / Occupancy </strong></td >" +
+                        "<td style =\"font-size:13px;width:12%;border:1px solid #ebebeb;padding:5px 0;\" valign =\"top\" align =\"center\"><strong> Check In </strong></td>" +
+                        "<td style =\"font-size:13px;width:12%;border:1px solid #ebebeb;padding:5px 0;\" valign =\"top\" align =\"center\"><strong> Check Out </strong></td >" +
+                        "<td style =\"font-size:13px;width:13%;border:1px solid #ebebeb;padding:5px 0;\" valign =\"top\" align =\"center\"><strong> Tariff </strong></td >" +
+                        "<td style =\"font-size:13px;width:13%;border:1px solid #ebebeb;padding:5px 0;\" valign =\"top\" align =\"center\"><strong> Room Tariff </strong></td>" +
+                        "<td style =\"font-size:13px;width:13%;border:1px solid #ebebeb;padding:5px 0;\" valign =\"top\" align =\"center\"><strong> Services </strong></td>" +
                         "</tr>";
                             for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
                             {
-                                BookingDetails += "<tr style =\"font-style:normal;font-weight:normal;border-bottom:1px solid #ebebeb\">" +
-                                "<td style =\"vertical-align:middle;text-align:center\"> " + ds.Tables[i].Rows[0][0].ToString() + " </td>" +
-                                "<td style =\"vertical-align:middle;text-align:center\"> " + ds.Tables[i].Rows[0][7].ToString() + "/" + ds.Tables[0].Rows[i][4].ToString() +" </td>" +
-                                "<td style =\"vertical-align:middle;text-align:center\"> " + ds.Tables[i].Rows[0][9].ToString() + " </td>" +
-                                "<td style =\"vertical-align:middle;text-align:center\"> " + ds.Tables[i].Rows[0][10].ToString() + " </td>" +
-                                "<td style =\"vertical-align:middle;text-align:center\"> " + ds.Tables[i].Rows[0][3].ToString() + " / -</td>" +
-                                "<td style =\"vertical-align:middle;text-align:center\"> " + ds.Tables[i].Rows[0][5].ToString() + "</td>" +
-                                "<td style =\"vertical-align:middle;text-align:center\"> " + ds.Tables[i].Rows[0][6].ToString() + "</td>" +
+                                BookingDetails += "<tr style =\"font-style:normal;font-weight:normal;\">" +
+                                "<td style =\"vertical-align:middle;text-align:center;border:1px solid #ebebeb;padding:5px 0;\"> " + ds.Tables[i].Rows[0][0].ToString() + " </td>" +
+                                "<td style =\"vertical-align:middle;text-align:center;border:1px solid #ebebeb;padding:5px 0;\"> " + ds.Tables[i].Rows[0][7].ToString() + "/" + ds.Tables[0].Rows[i][4].ToString() +" </td>" +
+                                "<td style =\"vertical-align:middle;text-align:center;border:1px solid #ebebeb;padding:5px 0;\"> " + ds.Tables[i].Rows[0][9].ToString() + " </td>" +
+                                "<td style =\"vertical-align:middle;text-align:center;border:1px solid #ebebeb;padding:5px 0;\"> " + ds.Tables[i].Rows[0][10].ToString() + " </td>" +
+                                "<td style =\"vertical-align:middle;text-align:center;border:1px solid #ebebeb;padding:5px 0;\"> " + ds.Tables[i].Rows[0][3].ToString() + " / -</td>" +
+                                "<td style =\"vertical-align:middle;text-align:center;border:1px solid #ebebeb;padding:5px 0;\"> " + ds.Tables[i].Rows[0][5].ToString() + "</td>" +
+                                "<td style =\"vertical-align:middle;text-align:center;border:1px solid #ebebeb;padding:5px 0;\"> " + ds.Tables[i].Rows[0][6].ToString() + "</td>" +
                                 "</tr></tbody>";
                             }
                                 BookingDetails += "</table>" +
@@ -4284,28 +4284,28 @@ namespace ConfirmationEMailWebApi.Controllers
                         {
                             BookingDetails = "<div style =\"border-bottom:2px solid #808080;margin:5px 0px 20px 0px\">" +
                             "<h3 style =\"margin:0;font-family:&#39;Open Sans&#39;;font-size:16px;padding:10px 0;text-align:center;color:#0000ff;font-weight:bold\">Booking Details<u></u></h3>" +
-                            "</ div >" +
+                            "</div>" +
                             "<table style =\"border-collapse:collapse\">" +
                             "<tbody>" +
-                            "<tr style =\"border-bottom:2px solid yellow\">" +
-                            "<td style =\"font-size:13px;width:13%\" valign =\"top\" align =\"center\"><strong> Guest Name </strong></td>" +
-                            "<td style =\"font-size:13px;width:12%\" valign =\"top\" align =\"center\"><strong> Room Type / Occupancy </strong></td >" +
-                            "<td style =\"font-size:13px;width:12%\" valign =\"top\" align =\"center\"><strong> Check In </strong></td>" +
-                            "<td style =\"font-size:13px;width:12%\" valign =\"top\" align =\"center\"><strong> Check Out </strong></td >" +
-                            "<td style =\"font-size:13px;width:13%\" valign =\"top\" align =\"center\"><strong> Tariff </strong></td >" +
-                            "<td style =\"font-size:13px;width:13%\" valign =\"top\" align =\"center\"><strong> Room Tariff </strong></td>" +
-                            "<td style =\"font-size:13px;width:13%\" valign =\"top\" align =\"center\"><strong> Services </strong></td>" +
+                            "<tr>" +
+                            "<td style =\"font-size:13px;width:13%;border:1px solid #ebebeb;padding:5px 0;\" valign =\"top\" align =\"center\"><strong> Guest Name </strong></td>" +
+                            "<td style =\"font-size:13px;width:12%;border:1px solid #ebebeb;padding:5px 0;\" valign =\"top\" align =\"center\"><strong> Room Type / Occupancy </strong></td >" +
+                            "<td style =\"font-size:13px;width:12%;border:1px solid #ebebeb;padding:5px 0;\" valign =\"top\" align =\"center\"><strong> Check In </strong></td>" +
+                            "<td style =\"font-size:13px;width:12%;border:1px solid #ebebeb;padding:5px 0;\" valign =\"top\" align =\"center\"><strong> Check Out </strong></td >" +
+                            "<td style =\"font-size:13px;width:13%;border:1px solid #ebebeb;padding:5px 0;\" valign =\"top\" align =\"center\"><strong> Tariff </strong></td >" +
+                            "<td style =\"font-size:13px;width:13%;border:1px solid #ebebeb;padding:5px 0;\" valign =\"top\" align =\"center\"><strong> Room Tariff </strong></td>" +
+                            "<td style =\"font-size:13px;width:13%;border:1px solid #ebebeb;padding:5px 0;\" valign =\"top\" align =\"center\"><strong> Services </strong></td>" +
                             "</tr>";
                             for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
                             {
                                 BookingDetails += "<tr style =\"font-style:normal;font-weight:normal;border-bottom:1px solid #ebebeb\">" +
-                                "<td style =\"vertical-align:middle;text-align:center\"> " + ds.Tables[0].Rows[i][0].ToString() + " </td>" +
-                                "<td style =\"vertical-align:middle;text-align:center\"> " + ds.Tables[0].Rows[i][7].ToString() + "/" + ds.Tables[0].Rows[i][4].ToString() + " </td>" +
-                                "<td style =\"vertical-align:middle;text-align:center\"> " + ds.Tables[0].Rows[i][1].ToString() + " </td>" +
-                                "<td style =\"vertical-align:middle;text-align:center\"> " + ds.Tables[0].Rows[i][2].ToString() + " </td>" +
-                                "<td style =\"vertical-align:middle;text-align:center\"> " + ds.Tables[0].Rows[i][3].ToString() + " /-</td>" +
-                                "<td style =\"vertical-align:middle;text-align:center\"> " + ds.Tables[0].Rows[i][5].ToString() + "</td>" +
-                                "<td style =\"vertical-align:middle;text-align:center\"> " + ds.Tables[0].Rows[i][6].ToString() + "</td>" +
+                                "<td style =\"vertical-align:middle;text-align:center;border:1px solid #ebebeb;\"> " + ds.Tables[0].Rows[i][0].ToString() + " </td>" +
+                                "<td style =\"vertical-align:middle;text-align:center;border:1px solid #ebebeb;\"> " + ds.Tables[0].Rows[i][7].ToString() + "/" + ds.Tables[0].Rows[i][4].ToString() + " </td>" +
+                                "<td style =\"vertical-align:middle;text-align:center;borde:1px solid #ebebeb;\"> " + ds.Tables[0].Rows[i][1].ToString() + " </td>" +
+                                "<td style =\"vertical-align:middle;text-align:center;border:1px solid #ebebeb;\"> " + ds.Tables[0].Rows[i][2].ToString() + " </td>" +
+                                "<td style =\"vertical-align:middle;text-align:center;border:1px solid #ebebeb;\"> " + ds.Tables[0].Rows[i][3].ToString() + " /-</td>" +
+                                "<td style =\"vertical-align:middle;text-align:center;border:1px solid #ebebeb;\"> " + ds.Tables[0].Rows[i][5].ToString() + "</td>" +
+                                "<td style =\"vertical-align:middle;text-align:center;border:1px solid #ebebeb;\"> " + ds.Tables[0].Rows[i][6].ToString() + "</td>" +
                                 "</tr></tbody>";
                             }
                             BookingDetails += "</table>" +
@@ -4329,9 +4329,9 @@ namespace ConfirmationEMailWebApi.Controllers
                         string GSTDetails = "<div style =\"border-bottom:2px solid #808080;margin:5px 0px 20px 0px\">" +
                             "<h3 style =\"margin:0;font-family:&#39;Open Sans&#39;;font-size:16px;padding:10px 0;text-align:center;color:#0000ff;font-weight:bold\">GST Details<u></u></h3>" +
                             "</div>" +
-                            "<table style =\"border-collapse:collapse;width:800px;\">" +
+                            "<table style =\"border-collapse:collapse;width:100%;\">" +
                             "<tbody>" +
-                            "<tr style =\"border-bottom:2px solid yellow\">" +
+                            "<tr style =\"border-bottom:1px solid #808080\">" +
                             "<td style =\"font-size:13px;width:16%\" valign =\"top\" align =\"center\"><strong> GST Number </strong></td>" +
                             "<td style =\"font-size:13px;width:16%\" valign =\"top\" align =\"center\"><strong> Legal Name </strong></td>" +
                             "<td style =\"font-size:13px;width:16%\" valign =\"top\" align =\"center\"><strong> Address </strong></td>" +
@@ -4344,9 +4344,9 @@ namespace ConfirmationEMailWebApi.Controllers
                         string OtherDetails = "<div style =\"border-bottom:2px solid #808080;margin:5px 0px 20px 0px\">" +
                             "<h3 style =\"margin:0;font-family:&#39;Open Sans&#39;;font-size:16px;padding:10px 0;text-align:center;color:#0000ff;font-weight:bold\">Other Details<u></u></h3>" +
                             "</div>" +
-                            "<table style =\"border-collapse:collapse;width:800px;\">" +
+                            "<table style =\"border-collapse:collapse;width:100%;\">" +
                             "<tbody>" +
-                            "<tr style =\"border-bottom:2px solid yellow;width:800px;\">" +
+                            "<tr style =\"border-bottom:1px solid #808080;\">" +
                             "<td style =\"font-size:13px;width:33%\" valign =\"top\" align =\"center\"><strong> Client Ref No</strong></td>" +
                             "<td style =\"font-size:13px;width:33%\" valign =\"top\" align =\"center\"><strong> Booker </strong></td>" +
                             "<td style =\"font-size:13px;width:33%\" valign =\"top\" align =\"center\"><strong> Issues / Feedback </strong></td>" +

@@ -25,6 +25,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -324,7 +325,6 @@
     <None Include="Properties\PublishProfiles\gv.pubxml" />
     <None Include="Properties\PublishProfiles\testconfirmemail - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\testconfirmemail - ReadOnly - FTP.pubxml" />
-    <None Include="Properties\PublishProfiles\testconfirmemail - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
