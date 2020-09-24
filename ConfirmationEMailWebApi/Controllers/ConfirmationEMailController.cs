@@ -3629,7 +3629,6 @@ namespace ConfirmationEMailWebApi.Controllers
         }
 
 
-
         [HttpPost]
         [Route("ConfirmNewEMail")]
         public IHttpActionResult ConfirmNewEMail(ConfirmationEMail All)
@@ -3816,7 +3815,7 @@ namespace ConfirmationEMailWebApi.Controllers
                             ////message.Bcc.Add(new System.Net.Mail.MailAddress("hbconf17@gmail.com"));
                         }
                         message.Bcc.Add(new System.Net.Mail.MailAddress("anbu@warblerit.com"));
-                        message.Bcc.Add(new System.Net.Mail.MailAddress("poorna@warblerit.com"));
+                        
 
                         message.Subject = "Booking Confirmation - " + ds.Tables[2].Rows[0][2].ToString();
 
@@ -3938,8 +3937,8 @@ namespace ConfirmationEMailWebApi.Controllers
                                 "</div>" +
                                  "<table style =\"border-collapse:collapse;width:100%;\">" +
                                  "<tbody style=\"width:100%\">" +
-                                 "<tr><td style=\"width:50%;text-align:center; \">" +
-                                 "<h3 style =\"margin:0;font-family:&#39;Open Sans&#39;font-size:15px;padding:10px 0\"> Note :" + ds.Tables[2].Rows[0][8].ToString() + "</h3></td>" +
+                                 "<tr><td style=\"width:50%;text-align:left; \">" +
+                                 "<h3 style =\"margin:0;font-family:&#39;Open Sans&#39;font-size:15px;padding:10px 0\"> Note  : <span style =\"font-weight:normal\">" + ds.Tables[2].Rows[0][8].ToString() + "</span></h3></td>" +
                                  "<tr><td style=\"width:50%;text-align:center; \">" +
                                  "</td></tr>"+
                                  "</tr></tbody></table>";
@@ -3980,8 +3979,8 @@ namespace ConfirmationEMailWebApi.Controllers
                                "</div>" +
                                 "<table style =\"border-collapse:collapse;width:100%;\">" +
                                 "<tbody style=\"width:100%\">" +
-                                "<tr><td style=\"width:50%;text-align:center; \">" +
-                                "<h3 style =\"margin:0;font-family:&#39;Open Sans&#39;font-size:15px;padding:10px 0\"> Note :" + ds.Tables[2].Rows[0][8].ToString() + "</h3></td>" +
+                                "<tr><td style=\"width:50%;text-align:left; \">" +
+                                "<h3 style =\"margin:0;font-family:&#39;Open Sans&#39;font-size:15px;padding:10px 0\"> Note  : <span style =\"font-weight:normal\">" + ds.Tables[2].Rows[0][8].ToString() + "</span></h3></td>" +
                                 "<tr><td style=\"width:50%;text-align:center; \">" +
                                  "</td></tr>" +
                                 "</tr></tbody></table>";
@@ -4352,9 +4351,9 @@ namespace ConfirmationEMailWebApi.Controllers
                            "</div>" +
                             "<table style =\"border-collapse:collapse;width:100%;\">" +
                             "<tbody style=\"width:100%\">" +
-                            "<tr><td style=\"width:50%;text-align:center; \">" +
-                            "<h3 style =\"margin:0;font-family:&#39;Open Sans&#39;font-size:15px;padding:10px 0\"> Inclusions:" + ds.Tables[1].Rows[0][12].ToString() + "</h3></td>" +
-                            "<td style=\"width:50%;text-align:center; \"><h3 style =\"margin:0;font-family:&#39;Open Sans&#39;;font-size:15px;padding:10px 0\"> Note :" + ds.Tables[2].Rows[0][8].ToString() + "</h3></td>" +
+                            "<tr><td style=\"width:50%;text-align:left; \">" +
+                            "<h3 style =\"margin:0;font-family:&#39;Open Sans&#39;font-size:15px;padding:10px 0\"> Inclusions : <span style =\"font-weight:normal\">" + ds.Tables[1].Rows[0][12].ToString() + "</span></h3></td>" +
+                            "<td style=\"width:50%;text-align:left; \"><h3 style =\"margin:0;font-family:&#39;Open Sans&#39;;font-size:15px;padding:10px 0\"> Note : <span style =\"font-weight:normal\">" + ds.Tables[2].Rows[0][8].ToString() + "</span></h3></td>" +
                             "</tr></tbody></table>";
                         }
                         else
@@ -4391,9 +4390,9 @@ namespace ConfirmationEMailWebApi.Controllers
                                "</div>" +
                                 "<table style =\"border-collapse:collapse;width:100%;\">" +
                                 "<tbody style=\"width:100%\">" +
-                                "<tr><td style=\"width:50%;text-align:center; \">" +
-                                "<h3 style =\"margin:0;font-family:&#39;Open Sans&#39;font-size:15px;padding:10px 0\"> Inclusions:" + ds.Tables[1].Rows[0][12].ToString() + "</h3></td>" +
-                                "<td style=\"width:50%;text-align:center; \"><h3 style =\"margin:0;font-family:&#39;Open Sans&#39;;font-size:15px;padding:10px 0\"> Note :" + ds.Tables[2].Rows[0][8].ToString() + "</h3></td>" +
+                                "<tr><td style=\"width:50%;text-align:left; \">" +
+                                "<h3 style =\"margin:0;font-family:&#39;Open Sans&#39;font-size:15px;padding:10px 0\"> Inclusions : <span style =\"font-weight:normal\">" + ds.Tables[1].Rows[0][12].ToString() + "</span></h3></td>" +
+                                "<td style=\"width:50%;text-align:left; \"><h3 style =\"margin:0;font-family:&#39;Open Sans&#39;;font-size:15px;padding:10px 0\"> Note : <span style =\"font-weight:normal\">" + ds.Tables[2].Rows[0][8].ToString() + "</span></h3></td>" +
                                 "</tr></tbody></table>";
                         }
                         string HotelDetails = "<div style =\"border-bottom:2px solid #808080;margin:5px 0px 20px 0px\">" +
@@ -6504,7 +6503,6 @@ namespace ConfirmationEMailWebApi.Controllers
                             ////message.Bcc.Add(new System.Net.Mail.MailAddress("hbconf17@gmail.com"));
                         }
                         message.Bcc.Add(new System.Net.Mail.MailAddress("anbu@warblerit.com"));
-                        message.Bcc.Add(new System.Net.Mail.MailAddress("poorna@warblerit.com"));
 
                         message.Subject = "Booking Confirmation - " + ds.Tables[2].Rows[0][2].ToString();
 
@@ -6625,8 +6623,8 @@ namespace ConfirmationEMailWebApi.Controllers
                                "</div>" +
                                 "<table style =\"border-collapse:collapse;width:100%;\">" +
                                 "<tbody style=\"width:100%\">" +
-                                "<tr><td style=\"width:50%;text-align:center; \">" +
-                                "<h3 style =\"margin:0;font-family:&#39;Open Sans&#39;font-size:15px;padding:10px 0\"> Inclusions:" + ds.Tables[1].Rows[0][12].ToString() + "</h3></td>" +
+                                "<tr><td style=\"width:50%;text-align:left; \">" +
+                                "<h3 style =\"margin:0;font-family:&#39;Open Sans&#39;font-size:15px;padding:10px 0\"> Inclusions : <span style =\"font-weight:normal\">" + ds.Tables[1].Rows[0][12].ToString() + "</span></h3></td>" +
                                 "<tr><td style=\"width:50%;text-align:center; \">" +
                                  "</td></tr>" +
                                 "</tr></tbody></table>";
@@ -6890,7 +6888,6 @@ namespace ConfirmationEMailWebApi.Controllers
                             ////message.Bcc.Add(new System.Net.Mail.MailAddress("hbconf17@gmail.com"));
                         }
                         message.Bcc.Add(new System.Net.Mail.MailAddress("poorna@warblerit.com"));
-                        message.Bcc.Add(new System.Net.Mail.MailAddress("anbu@warblerit.com"));
 
                         message.Subject = "Booking Confirmation - " + ds.Tables[2].Rows[0][2].ToString();
                         string typeofpty = ds.Tables[4].Rows[0][8].ToString();
@@ -7018,8 +7015,8 @@ namespace ConfirmationEMailWebApi.Controllers
                                "</div>" +
                                 "<table style =\"border-collapse:collapse;width:100%;\">" +
                                 "<tbody style=\"width:100%\">" +
-                                "<tr><td style=\"width:50%;text-align:center; \">" +
-                                "<h3 style =\"margin:0;font-family:&#39;Open Sans&#39;font-size:15px;padding:10px 0\"> Inclusions:" + ds.Tables[1].Rows[0][12].ToString() + "</h3></td>" +
+                                "<tr><td style=\"width:50%;text-align:left; \">" +
+                                "<h3 style =\"margin:0;font-family:&#39;Open Sans&#39;font-size:15px;padding:10px 0\"> Inclusions : <span style =\"font-weight:normal\">" + ds.Tables[1].Rows[0][12].ToString() + "</span></h3></td>" +
                                 "<tr><td style=\"width:50%;text-align:center; \">" +
                                  "</td></tr>" +
                                 "</tr></tbody></table>";
@@ -7058,8 +7055,8 @@ namespace ConfirmationEMailWebApi.Controllers
                                "</div>" +
                                 "<table style =\"border-collapse:collapse;width:100%;\">" +
                                 "<tbody style=\"width:100%\">" +
-                                "<tr><td style=\"width:50%;text-align:center; \">" +
-                                "<h3 style =\"margin:0;font-family:&#39;Open Sans&#39;font-size:15px;padding:10px 0\"> Inclusions:" + ds.Tables[1].Rows[0][12].ToString() + "</h3></td>" +
+                                "<tr><td style=\"width:50%;text-align:left; \">" +
+                                "<h3 style =\"margin:0;font-family:&#39;Open Sans&#39;font-size:15px;padding:10px 0\"> Inclusions : <span style =\"font-weight:normal\">" + ds.Tables[1].Rows[0][12].ToString() + "</span></h3></td>" +
                                 "<tr><td style=\"width:50%;text-align:center; \">" +
                                  "</td></tr>" +
                                 "</tr></tbody></table>";
