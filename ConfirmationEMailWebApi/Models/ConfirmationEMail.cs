@@ -48,4 +48,48 @@ namespace ConfirmationEMailWebApi.Models
         public string MobileNo { get; set; }
 
     }
+
+    public class PoData
+    {
+        public string item_id { get; set; }
+        public decimal rate { get; set; }
+        public int quantity { get; set; }
+        public string tax_id { get; set; }
+        public string vendor_id { get; set; }
+        public string purchaseorder_number { get; set; }
+        public string reference_number { get; set; }
+        public string date  { get; set; }
+        public string delivery_date { get; set; }
+        public int payment_terms  { get; set; }
+        public string payment_terms_label { get; set; }
+        public bool is_inclusive_tax { get; set; }
+        public string notes { get; set; }
+        public string terms { get; set; }
+    }
+
+   public class LineItemDt
+    {
+        public string item_id { get; set; } 
+        public decimal rate { get; set; } 
+        public int quantity { get; set; } 
+        public string tax_id { get; set; }
+    }
+
+    public class Purchaseorder
+    {
+        public string purchaseorder_id { get; set; }
+    }
+
+   public class PORootRes
+    {
+        public int code { get; set; }
+        public string message { get; set; }
+        public Purchaseorder purchaseorder { get; set; }
+    }
+
+    public class ZohoObj
+    {
+        public long BookingId { get; set; }
+    }
+
 }

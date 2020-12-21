@@ -5,15 +5,15 @@ using Microsoft.WindowsAzure.Storage.Blob;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.SqlClient;
-using System.Drawing;
+using System.Data.SqlClient; 
 using System.IO;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
+using System.Net; 
 using System.Net.Mail;
+using System.Text;
 using System.Threading.Tasks;
 using System.Web.Http;
+using System.Web.Script.Serialization; 
 
 namespace ConfirmationEMailWebApi.Controllers
 {
@@ -25,6 +25,7 @@ namespace ConfirmationEMailWebApi.Controllers
         [HttpPost]
         [Route("ConfirmEMail")]
         public IHttpActionResult ConfirmEMail(ConfirmationEMail All)
+        ///public async Task<Response> SomeHTTPAction(ConfirmationEMail All)
         {
 
             try
@@ -1767,8 +1768,10 @@ namespace ConfirmationEMailWebApi.Controllers
                         else
                         {
                             MailContent = style + header + header_cnt1 + HotelName + ChkInOutDate + TablHdr + Inclusions + Note + Address + BookerDtls + FooterDtls + EndData;
-                            PdfContent = header + header_cnt1 + HotelName + ChkInOutDate + TablHdr + Inclusions + Note + Address + BookerDtls + FooterDtls;
+                            PdfContent = header + header_cnt1 + HotelName + ChkInOutDate  + TablHdr + Inclusions + Note + Address + BookerDtls + FooterDtls;
                         }
+
+                   
 
                         var htmlContent = String.Format(PdfContent, DateTime.Now);
                         var htmlToPdf = new NReco.PdfGenerator.HtmlToPdfConverter();
@@ -3618,6 +3621,14 @@ namespace ConfirmationEMailWebApi.Controllers
                     Response = "Confirmation Email Sent Successfully";
                 }
 
+
+                if (All.ResendFlag != true && ds.Tables[4].Rows[0][8].ToString() == "ExP" && ds.Tables[0].Rows[0][5].ToString() == "Bill to Company (BTC)")
+                {
+                    ZohoObj ZohoObjData = new ZohoObj();
+                    ZohoObjData.BookingId = All.BookingId;
+                    Task.Factory.StartNew(() => ZohoPOAPI(ZohoObjData));
+                }
+                
                 return Json(new { Code = "200", EmailResponse = Response });
             }
             catch (Exception Ex)
@@ -3628,9 +3639,117 @@ namespace ConfirmationEMailWebApi.Controllers
             }
         }
 
+        public string ZohoPOAPI(ZohoObj All) {
+
+            SqlCommand command1 = new SqlCommand();
+            DataSet ds1 = new DataSet();
+            command1.CommandText = "SP_Zoho_PO_Help";
+            command1.CommandType = CommandType.StoredProcedure;
+            command1.Parameters.Add("@Action", SqlDbType.NVarChar).Value = "GetData";
+            command1.Parameters.Add("@Id", SqlDbType.BigInt).Value = All.BookingId;
+            command1.Parameters.Add("@Str1", SqlDbType.NVarChar).Value = "";
+            ds1 = new DBconnection().ExecuteDataSet(command1, "");
+            string ClientId = ds1.Tables[0].Rows[0][0].ToString();
+            string ClientSecret = ds1.Tables[0].Rows[0][1].ToString();
+            string AccessToken = ds1.Tables[0].Rows[0][2].ToString();
+            string OrganizationId = ds1.Tables[0].Rows[0][3].ToString();
+
+            string URL = "https://books.zoho.in/api/v3/purchaseorders?organization_id=" + OrganizationId;
+
+            ServicePointManager.Expect100Continue = true;
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls
+                   | SecurityProtocolType.Tls11
+                   | SecurityProtocolType.Tls12
+                   | SecurityProtocolType.Ssl3;
+            WebRequest webReq = WebRequest.Create(URL);
+            webReq.Proxy = null;
+            HttpWebRequest httpReq = (HttpWebRequest)webReq;
+            httpReq.ContentType = "application/json";
+            httpReq.Method = "POST";
+            httpReq.Headers.Add("Authorization", "Zoho-oauthtoken " + AccessToken);
+            httpReq.ProtocolVersion = HttpVersion.Version11;
+            httpReq.Credentials = CredentialCache.DefaultCredentials;
+            Stream reqStream = httpReq.GetRequestStream();
+            StreamWriter streamWrite = new StreamWriter(reqStream);
+
+            var myData = ds1.Tables[1].AsEnumerable().Select(r => new PoData
+            {
+
+                item_id = r.Field<string>("ItemId"),
+                rate = r.Field<decimal>("Tariff"),
+                quantity = r.Field<int>("NoOfDays"),
+                tax_id = r.Field<string>("TaxId"),
+                vendor_id = r.Field<string>("VendorId"),
+                purchaseorder_number = r.Field<string>("PONo"),
+                reference_number = r.Field<string>("BookingCode"),
+                date = r.Field<string>("BookedDt"),
+                //delivery_date = r.Field<string>("CheckInDate"),
+                payment_terms = r.Field<int>("PaymentTerms"),
+                payment_terms_label = r.Field<string>("PaymentTermsLabel"),
+                is_inclusive_tax = r.Field<bool>("InclusiveTax"),
+                notes = r.Field<string>("Notes"),
+                terms = r.Field<string>("Terms"),
+            }).ToList();
 
 
-        [HttpPost]
+
+            var line_items = new List<LineItemDt>();
+            int Tbl1RCount = myData.Count;
+            for (var j = 0; j < Tbl1RCount; j++)
+            {
+                line_items.Add(new LineItemDt
+                {
+                    item_id = myData[j].item_id,
+                    rate = myData[j].rate,
+                    quantity = myData[j].quantity,
+                    tax_id = myData[j].tax_id,
+                });
+            }
+
+            string body = new JavaScriptSerializer().Serialize(new
+            {
+                vendor_id = myData[0].vendor_id,
+                purchaseorder_number = myData[0].purchaseorder_number,
+                reference_number = myData[0].reference_number,
+                date = myData[0].date,
+                delivery_date = myData[0].delivery_date,
+                payment_terms = myData[0].payment_terms,
+                payment_terms_label = myData[0].payment_terms_label,
+                is_inclusive_tax = myData[0].is_inclusive_tax,
+                notes = myData[0].notes,
+                terms = myData[0].terms,
+                line_items
+
+            });
+
+            streamWrite.Write(body);
+            streamWrite.Close();
+            HttpWebResponse wrres = (HttpWebResponse)httpReq.GetResponse();
+            StreamReader strmReader = new StreamReader(wrres.GetResponseStream(), Encoding.Default, true);
+            string Resobj1 = strmReader.ReadToEnd();
+            JavaScriptSerializer jsonSerializer = new JavaScriptSerializer();
+            PORootRes POResponse = jsonSerializer.Deserialize<PORootRes>(Resobj1);
+
+            if (POResponse.code == 0)
+            {
+
+                SqlCommand command2 = new SqlCommand();
+                DataSet ds2 = new DataSet();
+                command2.CommandText = "SP_Zoho_PO_Help";
+                command2.CommandType = CommandType.StoredProcedure;
+                command2.Parameters.Add("@Action", SqlDbType.NVarChar).Value = "POUpdate";
+                command2.Parameters.Add("@Id", SqlDbType.BigInt).Value = All.BookingId;
+                command2.Parameters.Add("@Str1", SqlDbType.NVarChar).Value = POResponse.purchaseorder.purchaseorder_id;
+                ds2 = new DBconnection().ExecuteDataSet(command2, "");
+
+            }
+            return All.BookingId.ToString();
+        }
+
+
+
+
+    [HttpPost]
         [Route("ConfirmNewEMail")]
         public IHttpActionResult ConfirmNewEMail(ConfirmationEMail All)
         {
@@ -6235,8 +6354,7 @@ namespace ConfirmationEMailWebApi.Controllers
             }
         }
 
- 
-
+  
         public string WhatsappAPI(WhatsappObj Details)
         {
             Details.MobileNo = Details.MobileNo.Replace("+", "");
