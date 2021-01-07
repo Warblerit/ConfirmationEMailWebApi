@@ -199,3 +199,5 @@ D:\GitHub\ConfirmationEMailWebApi\ConfirmationEMailWebApi\bin\Microsoft.WindowsA
 D:\GitHub\ConfirmationEMailWebApi\ConfirmationEMailWebApi\obj\Release\ConfirmationEMailWebApi.csprojAssemblyReference.cache
 D:\GitHub\ConfirmationEMailWebApi\ConfirmationEMailWebApi\obj\Release\ConfirmationEMailWebApi.csproj.CoreCompileInputs.cache
 D:\GitHub\ConfirmationEMailWebApi\ConfirmationEMailWebApi\obj\Release\ConfirmationEMailWebApi.csproj.CopyComplete
+D:\GitHub\ConfirmationEMailWebApi\ConfirmationEMailWebApi\bin\NReco.PdfGenerator.dll
+D:\GitHub\ConfirmationEMailWebApi\ConfirmationEMailWebApi\bin\NReco.PdfGenerator.xml

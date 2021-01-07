@@ -139,6 +139,7 @@ D:\GitHub\ConfirmationEMailWebApi\ConfirmationEMailWebApi\bin\Microsoft.Web.Infr
 D:\GitHub\ConfirmationEMailWebApi\ConfirmationEMailWebApi\bin\Microsoft.WindowsAzure.Configuration.dll
 D:\GitHub\ConfirmationEMailWebApi\ConfirmationEMailWebApi\bin\Microsoft.WindowsAzure.Storage.dll
 D:\GitHub\ConfirmationEMailWebApi\ConfirmationEMailWebApi\bin\Newtonsoft.Json.dll
+D:\GitHub\ConfirmationEMailWebApi\ConfirmationEMailWebApi\bin\NReco.PdfGenerator.dll
 D:\GitHub\ConfirmationEMailWebApi\ConfirmationEMailWebApi\bin\Owin.dll
 D:\GitHub\ConfirmationEMailWebApi\ConfirmationEMailWebApi\bin\System.Net.Http.Formatting.dll
 D:\GitHub\ConfirmationEMailWebApi\ConfirmationEMailWebApi\bin\System.Web.Helpers.dll
@@ -164,6 +165,7 @@ D:\GitHub\ConfirmationEMailWebApi\ConfirmationEMailWebApi\bin\Microsoft.WindowsA
 D:\GitHub\ConfirmationEMailWebApi\ConfirmationEMailWebApi\bin\Microsoft.WindowsAzure.Storage.pdb
 D:\GitHub\ConfirmationEMailWebApi\ConfirmationEMailWebApi\bin\Microsoft.WindowsAzure.Storage.xml
 D:\GitHub\ConfirmationEMailWebApi\ConfirmationEMailWebApi\bin\Newtonsoft.Json.xml
+D:\GitHub\ConfirmationEMailWebApi\ConfirmationEMailWebApi\bin\NReco.PdfGenerator.xml
 D:\GitHub\ConfirmationEMailWebApi\ConfirmationEMailWebApi\bin\System.Net.Http.Formatting.xml
 D:\GitHub\ConfirmationEMailWebApi\ConfirmationEMailWebApi\bin\System.Web.Helpers.xml
 D:\GitHub\ConfirmationEMailWebApi\ConfirmationEMailWebApi\bin\System.Web.Http.xml

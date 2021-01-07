@@ -65,6 +65,7 @@ namespace ConfirmationEMailWebApi.Models
         public bool is_inclusive_tax { get; set; }
         public string notes { get; set; }
         public string terms { get; set; }
+        public string Zoho_Branch_Id { get; set; }
     }
 
    public class LineItemDt
@@ -90,6 +91,8 @@ namespace ConfirmationEMailWebApi.Models
     public class ZohoObj
     {
         public long BookingId { get; set; }
+        public string BookingCode { get; set; }
+        public string PropertyName { get; set; }
     }
 
 }

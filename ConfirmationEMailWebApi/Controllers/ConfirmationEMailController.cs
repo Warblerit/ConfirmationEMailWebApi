@@ -3625,7 +3625,9 @@ namespace ConfirmationEMailWebApi.Controllers
                 if (All.ResendFlag != true && ds.Tables[4].Rows[0][8].ToString() == "ExP" && ds.Tables[0].Rows[0][5].ToString() == "Bill to Company (BTC)")
                 {
                     ZohoObj ZohoObjData = new ZohoObj();
-                    ZohoObjData.BookingId = All.BookingId;
+                    ZohoObjData.BookingId = All.BookingId; 
+                    ZohoObjData.PropertyName = ds.Tables[1].Rows[0][5].ToString();
+                    ZohoObjData.BookingCode = ds.Tables[2].Rows[0][2].ToString();
                     Task.Factory.StartNew(() => ZohoPOAPI(ZohoObjData));
                 }
                 
@@ -3639,111 +3641,198 @@ namespace ConfirmationEMailWebApi.Controllers
             }
         }
 
-        public string ZohoPOAPI(ZohoObj All) {
-
-            SqlCommand command1 = new SqlCommand();
-            DataSet ds1 = new DataSet();
-            command1.CommandText = "SP_Zoho_PO_Help";
-            command1.CommandType = CommandType.StoredProcedure;
-            command1.Parameters.Add("@Action", SqlDbType.NVarChar).Value = "GetData";
-            command1.Parameters.Add("@Id", SqlDbType.BigInt).Value = All.BookingId;
-            command1.Parameters.Add("@Str1", SqlDbType.NVarChar).Value = "";
-            ds1 = new DBconnection().ExecuteDataSet(command1, "");
-            string ClientId = ds1.Tables[0].Rows[0][0].ToString();
-            string ClientSecret = ds1.Tables[0].Rows[0][1].ToString();
-            string AccessToken = ds1.Tables[0].Rows[0][2].ToString();
-            string OrganizationId = ds1.Tables[0].Rows[0][3].ToString();
-
-            string URL = "https://books.zoho.in/api/v3/purchaseorders?organization_id=" + OrganizationId;
-
-            ServicePointManager.Expect100Continue = true;
-            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls
-                   | SecurityProtocolType.Tls11
-                   | SecurityProtocolType.Tls12
-                   | SecurityProtocolType.Ssl3;
-            WebRequest webReq = WebRequest.Create(URL);
-            webReq.Proxy = null;
-            HttpWebRequest httpReq = (HttpWebRequest)webReq;
-            httpReq.ContentType = "application/json";
-            httpReq.Method = "POST";
-            httpReq.Headers.Add("Authorization", "Zoho-oauthtoken " + AccessToken);
-            httpReq.ProtocolVersion = HttpVersion.Version11;
-            httpReq.Credentials = CredentialCache.DefaultCredentials;
-            Stream reqStream = httpReq.GetRequestStream();
-            StreamWriter streamWrite = new StreamWriter(reqStream);
-
-            var myData = ds1.Tables[1].AsEnumerable().Select(r => new PoData
+        public string ZohoPOAPI(ZohoObj All)
+        {
+            string body = "";
+            try
             {
 
-                item_id = r.Field<string>("ItemId"),
-                rate = r.Field<decimal>("Tariff"),
-                quantity = r.Field<int>("NoOfDays"),
-                tax_id = r.Field<string>("TaxId"),
-                vendor_id = r.Field<string>("VendorId"),
-                purchaseorder_number = r.Field<string>("PONo"),
-                reference_number = r.Field<string>("BookingCode"),
-                date = r.Field<string>("BookedDt"),
-                //delivery_date = r.Field<string>("CheckInDate"),
-                payment_terms = r.Field<int>("PaymentTerms"),
-                payment_terms_label = r.Field<string>("PaymentTermsLabel"),
-                is_inclusive_tax = r.Field<bool>("InclusiveTax"),
-                notes = r.Field<string>("Notes"),
-                terms = r.Field<string>("Terms"),
-            }).ToList();
+                SqlCommand command1 = new SqlCommand();
+                DataSet ds1 = new DataSet();
+                command1.CommandText = "SP_Zoho_PO_Help";
+                command1.CommandType = CommandType.StoredProcedure;
+                command1.Parameters.Add("@Action", SqlDbType.NVarChar).Value = "GetData";
+                command1.Parameters.Add("@Id", SqlDbType.BigInt).Value = All.BookingId;
+                command1.Parameters.Add("@Str1", SqlDbType.NVarChar).Value = "";
+                ds1 = new DBconnection().ExecuteDataSet(command1, "");
+                string ClientId = ds1.Tables[0].Rows[0][0].ToString();
+                string ClientSecret = ds1.Tables[0].Rows[0][1].ToString();
+                string AccessToken = ds1.Tables[0].Rows[0][2].ToString();
+                string OrganizationId = ds1.Tables[0].Rows[0][3].ToString();
 
+                string URL = "https://books.zoho.in/api/v3/purchaseorders?organization_id=" + OrganizationId;
 
+                ServicePointManager.Expect100Continue = true;
+                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls
+                       | SecurityProtocolType.Tls11
+                       | SecurityProtocolType.Tls12
+                       | SecurityProtocolType.Ssl3;
+                WebRequest webReq = WebRequest.Create(URL);
+                webReq.Proxy = null;
+                HttpWebRequest httpReq = (HttpWebRequest)webReq;
+                httpReq.ContentType = "application/json";
+                httpReq.Method = "POST";
+                httpReq.Headers.Add("Authorization", "Zoho-oauthtoken " + AccessToken);
+                httpReq.ProtocolVersion = HttpVersion.Version11;
+                httpReq.Credentials = CredentialCache.DefaultCredentials;
+                Stream reqStream = httpReq.GetRequestStream();
+                StreamWriter streamWrite = new StreamWriter(reqStream);
 
-            var line_items = new List<LineItemDt>();
-            int Tbl1RCount = myData.Count;
-            for (var j = 0; j < Tbl1RCount; j++)
-            {
-                line_items.Add(new LineItemDt
+                var myData = ds1.Tables[1].AsEnumerable().Select(r => new PoData
                 {
-                    item_id = myData[j].item_id,
-                    rate = myData[j].rate,
-                    quantity = myData[j].quantity,
-                    tax_id = myData[j].tax_id,
-                });
+
+                    item_id = r.Field<string>("ItemId"),
+                    rate = r.Field<decimal>("Tariff"),
+                    quantity = r.Field<int>("NoOfDays"),
+                    tax_id = r.Field<string>("TaxId"),
+                    vendor_id = r.Field<string>("VendorId"),
+                    purchaseorder_number = r.Field<string>("PONo"),
+                    reference_number = r.Field<string>("BookingCode"),
+                    date = r.Field<string>("BookedDt"),
+                    delivery_date = r.Field<string>("CheckInDate"),
+                    payment_terms = r.Field<int>("PaymentTerms"),
+                    payment_terms_label = r.Field<string>("PaymentTermsLabel"),
+                    is_inclusive_tax = r.Field<bool>("InclusiveTax"),
+                    notes = r.Field<string>("Notes"),
+                    terms = r.Field<string>("Terms"),
+                    Zoho_Branch_Id = r.Field<string>("Zoho_Branch_Id"),
+                }).ToList();
+
+                if (myData[0].vendor_id != "0")
+                {
+                    var line_items = new List<LineItemDt>();
+                    int Tbl1RCount = myData.Count;
+                    for (var j = 0; j < Tbl1RCount; j++)
+                    {
+                        line_items.Add(new LineItemDt
+                        {
+                            item_id = myData[j].item_id,
+                            rate = myData[j].rate,
+                            quantity = myData[j].quantity,
+                            tax_id = myData[j].tax_id,
+                        });
+                    }
+
+                    body = new JavaScriptSerializer().Serialize(new
+                    {
+                        vendor_id = myData[0].vendor_id,
+                        purchaseorder_number = myData[0].purchaseorder_number,
+                        reference_number = myData[0].reference_number,
+                        date = myData[0].date,
+                        delivery_date = myData[0].delivery_date,
+                        payment_terms = myData[0].payment_terms,
+                        payment_terms_label = myData[0].payment_terms_label,
+                        is_inclusive_tax = myData[0].is_inclusive_tax,
+                        notes = myData[0].notes,
+                        terms = myData[0].terms,
+                        branch_id = myData[0].Zoho_Branch_Id,
+                        line_items
+
+                    });
+
+                    streamWrite.Write(body);
+                    streamWrite.Close();
+                    HttpWebResponse wrres = (HttpWebResponse)httpReq.GetResponse();
+                    StreamReader strmReader = new StreamReader(wrres.GetResponseStream(), Encoding.Default, true);
+                    string Resobj1 = strmReader.ReadToEnd();
+                    JavaScriptSerializer jsonSerializer = new JavaScriptSerializer();
+                    PORootRes POResponse = jsonSerializer.Deserialize<PORootRes>(Resobj1);
+
+                    if (POResponse.code == 0)
+                    {
+
+                        SqlCommand command2 = new SqlCommand();
+                        DataSet ds2 = new DataSet();
+                        command2.CommandText = "SP_Zoho_PO_Help";
+                        command2.CommandType = CommandType.StoredProcedure;
+                        command2.Parameters.Add("@Action", SqlDbType.NVarChar).Value = "POUpdate";
+                        command2.Parameters.Add("@Id", SqlDbType.BigInt).Value = All.BookingId;
+                        command2.Parameters.Add("@Str1", SqlDbType.NVarChar).Value = POResponse.purchaseorder.purchaseorder_id;
+                        ds2 = new DBconnection().ExecuteDataSet(command2, "");
+                    }
+                    else
+                    {
+                        CreateLogFiles log = new CreateLogFiles();
+                        log.ErrorLog(" => Confirmation Email API => PO Insert => Err msg => Booking Id -" + All.BookingId + " => " + POResponse.message);
+                    }
+                }
+                else
+                {
+                    SqlCommand command5 = new SqlCommand();
+                    DataSet ds5 = new DataSet();
+                    command5.CommandText = "SP_SMTPMailSetting_Help";
+                    command5.CommandType = CommandType.StoredProcedure;
+                    command5.Parameters.Add("@Action", SqlDbType.NVarChar).Value = "SMTP";
+                    command5.Parameters.Add("@Str1", SqlDbType.NVarChar).Value = "";
+                    command5.Parameters.Add("@Id", SqlDbType.BigInt).Value = 0;
+                    ds5 = new DBconnection().ExecuteDataSet(command5, "");
+                    string Host = ds5.Tables[0].Rows[0][0].ToString();
+                    string CredentialsUserName = ds5.Tables[0].Rows[0][1].ToString();
+                    string CredentialsPassword = ds5.Tables[0].Rows[0][2].ToString();
+                    int Port = Convert.ToInt16(ds5.Tables[0].Rows[0][3]);
+
+                    System.Net.Mail.MailMessage message2 = new System.Net.Mail.MailMessage();
+                    message2.From = new System.Net.Mail.MailAddress("noreply@hummingbirdindia.com", "noreply", System.Text.Encoding.UTF8);
+                    message2.To.Add(new System.Net.Mail.MailAddress("prabakaran@warblerit.com"));
+                    //message2.To.Add(new System.Net.Mail.MailAddress("nandhu@warblerit.com"));
+                    message2.To.Add(new System.Net.Mail.MailAddress("vivek@warblerit.com"));
+                    message2.Bcc.Add(new System.Net.Mail.MailAddress("hbconf17@gmail.com"));
+                    message2.Subject = "PO Creation Status - " + All.BookingCode;
+                    string Imagebody = "<div style=\"text-align: center;  padding: 10px 0 10px 0;\">" +
+                           "<img src=\"https://portalvhds4prl9ymlwxnt8.blob.core.windows.net/img/HB_logo_small.png\" alt=\"logo\">" +
+                           "</div>";
+                    string header = "<div  style=\"width: 700px;margin: 10px auto;\">" +
+                             "<p style=\"margin: 0; padding: 10px 0 10px 0; color: #556DE5; letter-spacing: 125%; word-spacing: 150%;font-weight: bold; font-family: 'Open Sans', sans-serif\">Hello ,</p>" +
+                             "<p style=\"margin: 0; padding: 10px 0 10px 0;  letter-spacing: 125%; word-spacing: 150%;font-weight: bold; font-family: 'Open Sans', sans-serif\">Purchase order not created because of vendor id is not exists. Please find the details below for your reference.</p>" +
+                             "<table style=\"background-color: #ffffff;border-radius: 4px 4px 0 0;overflow: hidden; width: 100%;margin-bottom: 1rem;background-color: transparent;border-collapse: collapse;font-family: ''Open Sans', sans-serif';\">" +
+                             "<thead style=\"text-align: left;\">" +
+                             "<tr>" +
+                             "<th style=\"padding-left: 5px;background-color: #ebebeb;padding: 20px;border-bottom: transparent;color: #000000;font-weight: bold;border-color: #dee2e6;  vertical-align: bottom;border: 1px solid #dee2e6;padding: .75rem;vertical-align: top;width: 30%\">Booking Code</th>" +
+                             "<th style=\"padding-left: 5px;background-color: #ebebeb;padding: 20px;border-bottom: transparent;color: #000000;font-weight: bold;border-color: #dee2e6;  vertical-align: bottom;border: 1px solid #dee2e6;padding: .75rem;vertical-align: top;width: 50%\">Property Name</th>" +
+                             "</tr>" +
+                             "</thead>" +
+                             "<tbody>" +
+                             "<tr>" +
+                             "<td style=\"padding-left: 5px;padding: .75rem;vertical-align: top;border: 1px solid #dee2e6;width: 30%\">" + All.BookingCode + "</td>" +
+                             "<td style=\"padding-left: 5px;padding: .75rem;vertical-align: top;border: 1px solid #dee2e6;width: 50%\">" + All.PropertyName + "</td>" +
+                             "<tr/>" +
+                             "</tbody>" +
+                             "</table>";
+
+                    string footer = "<br /><br />" +
+                        "<p style=\"margin: 0; padding: 10px 0 10px 0; color: #556DE5; letter-spacing: 125%; word-spacing: 150%;font-weight: bold; font-family: 'Open Sans', sans-serif\"> Warm Regards,</p>" +
+                        "<p style=\"margin: 0; padding: 0px 0 10px 0; color: #556DE5; letter-spacing: 125%; word-spacing: 150%;font-weight: bold; font-family: 'Open Sans', sans-serif\"> Technical Team</p><br /></div>";
+
+
+                    message2.Body = Imagebody + header + footer;
+                    message2.IsBodyHtml = true;
+                    System.Net.Mail.SmtpClient smtp2 = new System.Net.Mail.SmtpClient();
+                    smtp2.EnableSsl = true;
+                    smtp2.Port = Port;
+                    smtp2.Host = Host;
+                    smtp2.Credentials = new System.Net.NetworkCredential(CredentialsUserName, CredentialsPassword);
+                    try
+                    {
+                        smtp2.Send(message2);
+                    }
+                    catch (Exception ex)
+                    {
+                        CreateLogFiles log = new CreateLogFiles();
+                        log.ErrorLog(" => Confirmation Email API => Error => Vendor id not exists =>  Mail Block =>  msg => " + ex.Message);
+
+                    }
+
+                }
+
+                return All.BookingId.ToString();
+            }
+            catch (Exception Ex)
+            {
+                log = new CreateLogFiles();
+                log.ErrorLog(" => Confirmation Email API => BookingId => " + All.BookingId + "=> Zoho PO Insert" + Ex.Message + "=>" + body);
+                return All.BookingId.ToString();
             }
 
-            string body = new JavaScriptSerializer().Serialize(new
-            {
-                vendor_id = myData[0].vendor_id,
-                purchaseorder_number = myData[0].purchaseorder_number,
-                reference_number = myData[0].reference_number,
-                date = myData[0].date,
-                delivery_date = myData[0].delivery_date,
-                payment_terms = myData[0].payment_terms,
-                payment_terms_label = myData[0].payment_terms_label,
-                is_inclusive_tax = myData[0].is_inclusive_tax,
-                notes = myData[0].notes,
-                terms = myData[0].terms,
-                line_items
-
-            });
-
-            streamWrite.Write(body);
-            streamWrite.Close();
-            HttpWebResponse wrres = (HttpWebResponse)httpReq.GetResponse();
-            StreamReader strmReader = new StreamReader(wrres.GetResponseStream(), Encoding.Default, true);
-            string Resobj1 = strmReader.ReadToEnd();
-            JavaScriptSerializer jsonSerializer = new JavaScriptSerializer();
-            PORootRes POResponse = jsonSerializer.Deserialize<PORootRes>(Resobj1);
-
-            if (POResponse.code == 0)
-            {
-
-                SqlCommand command2 = new SqlCommand();
-                DataSet ds2 = new DataSet();
-                command2.CommandText = "SP_Zoho_PO_Help";
-                command2.CommandType = CommandType.StoredProcedure;
-                command2.Parameters.Add("@Action", SqlDbType.NVarChar).Value = "POUpdate";
-                command2.Parameters.Add("@Id", SqlDbType.BigInt).Value = All.BookingId;
-                command2.Parameters.Add("@Str1", SqlDbType.NVarChar).Value = POResponse.purchaseorder.purchaseorder_id;
-                ds2 = new DBconnection().ExecuteDataSet(command2, "");
-
-            }
-            return All.BookingId.ToString();
         }
 
 
