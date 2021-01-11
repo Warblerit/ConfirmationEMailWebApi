@@ -66,6 +66,7 @@ namespace ConfirmationEMailWebApi.Models
         public string notes { get; set; }
         public string terms { get; set; }
         public string Zoho_Branch_Id { get; set; }
+        public int RoomCaptured { get; set; }
     }
 
    public class LineItemDt
@@ -74,11 +75,13 @@ namespace ConfirmationEMailWebApi.Models
         public decimal rate { get; set; } 
         public int quantity { get; set; } 
         public string tax_id { get; set; }
+        public int item_order { get; set; }
     }
 
     public class Purchaseorder
     {
         public string purchaseorder_id { get; set; }
+        public List<LineItem> line_items { get; set; }
     }
 
    public class PORootRes
@@ -93,6 +96,12 @@ namespace ConfirmationEMailWebApi.Models
         public long BookingId { get; set; }
         public string BookingCode { get; set; }
         public string PropertyName { get; set; }
+    }
+
+    public class LineItem
+    {
+        public string line_item_id { get; set; } 
+        public int item_order { get; set; } 
     }
 
 }
