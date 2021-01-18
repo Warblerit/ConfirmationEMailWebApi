@@ -104,4 +104,23 @@ namespace ConfirmationEMailWebApi.Models
         public int item_order { get; set; } 
     }
 
+    public class ZohoPropertyDtls
+    {
+        public string PropertyName { get; set; }
+        public string LegalName { get; set; }
+        public string LegalAddress { get; set; }
+        public string City { get; set; }
+        public string State { get; set; }
+        public string Postal { get; set; }
+        public int CreditPeriod { get; set; }
+        public string GSTNumber { get; set; }
+        public Int64 PropertyId { get; set; }
+
+    }
+    public class RootObjNew
+    {
+        public string Code { get; set; }
+        public string EmailResponse { get; set; }
+    }
+
 }

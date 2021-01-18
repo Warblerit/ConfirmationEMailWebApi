@@ -176,7 +176,6 @@ D:\Projects\ConfirmationEMailWebApi\ConfirmationEMailWebApi\bin\Microsoft.Owin.S
 D:\Projects\ConfirmationEMailWebApi\ConfirmationEMailWebApi\bin\Microsoft.Owin.Security.Twitter.xml
 D:\Projects\ConfirmationEMailWebApi\ConfirmationEMailWebApi\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
 D:\Projects\ConfirmationEMailWebApi\ConfirmationEMailWebApi\bin\System.Web.Http.Owin.xml
-D:\Projects\ConfirmationEMailWebApi\ConfirmationEMailWebApi\obj\Release\ConfirmationEMailWebApi.csprojResolveAssemblyReference.cache
 D:\Projects\ConfirmationEMailWebApi\ConfirmationEMailWebApi\obj\Release\ConfirmationEMailWebApi.dll
 D:\Projects\ConfirmationEMailWebApi\ConfirmationEMailWebApi\obj\Release\ConfirmationEMailWebApi.pdb
 D:\Projects\ConfirmationEMailWebApi\ConfirmationEMailWebApi\bin\Microsoft.Azure.KeyVault.Core.dll
@@ -201,3 +200,5 @@ D:\GitHub\ConfirmationEMailWebApi\ConfirmationEMailWebApi\obj\Release\Confirmati
 D:\GitHub\ConfirmationEMailWebApi\ConfirmationEMailWebApi\obj\Release\ConfirmationEMailWebApi.csproj.CopyComplete
 D:\GitHub\ConfirmationEMailWebApi\ConfirmationEMailWebApi\bin\NReco.PdfGenerator.dll
 D:\GitHub\ConfirmationEMailWebApi\ConfirmationEMailWebApi\bin\NReco.PdfGenerator.xml
+D:\Projects\ConfirmationEMailWebApi\ConfirmationEMailWebApi\bin\NReco.PdfGenerator.dll
+D:\Projects\ConfirmationEMailWebApi\ConfirmationEMailWebApi\bin\NReco.PdfGenerator.xml

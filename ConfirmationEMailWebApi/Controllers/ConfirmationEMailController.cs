@@ -3971,70 +3971,276 @@ namespace ConfirmationEMailWebApi.Controllers
                 }
                 else
                 {
-                    SqlCommand command5 = new SqlCommand();
-                    DataSet ds5 = new DataSet();
-                    command5.CommandText = "SP_SMTPMailSetting_Help";
-                    command5.CommandType = CommandType.StoredProcedure;
-                    command5.Parameters.Add("@Action", SqlDbType.NVarChar).Value = "SMTP";
-                    command5.Parameters.Add("@Str1", SqlDbType.NVarChar).Value = "";
-                    command5.Parameters.Add("@Id", SqlDbType.BigInt).Value = 0;
-                    ds5 = new DBconnection().ExecuteDataSet(command5, "");
-                    string Host = ds5.Tables[0].Rows[0][0].ToString();
-                    string CredentialsUserName = ds5.Tables[0].Rows[0][1].ToString();
-                    string CredentialsPassword = ds5.Tables[0].Rows[0][2].ToString();
-                    int Port = Convert.ToInt16(ds5.Tables[0].Rows[0][3]);
+                    //SqlCommand command5 = new SqlCommand();
+                    //DataSet ds5 = new DataSet();
+                    //command5.CommandText = "SP_SMTPMailSetting_Help";
+                    //command5.CommandType = CommandType.StoredProcedure;
+                    //command5.Parameters.Add("@Action", SqlDbType.NVarChar).Value = "SMTP";
+                    //command5.Parameters.Add("@Str1", SqlDbType.NVarChar).Value = "";
+                    //command5.Parameters.Add("@Id", SqlDbType.BigInt).Value = 0;
+                    //ds5 = new DBconnection().ExecuteDataSet(command5, "");
+                    //string Host = ds5.Tables[0].Rows[0][0].ToString();
+                    //string CredentialsUserName = ds5.Tables[0].Rows[0][1].ToString();
+                    //string CredentialsPassword = ds5.Tables[0].Rows[0][2].ToString();
+                    //int Port = Convert.ToInt16(ds5.Tables[0].Rows[0][3]);
 
-                    System.Net.Mail.MailMessage message2 = new System.Net.Mail.MailMessage();
-                    message2.From = new System.Net.Mail.MailAddress("noreply@hummingbirdindia.com", "noreply", System.Text.Encoding.UTF8);
-                    message2.To.Add(new System.Net.Mail.MailAddress("prabakaran@warblerit.com"));
-                    //message2.To.Add(new System.Net.Mail.MailAddress("nandhu@warblerit.com"));
-                    //message2.To.Add(new System.Net.Mail.MailAddress("vivek@warblerit.com"));
-                    //message2.Bcc.Add(new System.Net.Mail.MailAddress("hbconf17@gmail.com"));
-                    message2.Subject = "PO Creation Status - " + All.BookingCode;
-                    string Imagebody = "<div style=\"text-align: center;  padding: 10px 0 10px 0;\">" +
-                           "<img src=\"https://portalvhds4prl9ymlwxnt8.blob.core.windows.net/img/HB_logo_small.png\" alt=\"logo\">" +
-                           "</div>";
-                    string header = "<div  style=\"width: 700px;margin: 10px auto;\">" +
-                             "<p style=\"margin: 0; padding: 10px 0 10px 0; color: #556DE5; letter-spacing: 125%; word-spacing: 150%;font-weight: bold; font-family: 'Open Sans', sans-serif\">Hello ,</p>" +
-                             "<p style=\"margin: 0; padding: 10px 0 10px 0;  letter-spacing: 125%; word-spacing: 150%;font-weight: bold; font-family: 'Open Sans', sans-serif\">Purchase order not created because of vendor id is not exists. Please find the details below for your reference.</p>" +
-                             "<table style=\"background-color: #ffffff;border-radius: 4px 4px 0 0;overflow: hidden; width: 100%;margin-bottom: 1rem;background-color: transparent;border-collapse: collapse;font-family: ''Open Sans', sans-serif';\">" +
-                             "<thead style=\"text-align: left;\">" +
-                             "<tr>" +
-                             "<th style=\"padding-left: 5px;background-color: #ebebeb;padding: 20px;border-bottom: transparent;color: #000000;font-weight: bold;border-color: #dee2e6;  vertical-align: bottom;border: 1px solid #dee2e6;padding: .75rem;vertical-align: top;width: 30%\">Booking Code</th>" +
-                             "<th style=\"padding-left: 5px;background-color: #ebebeb;padding: 20px;border-bottom: transparent;color: #000000;font-weight: bold;border-color: #dee2e6;  vertical-align: bottom;border: 1px solid #dee2e6;padding: .75rem;vertical-align: top;width: 50%\">Property Name</th>" +
-                             "</tr>" +
-                             "</thead>" +
-                             "<tbody>" +
-                             "<tr>" +
-                             "<td style=\"padding-left: 5px;padding: .75rem;vertical-align: top;border: 1px solid #dee2e6;width: 30%\">" + All.BookingCode + "</td>" +
-                             "<td style=\"padding-left: 5px;padding: .75rem;vertical-align: top;border: 1px solid #dee2e6;width: 50%\">" + All.PropertyName + "</td>" +
-                             "<tr/>" +
-                             "</tbody>" +
-                             "</table>";
+                    //System.Net.Mail.MailMessage message2 = new System.Net.Mail.MailMessage();
+                    //message2.From = new System.Net.Mail.MailAddress("noreply@hummingbirdindia.com", "noreply", System.Text.Encoding.UTF8);
+                    //message2.To.Add(new System.Net.Mail.MailAddress("prabakaran@warblerit.com"));
+                    ////message2.To.Add(new System.Net.Mail.MailAddress("nandhu@warblerit.com"));
+                    ////message2.To.Add(new System.Net.Mail.MailAddress("vivek@warblerit.com"));
+                    ////message2.Bcc.Add(new System.Net.Mail.MailAddress("hbconf17@gmail.com"));
+                    //message2.Subject = "PO Creation Status - " + All.BookingCode;
+                    //string Imagebody = "<div style=\"text-align: center;  padding: 10px 0 10px 0;\">" +
+                    //       "<img src=\"https://portalvhds4prl9ymlwxnt8.blob.core.windows.net/img/HB_logo_small.png\" alt=\"logo\">" +
+                    //       "</div>";
+                    //string header = "<div  style=\"width: 700px;margin: 10px auto;\">" +
+                    //         "<p style=\"margin: 0; padding: 10px 0 10px 0; color: #556DE5; letter-spacing: 125%; word-spacing: 150%;font-weight: bold; font-family: 'Open Sans', sans-serif\">Hello ,</p>" +
+                    //         "<p style=\"margin: 0; padding: 10px 0 10px 0;  letter-spacing: 125%; word-spacing: 150%;font-weight: bold; font-family: 'Open Sans', sans-serif\">Purchase order not created because of vendor id is not exists. Please find the details below for your reference.</p>" +
+                    //         "<table style=\"background-color: #ffffff;border-radius: 4px 4px 0 0;overflow: hidden; width: 100%;margin-bottom: 1rem;background-color: transparent;border-collapse: collapse;font-family: ''Open Sans', sans-serif';\">" +
+                    //         "<thead style=\"text-align: left;\">" +
+                    //         "<tr>" +
+                    //         "<th style=\"padding-left: 5px;background-color: #ebebeb;padding: 20px;border-bottom: transparent;color: #000000;font-weight: bold;border-color: #dee2e6;  vertical-align: bottom;border: 1px solid #dee2e6;padding: .75rem;vertical-align: top;width: 30%\">Booking Code</th>" +
+                    //         "<th style=\"padding-left: 5px;background-color: #ebebeb;padding: 20px;border-bottom: transparent;color: #000000;font-weight: bold;border-color: #dee2e6;  vertical-align: bottom;border: 1px solid #dee2e6;padding: .75rem;vertical-align: top;width: 50%\">Property Name</th>" +
+                    //         "</tr>" +
+                    //         "</thead>" +
+                    //         "<tbody>" +
+                    //         "<tr>" +
+                    //         "<td style=\"padding-left: 5px;padding: .75rem;vertical-align: top;border: 1px solid #dee2e6;width: 30%\">" + All.BookingCode + "</td>" +
+                    //         "<td style=\"padding-left: 5px;padding: .75rem;vertical-align: top;border: 1px solid #dee2e6;width: 50%\">" + All.PropertyName + "</td>" +
+                    //         "<tr/>" +
+                    //         "</tbody>" +
+                    //         "</table>";
 
-                    string footer = "<br /><br />" +
-                        "<p style=\"margin: 0; padding: 10px 0 10px 0; color: #556DE5; letter-spacing: 125%; word-spacing: 150%;font-weight: bold; font-family: 'Open Sans', sans-serif\"> Warm Regards,</p>" +
-                        "<p style=\"margin: 0; padding: 0px 0 10px 0; color: #556DE5; letter-spacing: 125%; word-spacing: 150%;font-weight: bold; font-family: 'Open Sans', sans-serif\"> Technical Team</p><br /></div>";
+                    //string footer = "<br /><br />" +
+                    //    "<p style=\"margin: 0; padding: 10px 0 10px 0; color: #556DE5; letter-spacing: 125%; word-spacing: 150%;font-weight: bold; font-family: 'Open Sans', sans-serif\"> Warm Regards,</p>" +
+                    //    "<p style=\"margin: 0; padding: 0px 0 10px 0; color: #556DE5; letter-spacing: 125%; word-spacing: 150%;font-weight: bold; font-family: 'Open Sans', sans-serif\"> Technical Team</p><br /></div>";
 
 
-                    message2.Body = Imagebody + header + footer;
-                    message2.IsBodyHtml = true;
-                    System.Net.Mail.SmtpClient smtp2 = new System.Net.Mail.SmtpClient();
-                    smtp2.EnableSsl = true;
-                    smtp2.Port = Port;
-                    smtp2.Host = Host;
-                    smtp2.Credentials = new System.Net.NetworkCredential(CredentialsUserName, CredentialsPassword);
+                    //message2.Body = Imagebody + header + footer;
+                    //message2.IsBodyHtml = true;
+                    //System.Net.Mail.SmtpClient smtp2 = new System.Net.Mail.SmtpClient();
+                    //smtp2.EnableSsl = true;
+                    //smtp2.Port = Port;
+                    //smtp2.Host = Host;
+                    //smtp2.Credentials = new System.Net.NetworkCredential(CredentialsUserName, CredentialsPassword);
+                    //try
+                    //{
+                    //    smtp2.Send(message2);
+                    //}
+                    //catch (Exception ex)
+                    //{
+                    //    CreateLogFiles log = new CreateLogFiles();
+                    //    log.ErrorLog(" => Confirmation Email API => Error => Vendor id not exists =>  Mail Block =>  msg => " + ex.Message);
+
+                    //}
+
+                    SqlCommand command = new SqlCommand();
+                    DataSet ds = new DataSet();
+                    command.CommandText = "SP_ZohoContactVendor_PO_Help";
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.Add("@Action", SqlDbType.NVarChar).Value = "GetHotelDetails";
+                    command.Parameters.Add("@Str1", SqlDbType.NVarChar).Value = "";
+                    command.Parameters.Add("@Id", SqlDbType.BigInt).Value = All.BookingId;
+                    ds = new DBconnection().ExecuteDataSet(command, "");
+                    var myDatas = ds.Tables[0].AsEnumerable().Select(r => new ZohoPropertyDtls
+                    {
+
+                        PropertyName = r.Field<string>("PropertyName"),
+                        LegalName = r.Field<string>("LegalName"),
+                        LegalAddress = r.Field<string>("LegalAddress"),
+                        City = r.Field<string>("City"),
+                        State = r.Field<string>("State"),
+                        Postal = r.Field<string>("Postal"),
+                        CreditPeriod = r.Field<int>("CreditPeriod"),
+                        GSTNumber = r.Field<string>("GSTNumber"),
+                        PropertyId = r.Field<Int64>("PropertyId")
+                    }).ToList();
+                    //Zoho Vendor Creation Insert Start
+
                     try
-                    {
-                        smtp2.Send(message2);
-                    }
-                    catch (Exception ex)
-                    {
-                        CreateLogFiles log = new CreateLogFiles();
-                        log.ErrorLog(" => Confirmation Email API => Error => Vendor id not exists =>  Mail Block =>  msg => " + ex.Message);
+                        {
+                            string FinalAPIUrl = "";
+                            FinalAPIUrl = System.Configuration.ConfigurationManager.AppSettings["UrlShortner"] + "/API/zohocontact/zohohotelcontactcreate";
 
-                    }
+                            WebRequest webReq1 = WebRequest.Create("https://zohoapi.staysimplyfied.com/API/zohocontact/zohohotelcontactcreate");
+                            webReq1.Proxy = null;
+                            HttpWebRequest httpReq1 = (HttpWebRequest)webReq1;
+                            httpReq1.ContentType = "application/json";
+                            httpReq1.Method = "POST";
+                            httpReq1.ProtocolVersion = HttpVersion.Version11;
+                            httpReq1.Credentials = CredentialCache.DefaultCredentials;
+                            Stream reqStream1 = httpReq1.GetRequestStream();
+                            StreamWriter streamWrite1 = new StreamWriter(reqStream1);
+                            var billing_address = new
+                            {
+                                attention = "",
+                                address = myDatas[0].LegalAddress,
+                                street2 = "",
+                                state_code = "",
+                                city = myDatas[0].City,
+                                state = myDatas[0].State,
+                                zip = myDatas[0].Postal,
+                                country = "India",
+                                fax = "",
+                                phone = ""
+                            };
+                            var shipping_address = new
+                            {
+                                attention = "",
+                                address = myDatas[0].LegalAddress,
+                                street2 = "",
+                                state_code = "",
+                                city = myDatas[0].City,
+                                state = myDatas[0].State,
+                                zip = myDatas[0].Postal,
+                                country = "India",
+                                fax = "",
+                                phone = ""
+                            };
+                            var custom_fields = new
+                            {
+                               
+                            };
 
+
+
+                            string body1 = new JavaScriptSerializer().Serialize(new
+                            {
+
+                                contact_name = myDatas[0].PropertyName,
+                                place_of_contact = "", //Source of Display
+                                currency_id = "", //currency Code
+                                company_name = myDatas[0].LegalName, //Legal Name
+                                website = "",
+                                contact_type = "vendor",
+                                customer_sub_type = "",
+                                is_portal_enabled = true,
+                                custom_fields = custom_fields,
+                                billing_address = billing_address,
+                                shipping_address = shipping_address,
+                                payment_terms = myDatas[0].CreditPeriod,
+                                payment_terms_label = "Net" + " " + myDatas[0].CreditPeriod,
+                                notes = "Hotel",
+                                gst_no = myDatas[0].GSTNumber,
+                                gst_treatment = "",
+                                PropertyId = myDatas[0].PropertyId
+
+                            });
+                            streamWrite1.Write(body1);
+                            streamWrite1.Close();
+                            HttpWebResponse wrres = (HttpWebResponse)httpReq1.GetResponse();
+                            StreamReader strmReader = new StreamReader(wrres.GetResponseStream(), Encoding.Default, true);
+                            string Resobj2 = strmReader.ReadToEnd();
+                            JavaScriptSerializer jsonSerializer = new JavaScriptSerializer();
+                            RootObjNew Response = jsonSerializer.Deserialize<RootObjNew>(Resobj2);
+                        //Zoho Vendor Creation Insert End
+
+
+                        //Get VendorId
+                            SqlCommand commands = new SqlCommand();
+                            DataSet dss = new DataSet();
+                            commands.CommandText = "SP_ZohoContactVendor_PO_Help";
+                            commands.CommandType = CommandType.StoredProcedure;
+                            commands.Parameters.Add("@Action", SqlDbType.NVarChar).Value = "GetVendorId";
+                            commands.Parameters.Add("@Str1", SqlDbType.NVarChar).Value = "";
+                            commands.Parameters.Add("@Id", SqlDbType.BigInt).Value = All.BookingId;
+                            dss = new DBconnection().ExecuteDataSet(commands, "");
+                            string Vendor_Id = dss.Tables[0].Rows[0][0].ToString();
+
+                        string URL1 = "https://books.zoho.in/api/v3/purchaseorders?organization_id=" + OrganizationId;
+
+                        ServicePointManager.Expect100Continue = true;
+                        ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls
+                               | SecurityProtocolType.Tls11
+                               | SecurityProtocolType.Tls12
+                               | SecurityProtocolType.Ssl3;
+                        WebRequest webReq3 = WebRequest.Create(URL1);
+                        webReq3.Proxy = null;
+                        HttpWebRequest httpReq3 = (HttpWebRequest)webReq3;
+                        httpReq3.ContentType = "application/json";
+                        httpReq3.Method = "POST";
+                        httpReq3.Headers.Add("Authorization", "Zoho-oauthtoken " + AccessToken);
+                        httpReq3.ProtocolVersion = HttpVersion.Version11;
+                        httpReq3.Credentials = CredentialCache.DefaultCredentials;
+                        Stream reqStream3 = httpReq3.GetRequestStream();
+                        StreamWriter streamWrite3 = new StreamWriter(reqStream3);
+                        var line_items = new List<LineItemDt>();
+                        int Tbl1RCount = myData.Count;
+                        for (var j = 0; j < Tbl1RCount; j++)
+                        {
+                            line_items.Add(new LineItemDt
+                            {
+                                item_id = myData[j].item_id,
+                                rate = myData[j].rate,
+                                quantity = myData[j].quantity,
+                                tax_id = myData[j].tax_id,
+                                item_order = myData[j].RoomCaptured
+                            });
+                        }
+
+                        string body3 = new JavaScriptSerializer().Serialize(new
+                        {
+                            vendor_id = Vendor_Id,
+                            purchaseorder_number = myData[0].purchaseorder_number,
+                            reference_number = myData[0].reference_number,
+                            date = myData[0].date,
+                            delivery_date = myData[0].delivery_date,
+                            payment_terms = myData[0].payment_terms,
+                            payment_terms_label = myData[0].payment_terms_label,
+                            is_inclusive_tax = myData[0].is_inclusive_tax,
+                            notes = myData[0].notes,
+                            terms = myData[0].terms,
+                            branch_id = myData[0].Zoho_Branch_Id,
+                            line_items
+
+                        });
+
+                        streamWrite3.Write(body3);
+                        streamWrite3.Close();
+                        HttpWebResponse wrres3 = (HttpWebResponse)httpReq3.GetResponse();
+                        StreamReader strmReader3 = new StreamReader(wrres3.GetResponseStream(), Encoding.Default, true);
+                        string Resobj3 = strmReader3.ReadToEnd();
+                        JavaScriptSerializer jsonSerializer3 = new JavaScriptSerializer();
+                        PORootRes POResponses = jsonSerializer3.Deserialize<PORootRes>(Resobj3);
+
+                        if (POResponses.code == 0)
+                        {
+
+                            SqlCommand command2 = new SqlCommand();
+                            DataSet ds2 = new DataSet();
+                            command2.CommandText = "SP_Zoho_PO_Help";
+                            command2.CommandType = CommandType.StoredProcedure;
+                            command2.Parameters.Add("@Action", SqlDbType.NVarChar).Value = "POUpdate";
+                            command2.Parameters.Add("@Id", SqlDbType.BigInt).Value = All.BookingId;
+                            command2.Parameters.Add("@Str1", SqlDbType.NVarChar).Value = POResponses.purchaseorder.purchaseorder_id;
+                            ds2 = new DBconnection().ExecuteDataSet(command2, "");
+
+                            foreach (var item in POResponses.purchaseorder.line_items)
+                            {
+
+                                SqlCommand command3 = new SqlCommand();
+                                DataSet ds3 = new DataSet();
+                                command3.CommandText = "SP_Zoho_PO_LineItem_Update";
+                                command3.CommandType = CommandType.StoredProcedure;
+                                command3.Parameters.Add("@Action", SqlDbType.NVarChar).Value = "Update";
+                                command3.Parameters.Add("@Id", SqlDbType.BigInt).Value = All.BookingId;
+                                command3.Parameters.Add("@OrderId", SqlDbType.Int).Value = item.item_order;
+                                command3.Parameters.Add("@Str1", SqlDbType.NVarChar).Value = item.line_item_id;
+                                ds3 = new DBconnection().ExecuteDataSet(command3, "");
+
+                            }
+
+
+                        }
+                    }
+                        catch (Exception ex)
+                        {
+                            log = new CreateLogFiles();
+                            log.ErrorLog("Property Management Zoho Insert => Err msg => Missed Property Add => " + ex.Message);
+
+                        }
+                    
                 }
 
                 return All.BookingId.ToString();
