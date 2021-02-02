@@ -102,6 +102,7 @@ namespace ConfirmationEMailWebApi.Models
     {
         public string line_item_id { get; set; } 
         public int item_order { get; set; } 
+        public string item_id { get; set; }
     }
 
     public class ZohoPropertyDtls
@@ -122,5 +123,21 @@ namespace ConfirmationEMailWebApi.Models
         public string Code { get; set; }
         public string EmailResponse { get; set; }
     }
+
+    public class Item
+    {
+        public string item_id { get; set; }
+        public string name { get; set; }
+
+    }
+
+        public class ItemRootRes
+    {
+        public int code { get; set; }
+        public string message { get; set; }
+        public Item item { get; set; }
+    }
+
+    
 
 }

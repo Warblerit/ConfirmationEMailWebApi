@@ -95,6 +95,11 @@ D:\Projects\ConfirmationEMailWebApi\ConfirmationEMailWebApi\bin\Microsoft.Azure.
 D:\Projects\ConfirmationEMailWebApi\ConfirmationEMailWebApi\bin\Microsoft.WindowsAzure.Configuration.xml
 D:\Projects\ConfirmationEMailWebApi\ConfirmationEMailWebApi\bin\Microsoft.WindowsAzure.Storage.pdb
 D:\Projects\ConfirmationEMailWebApi\ConfirmationEMailWebApi\bin\Microsoft.WindowsAzure.Storage.xml
+D:\Projects\ConfirmationEMailWebApi\ConfirmationEMailWebApi\bin\NReco.PdfGenerator.dll
+D:\Projects\ConfirmationEMailWebApi\ConfirmationEMailWebApi\bin\NReco.PdfGenerator.xml
+D:\Projects\ConfirmationEMailWebApi\ConfirmationEMailWebApi\obj\Debug\ConfirmationEMailWebApi.csprojAssemblyReference.cache
+D:\Projects\ConfirmationEMailWebApi\ConfirmationEMailWebApi\obj\Debug\ConfirmationEMailWebApi.csproj.CoreCompileInputs.cache
+D:\Projects\ConfirmationEMailWebApi\ConfirmationEMailWebApi\obj\Debug\ConfirmationEMailWebApi.csproj.CopyComplete
 D:\GitHub\ConfirmationEMailWebApi\ConfirmationEMailWebApi\bin\ApplicationInsights.config
 D:\GitHub\ConfirmationEMailWebApi\ConfirmationEMailWebApi\bin\roslyn\csc.exe
 D:\GitHub\ConfirmationEMailWebApi\ConfirmationEMailWebApi\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
@@ -197,8 +202,3 @@ D:\GitHub\ConfirmationEMailWebApi\ConfirmationEMailWebApi\obj\Debug\Confirmation
 D:\GitHub\ConfirmationEMailWebApi\ConfirmationEMailWebApi\obj\Debug\ConfirmationEMailWebApi.csproj.CopyComplete
 D:\GitHub\ConfirmationEMailWebApi\ConfirmationEMailWebApi\obj\Debug\ConfirmationEMailWebApi.dll
 D:\GitHub\ConfirmationEMailWebApi\ConfirmationEMailWebApi\obj\Debug\ConfirmationEMailWebApi.pdb
-D:\Projects\ConfirmationEMailWebApi\ConfirmationEMailWebApi\bin\NReco.PdfGenerator.dll
-D:\Projects\ConfirmationEMailWebApi\ConfirmationEMailWebApi\bin\NReco.PdfGenerator.xml
-D:\Projects\ConfirmationEMailWebApi\ConfirmationEMailWebApi\obj\Debug\ConfirmationEMailWebApi.csprojAssemblyReference.cache
-D:\Projects\ConfirmationEMailWebApi\ConfirmationEMailWebApi\obj\Debug\ConfirmationEMailWebApi.csproj.CoreCompileInputs.cache
-D:\Projects\ConfirmationEMailWebApi\ConfirmationEMailWebApi\obj\Debug\ConfirmationEMailWebApi.csproj.CopyComplete
