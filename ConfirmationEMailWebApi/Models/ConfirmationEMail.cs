@@ -27,6 +27,7 @@ namespace ConfirmationEMailWebApi.Models
         public bool QReserveFlag { get; set; }
         public string MobileNo { get; set; }
         public string WhatsAppMsg { get; set; }
+        public bool ChatAPIFlag { get; set; }
 
     }
     public class WhatsappObj
