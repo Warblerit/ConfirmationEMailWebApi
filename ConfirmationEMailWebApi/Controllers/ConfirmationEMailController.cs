@@ -6136,6 +6136,8 @@ namespace ConfirmationEMailWebApi.Controllers
                                         WhatsappData.WhatsappFileName = WhatsappFileName;
                                         WhatsappData.WhatsappPdfUrl = WhatsappPdfUrl;
                                         Task.Factory.StartNew(() => WhatsappAPI(WhatsappData));
+                                        Task.Factory.StartNew(() => WhatsappMsgafterConfirmAPI(WhatsappData));
+                                        
                                     }
                                     catch (Exception Ex)
                                     {
@@ -8812,6 +8814,8 @@ namespace ConfirmationEMailWebApi.Controllers
                                         WhatsappData.WhatsappFileName = WhatsappFileName;
                                         WhatsappData.WhatsappPdfUrl = WhatsappPdfUrl;
                                         Task.Factory.StartNew(() => WhatsappAPI(WhatsappData));
+                                        Task.Factory.StartNew(() => WhatsappMsgafterConfirmAPI(WhatsappData));
+                                        
                                     }
                                     catch (Exception Ex)
                                     {
@@ -8925,6 +8929,58 @@ namespace ConfirmationEMailWebApi.Controllers
             {
                 log = new CreateLogFiles();
                 log.ErrorLog(" => WhatappMsg Response => " + ex.Message);
+            }
+            return RR1;
+        }
+
+        public string WhatsappMsgafterConfirmAPI(WhatsappObj Details)
+        {
+            Details.MobileNo = Details.MobileNo.Replace("+", "");
+            if (Details.MobileNo.Length == 10)
+            {
+                Details.MobileNo = "91" + Details.MobileNo;
+            }
+
+            string RR1 = "Success";
+            WebClient client = new WebClient();
+            client.Headers.Add("Content-Type", "application/json");
+            string body = "{\"@VER\": \"1.2\"," +
+        "\"USER\": {" +
+    "\"@USERNAME\": \"hummingWA\"," +
+    "\"@PASSWORD\": \"humng891\"," +
+    "\"@UNIXTIMESTAMP\": \"\"" +
+  "}," +
+  "\"DLR\": {" +
+  "\"@URL\": \"\"" +
+  "}," +
+  "\"SMS\": [" +
+    "{" +
+      "\"@UDH\": \"0\"," +
+      "\"@CODING\": \"1\"," +
+      "\"@TEXT\": \"Hi, Thanks for choosing Hummingbird Digital Do you know, now you can do reservations through whatsapp.\"," +
+      "\"@PROPERTY\": \"0\"," +
+      "\"@ID\": \"1\"," +
+      "\"ADDRESS\": [" +
+        "{" +
+          "\"@FROM\": \"917540002412\"," +
+          "\"@TO\": \"" + Details.MobileNo + "\"," +
+          "\"@SEQ\": \"1\"," +
+          "\"@TAG\": \"\"" +
+        "}" +
+      "]" +
+    "}" +
+  "]" +
+"}";
+            try
+            {
+                var WhatappResponse = client.UploadString("https://api.myvaluefirst.com/psms/servlet/psms.JsonEservice", "POST", body);
+                log = new CreateLogFiles();
+                log.ErrorLog(" => WhatappMsg after Confirmation Msg Response => " + WhatappResponse + "-" + body.ToString());
+            }
+            catch (Exception ex)
+            {
+                log = new CreateLogFiles();
+                log.ErrorLog(" => WhatappMsg after Confirmation Msg Response => " + ex.Message);
             }
             return RR1;
         }
