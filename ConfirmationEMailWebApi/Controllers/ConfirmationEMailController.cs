@@ -8935,7 +8935,6 @@ namespace ConfirmationEMailWebApi.Controllers
             return RR1;
         }
 
-
         public string WhatsappMsgafterConfirmAPI(WhatsappObj Details)
         {
             Details.MobileNo = Details.MobileNo.Replace("+", "");
@@ -8973,7 +8972,7 @@ namespace ConfirmationEMailWebApi.Controllers
       "]" +
     "}" +
   "]" +
- "}";
+"}";
             try
             {
                 var WhatappResponse = client.UploadString("https://api.myvaluefirst.com/psms/servlet/psms.JsonEservice", "POST", body);
