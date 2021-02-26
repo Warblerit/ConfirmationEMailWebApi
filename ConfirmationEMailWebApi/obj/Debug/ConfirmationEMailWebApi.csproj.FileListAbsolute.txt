@@ -100,8 +100,6 @@ D:\Projects\ConfirmationEMailWebApi\ConfirmationEMailWebApi\bin\NReco.PdfGenerat
 D:\Projects\ConfirmationEMailWebApi\ConfirmationEMailWebApi\obj\Debug\ConfirmationEMailWebApi.csprojAssemblyReference.cache
 D:\Projects\ConfirmationEMailWebApi\ConfirmationEMailWebApi\obj\Debug\ConfirmationEMailWebApi.csproj.CoreCompileInputs.cache
 D:\Projects\ConfirmationEMailWebApi\ConfirmationEMailWebApi\obj\Debug\ConfirmationEMailWebApi.csproj.CopyComplete
-D:\GitHub\ConfirmationEMailWebApi\ConfirmationEMailWebApi\bin\Microsoft.AI.Agent.Intercept.dll
-D:\GitHub\ConfirmationEMailWebApi\ConfirmationEMailWebApi\bin\Microsoft.ApplicationInsights.xml
 D:\GitHub\ConfirmationEMailWebApi\ConfirmationEMailWebApi\bin\ApplicationInsights.config
 D:\GitHub\ConfirmationEMailWebApi\ConfirmationEMailWebApi\bin\roslyn\csc.exe
 D:\GitHub\ConfirmationEMailWebApi\ConfirmationEMailWebApi\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
@@ -121,6 +119,7 @@ D:\GitHub\ConfirmationEMailWebApi\ConfirmationEMailWebApi\bin\ConfirmationEMailW
 D:\GitHub\ConfirmationEMailWebApi\ConfirmationEMailWebApi\bin\Antlr3.Runtime.dll
 D:\GitHub\ConfirmationEMailWebApi\ConfirmationEMailWebApi\bin\EntityFramework.dll
 D:\GitHub\ConfirmationEMailWebApi\ConfirmationEMailWebApi\bin\EntityFramework.SqlServer.dll
+D:\GitHub\ConfirmationEMailWebApi\ConfirmationEMailWebApi\bin\Microsoft.AI.Agent.Intercept.dll
 D:\GitHub\ConfirmationEMailWebApi\ConfirmationEMailWebApi\bin\Microsoft.AI.DependencyCollector.dll
 D:\GitHub\ConfirmationEMailWebApi\ConfirmationEMailWebApi\bin\Microsoft.AI.PerfCounterCollector.dll
 D:\GitHub\ConfirmationEMailWebApi\ConfirmationEMailWebApi\bin\Microsoft.AI.ServerTelemetryChannel.dll
@@ -164,6 +163,7 @@ D:\GitHub\ConfirmationEMailWebApi\ConfirmationEMailWebApi\bin\Microsoft.AI.Depen
 D:\GitHub\ConfirmationEMailWebApi\ConfirmationEMailWebApi\bin\Microsoft.AI.ServerTelemetryChannel.xml
 D:\GitHub\ConfirmationEMailWebApi\ConfirmationEMailWebApi\bin\Microsoft.AI.Web.xml
 D:\GitHub\ConfirmationEMailWebApi\ConfirmationEMailWebApi\bin\Microsoft.AI.WindowsServer.xml
+D:\GitHub\ConfirmationEMailWebApi\ConfirmationEMailWebApi\bin\Microsoft.ApplicationInsights.xml
 D:\GitHub\ConfirmationEMailWebApi\ConfirmationEMailWebApi\bin\Microsoft.Azure.KeyVault.Core.xml
 D:\GitHub\ConfirmationEMailWebApi\ConfirmationEMailWebApi\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
 D:\GitHub\ConfirmationEMailWebApi\ConfirmationEMailWebApi\bin\Microsoft.WindowsAzure.Configuration.xml
@@ -197,6 +197,7 @@ D:\GitHub\ConfirmationEMailWebApi\ConfirmationEMailWebApi\bin\Microsoft.Owin.Sec
 D:\GitHub\ConfirmationEMailWebApi\ConfirmationEMailWebApi\bin\Microsoft.Owin.Security.Twitter.xml
 D:\GitHub\ConfirmationEMailWebApi\ConfirmationEMailWebApi\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
 D:\GitHub\ConfirmationEMailWebApi\ConfirmationEMailWebApi\bin\System.Web.Http.Owin.xml
+D:\GitHub\ConfirmationEMailWebApi\ConfirmationEMailWebApi\obj\Debug\ConfirmationEMailWebApi.csprojAssemblyReference.cache
 D:\GitHub\ConfirmationEMailWebApi\ConfirmationEMailWebApi\obj\Debug\ConfirmationEMailWebApi.csproj.CoreCompileInputs.cache
 D:\GitHub\ConfirmationEMailWebApi\ConfirmationEMailWebApi\obj\Debug\ConfirmationEMailWebApi.csproj.CopyComplete
 D:\GitHub\ConfirmationEMailWebApi\ConfirmationEMailWebApi\obj\Debug\ConfirmationEMailWebApi.dll

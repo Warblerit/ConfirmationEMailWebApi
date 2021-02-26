@@ -5,15 +5,15 @@ using Microsoft.WindowsAzure.Storage.Blob;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.SqlClient; 
+using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
-using System.Net; 
+using System.Net;
 using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Http;
-using System.Web.Script.Serialization; 
+using System.Web.Script.Serialization;
 
 namespace ConfirmationEMailWebApi.Controllers
 {
@@ -407,9 +407,9 @@ namespace ConfirmationEMailWebApi.Controllers
                             "<td style =\"font-size:13px;width:33%\" valign =\"top\" align =\"center\"><strong> Issues / Feedback </strong></td>" +
                             "</tr>" +
                             "<tr style =\"font-style:normal;font-weight:normal;border-bottom:1px solid #ebebeb\">" +
-                            "<td style =\"vertical-align:middle;text-align:center\">" + ds.Tables[2].Rows[0][13].ToString() + "</td>" +
+                            "<td style =\"vertical-align:middle;text-align:center\">" + ds.Tables[2].Rows[0][12].ToString() + "</td>" +
                             "<td style =\"vertical-align:middle;text-align:center\">" + ds.Tables[2].Rows[0][3].ToString() + "</td>" +
-                            "<td style =\"vertical-align:middle;text-align:center\">" + ds.Tables[2].Rows[0][14].ToString() + " </td>" +
+                            "<td style =\"vertical-align:middle;text-align:center\">" + DeskNo + "<br>" + ContactEmail + "  </td>" +
                             "</tr></tbody></table>" +
                             "<table><tbody><tr>" +
                             "<td style =\"font-size:13px;width:16%\" valign =\"top\" align =\"center\"><strong></strong></td>" +
@@ -828,7 +828,7 @@ namespace ConfirmationEMailWebApi.Controllers
                             "<tr style =\"font-style:normal;font-weight:normal;border-bottom:1px solid #ebebeb\">" +
                             "<td style =\"vertical-align:middle;text-align:center\">" + ds.Tables[2].Rows[0][13].ToString() + "</td>" +
                             "<td style =\"vertical-align:middle;text-align:center\">" + ds.Tables[2].Rows[0][3].ToString() + "</td>" +
-                            "<td style =\"vertical-align:middle;text-align:center\">" + ds.Tables[2].Rows[0][14].ToString() + " </td>" +
+                            "<td style =\"vertical-align:middle;text-align:center\">" + DeskNo + "<br>" + ContactEmail + "  </td>" +
                             "</tr></tbody></table>" +
                             "<table><tbody><tr>" +
                             "<td style =\"font-size:13px;width:16%\" valign =\"top\" align =\"center\">" + BOKCreditcardView + "</td>" +
@@ -2657,7 +2657,7 @@ namespace ConfirmationEMailWebApi.Controllers
                                         WhatsappData.WhatsappFileName = WhatsappFileName;
                                         WhatsappData.WhatsappPdfUrl = WhatsappPdfUrl;
                                         Task.Factory.StartNew(() => WhatsappAPI(WhatsappData));
-                                        
+
                                     }
                                     catch (Exception Ex)
                                     {
@@ -2712,12 +2712,12 @@ namespace ConfirmationEMailWebApi.Controllers
                 if (All.ResendFlag != true && ds.Tables[4].Rows[0][8].ToString() == "ExP" && ds.Tables[0].Rows[0][5].ToString() == "Bill to Company (BTC)")
                 {
                     ZohoObj ZohoObjData = new ZohoObj();
-                    ZohoObjData.BookingId = All.BookingId; 
+                    ZohoObjData.BookingId = All.BookingId;
                     ZohoObjData.PropertyName = ds.Tables[1].Rows[0][5].ToString();
                     ZohoObjData.BookingCode = ds.Tables[2].Rows[0][2].ToString();
                     Task.Factory.StartNew(() => ZohoPOAPI(ZohoObjData));
                 }
-                
+
                 return Json(new { Code = "200", EmailResponse = Response });
             }
             catch (Exception Ex)
@@ -2941,7 +2941,7 @@ namespace ConfirmationEMailWebApi.Controllers
                 string ClientSecret = ds1.Tables[0].Rows[0][1].ToString();
                 string AccessToken = ds1.Tables[0].Rows[0][2].ToString();
                 string OrganizationId = ds1.Tables[0].Rows[0][3].ToString();
-              
+
 
                 var myData = ds1.Tables[1].AsEnumerable().Select(r => new PoData
                 {
@@ -3238,7 +3238,7 @@ namespace ConfirmationEMailWebApi.Controllers
                         dss = new DBconnection().ExecuteDataSet(commands, "");
                         string Vendor_Id = dss.Tables[0].Rows[0][0].ToString();
 
-                       
+
                         var line_items = new List<LineItemDt>();
                         int Tbl1RCount = myData.Count;
 
@@ -3437,7 +3437,7 @@ namespace ConfirmationEMailWebApi.Controllers
             message2.From = new System.Net.Mail.MailAddress("noreply@hummingbirdindia.com", "noreply", System.Text.Encoding.UTF8);
             message2.To.Add(new System.Net.Mail.MailAddress("prabakaran@warblerit.com"));
             //message2.To.Add(new System.Net.Mail.MailAddress("nandhu@warblerit.com")); 
-            message2.Subject = APIBlock +" Status - " + All.BookingCode;
+            message2.Subject = APIBlock + " Status - " + All.BookingCode;
             string Imagebody = "<div style=\"text-align: center;  padding: 10px 0 10px 0;\">" +
                    "<img src=\"https://portalvhds4prl9ymlwxnt8.blob.core.windows.net/img/HB_logo_small.png\" alt=\"logo\">" +
                    "</div>";
@@ -3462,7 +3462,7 @@ namespace ConfirmationEMailWebApi.Controllers
                 "</tbody>" +
                 "</table>";
             }
-            else if(APIBlock == "PO Creation")
+            else if (APIBlock == "PO Creation")
             {
                 header += "<p style=\"margin: 0; padding: 10px 0 10px 0;  letter-spacing: 125%; word-spacing: 150%;font-weight: bold; font-family: 'Open Sans', sans-serif\">Purchase order not created. Please find the details below for your reference.</p>" +
                     "<table style=\"background-color: #ffffff;border-radius: 4px 4px 0 0;overflow: hidden; width: 100%;margin-bottom: 1rem;background-color: transparent;border-collapse: collapse;font-family: ''Open Sans', sans-serif';\">" +
@@ -3698,7 +3698,7 @@ namespace ConfirmationEMailWebApi.Controllers
                             message.Bcc.Add(new System.Net.Mail.MailAddress("hbconf17@gmail.com"));
                         }
                         ////message.Bcc.Add(new System.Net.Mail.MailAddress("anbu@warblerit.com"));
-                        
+
 
                         message.Subject = "Booking Confirmation - " + ds.Tables[2].Rows[0][2].ToString();
 
@@ -3781,7 +3781,7 @@ namespace ConfirmationEMailWebApi.Controllers
                             "</div></div>";
                         }
 
-                        
+
 
                         string BookingDetails = "";
                         if (All.LTIAPIFlag == true)
@@ -3823,7 +3823,7 @@ namespace ConfirmationEMailWebApi.Controllers
                                  "<tr><td style=\"width:50%;text-align:left; \">" +
                                  "<h3 style =\"margin:0;font-family:&#39;Open Sans&#39;font-size:15px;padding:10px 0\"> Note  : <span style =\"font-weight:normal\">" + ds.Tables[2].Rows[0][8].ToString() + "</span></h3></td>" +
                                  "<tr><td style=\"width:50%;text-align:center; \">" +
-                                 "</td></tr>"+
+                                 "</td></tr>" +
                                  "</tr></tbody></table>";
                         }
                         else
@@ -4220,9 +4220,9 @@ namespace ConfirmationEMailWebApi.Controllers
                             {
                                 BookingDetails += "<tr style =\"font-style:normal;font-weight:normal;\">" +
                                 "<td style =\"vertical-align:middle;text-align:center;border:1px solid #ebebeb;padding:5px 0;\"> " + ds.Tables[i].Rows[0][0].ToString() + " </td>" +
-                                "<td style =\"vertical-align:middle;text-align:center;border:1px solid #ebebeb;padding:5px 0;\"> " + ds.Tables[i].Rows[0][7].ToString() + "/" + ds.Tables[0].Rows[i][4].ToString() +" </td>" +
+                                "<td style =\"vertical-align:middle;text-align:center;border:1px solid #ebebeb;padding:5px 0;\"> " + ds.Tables[i].Rows[0][7].ToString() + "/" + ds.Tables[0].Rows[i][4].ToString() + " </td>" +
                                 "<td style =\"vertical-align:middle;text-align:center;border:1px solid #ebebeb;padding:5px 0;\"> " + ds.Tables[i].Rows[0][9].ToString() + " </td>" +
-                                "<td style =\"vertical-align:middle;text-align:center;border:1px solid #ebebeb;padding:5px 0;\"> " + ds.Tables[i].Rows[0][10].ToString() +"</td>" +
+                                "<td style =\"vertical-align:middle;text-align:center;border:1px solid #ebebeb;padding:5px 0;\"> " + ds.Tables[i].Rows[0][10].ToString() + "</td>" +
                                 "<td style =\"vertical-align:middle;text-align:center;border:1px solid #ebebeb;padding:5px 0;\"> " + ds.Tables[i].Rows[0][3].ToString() + "</td>" +
                                 "<td style =\"vertical-align:middle;text-align:center;border:1px solid #ebebeb;padding:5px 0;\"> " + ds.Tables[i].Rows[0][5].ToString() + "</td>" +
                                 "<td style =\"vertical-align:middle;text-align:center;border:1px solid #ebebeb;padding:5px 0;\"> " + ds.Tables[i].Rows[0][6].ToString() + "</td>" +
@@ -6139,7 +6139,7 @@ namespace ConfirmationEMailWebApi.Controllers
                                         WhatsappData.WhatsappFileName = WhatsappFileName;
                                         WhatsappData.WhatsappPdfUrl = WhatsappPdfUrl;
                                         Task.Factory.StartNew(() => WhatsappAPI(WhatsappData));
-                                        
+
                                     }
                                     catch (Exception Ex)
                                     {
@@ -6200,7 +6200,7 @@ namespace ConfirmationEMailWebApi.Controllers
             }
         }
 
-  
+
 
         [HttpPost]
         [Route("ConfirmChatEMail")]
@@ -6996,17 +6996,17 @@ namespace ConfirmationEMailWebApi.Controllers
                         var PdfContent = "";
                         if (ds.Tables[0].Rows[0][5].ToString() == "Direct<br>(Cash/Card)")
                         {
-                            if(ds.Tables[2].Rows[0][11].ToString() == "1645")
+                            if (ds.Tables[2].Rows[0][11].ToString() == "1645")
                             {
-                                MailContent = header + BookingDetails + HotelDetails  + OtherDetails;
-                                PdfContent = header + BookingDetails + HotelDetails  + OtherDetails;
+                                MailContent = header + BookingDetails + HotelDetails + OtherDetails;
+                                PdfContent = header + BookingDetails + HotelDetails + OtherDetails;
                             }
                             else
                             {
                                 MailContent = header + BookingDetails + HotelDetails + GSTDetails + OtherDetails;
                                 PdfContent = header + BookingDetails + HotelDetails + GSTDetails + OtherDetails;
                             }
-                            
+
                         }
                         else
                         {
@@ -8816,7 +8816,7 @@ namespace ConfirmationEMailWebApi.Controllers
                                         WhatsappData.WhatsappFileName = WhatsappFileName;
                                         WhatsappData.WhatsappPdfUrl = WhatsappPdfUrl;
                                         Task.Factory.StartNew(() => WhatsappAPI(WhatsappData));
-                                        
+
                                     }
                                     catch (Exception Ex)
                                     {
@@ -8924,7 +8924,7 @@ namespace ConfirmationEMailWebApi.Controllers
             {
                 var WhatappResponse = client.UploadString("https://api.myvaluefirst.com/psms/servlet/psms.JsonEservice", "POST", body);
                 log = new CreateLogFiles();
-                log.ErrorLog(" => WhatappMsg Response => " + WhatappResponse+"-"+ body.ToString());
+                log.ErrorLog(" => WhatappMsg Response => " + WhatappResponse + "-" + body.ToString());
                 Task.Factory.StartNew(() => WhatsappMsgafterConfirmAPI(Details));
             }
             catch (Exception ex)
