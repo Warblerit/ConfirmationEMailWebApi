@@ -8986,5 +8986,131 @@ namespace ConfirmationEMailWebApi.Controllers
             }
             return RR1;
         }
+
+
+
+        [HttpPost]
+        [Route("ContactCreate")]
+        public string ContactCreate()
+        {
+            string Responses = "";
+            long PropertyId = 0;
+           
+                SqlCommand command = new SqlCommand();
+                DataSet ds = new DataSet();
+                command.CommandText = "SP_ZohoContactVendor_PO_Help";
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.Add("@Action", SqlDbType.NVarChar).Value = "GetData";
+                command.Parameters.Add("@Str1", SqlDbType.NVarChar).Value = "";
+                command.Parameters.Add("@Id", SqlDbType.BigInt).Value = 0;
+                ds = new DBconnection().ExecuteDataSet(command, "");
+                var myDatas = ds.Tables[0].AsEnumerable().Select(r => new ZohoPropertyDtls
+                {
+
+                    PropertyName = r.Field<string>("PropertyName"),
+                    LegalName = r.Field<string>("LegalName"),
+                    LegalAddress = r.Field<string>("LegalAddress"),
+                    City = r.Field<string>("City"),
+                    State = r.Field<string>("State"),
+                    Postal = r.Field<string>("Postal"),
+                    CreditPeriod = r.Field<int>("CreditPeriod"),
+                    GSTNumber = r.Field<string>("GSTNumber"),
+                    PropertyId = r.Field<Int64>("PropertyId")
+                }).ToList();
+                //Zoho Vendor Creation Insert Start
+
+                try
+                {
+                    int Tbl1RCount = myDatas.Count;
+                    for (var j = 0; j < Tbl1RCount; j++)
+                    {
+                        WebRequest webReq1 = WebRequest.Create("https://warsoftapi.warsoft.in/API/zohocontact/zohohotelcontactcreate");
+                        //WebRequest webReq1 = WebRequest.Create("http://localhost:1520/API/zohocontact/zohohotelcontactcreate");
+                        //WebRequest webReq1 = WebRequest.Create("http://zohoapi.staysimplyfied.com/API/zohocontact/zohohotelcontactcreate");
+                        webReq1.Proxy = null;
+                        HttpWebRequest httpReq1 = (HttpWebRequest)webReq1;
+                        httpReq1.ContentType = "application/json";
+                        httpReq1.Method = "POST";
+                        httpReq1.ProtocolVersion = HttpVersion.Version11;
+                        httpReq1.Credentials = CredentialCache.DefaultCredentials;
+                        Stream reqStream1 = httpReq1.GetRequestStream();
+                        StreamWriter streamWrite1 = new StreamWriter(reqStream1);
+                        var billing_address = new
+                        {
+                            attention = "",
+                            address = myDatas[j].LegalAddress,
+                            street2 = "",
+                            state_code = "",
+                            city = myDatas[j].City,
+                            state = myDatas[j].State,
+                            zip = myDatas[j].Postal,
+                            country = "India",
+                            fax = "",
+                            phone = ""
+                        };
+                        var shipping_address = new
+                        {
+                            attention = "",
+                            address = myDatas[j].LegalAddress,
+                            street2 = "",
+                            state_code = "",
+                            city = myDatas[j].City,
+                            state = myDatas[j].State,
+                            zip = myDatas[j].Postal,
+                            country = "India",
+                            fax = "",
+                            phone = ""
+                        };
+                        var custom_fields = new
+                        {
+
+                        };
+
+
+
+                        string body1 = new JavaScriptSerializer().Serialize(new
+                        {
+
+                            contact_name = myDatas[j].PropertyName,
+                            place_of_contact = "", //Source of Display
+                            currency_id = "", //currency Code
+                            company_name = myDatas[j].LegalName, //Legal Name
+                            website = "",
+                            contact_type = "vendor",
+                            customer_sub_type = "",
+                            is_portal_enabled = true,
+                            custom_fields = custom_fields,
+                            billing_address = billing_address,
+                            shipping_address = shipping_address,
+                            payment_terms = myDatas[j].CreditPeriod,
+                            payment_terms_label = "Net" + " " + myDatas[j].CreditPeriod,
+                            notes = "Hotel",
+                            gst_no = myDatas[j].GSTNumber,
+                            gst_treatment = "",
+                            PropertyId = myDatas[j].PropertyId
+
+                        });
+                        streamWrite1.Write(body1);
+                        streamWrite1.Close();
+                        HttpWebResponse wrres = (HttpWebResponse)httpReq1.GetResponse();
+                        StreamReader strmReader = new StreamReader(wrres.GetResponseStream(), Encoding.Default, true);
+                        string Resobj2 = strmReader.ReadToEnd();
+                        JavaScriptSerializer jsonSerializer = new JavaScriptSerializer();
+                        RootObjNew Response = jsonSerializer.Deserialize<RootObjNew>(Resobj2);
+                    }
+                }
+                catch (Exception ex)
+                {
+
+                    log = new CreateLogFiles();
+                    log.ErrorLog("ContactCreate => Zoho Contact Create => Err msg => Property Id -" + PropertyId + " =>" + ex.Message);
+
+                } 
+            return Responses;
+        }
+
+
+
+
     }
 }
