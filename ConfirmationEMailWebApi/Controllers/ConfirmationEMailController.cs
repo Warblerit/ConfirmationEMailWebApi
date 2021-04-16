@@ -9110,7 +9110,767 @@ namespace ConfirmationEMailWebApi.Controllers
         }
 
 
+        /* Hotel Request - Quick Confirm Email
+         * Warsoft
+         * ChatApi
+         * ICICI API
+         * LTI API
+         * TR Form         
+         */
+        [HttpPost]
+        [Route("PropertyRequestMailConfirm")]
+        public IHttpActionResult PropertyRequestMailConfirm(ConfirmationEMail All)
+        {
+            string Response = "Property Request Mail not Sent";
+            string APIUrl = "";
+            APIUrl = System.Configuration.ConfigurationManager.AppSettings["UrlHotelConfirmationEmailApi"];
+
+            try
+            {
+                SqlCommand command1 = new SqlCommand();
+                DataSet ds1 = new DataSet();
+                command1.CommandText = "SP_SMTPMailSetting_Help";
+                command1.CommandType = CommandType.StoredProcedure;
+                command1.Parameters.Add("@Action", SqlDbType.NVarChar).Value = "SMTP";
+                command1.Parameters.Add("@Str1", SqlDbType.NVarChar).Value = "";
+                command1.Parameters.Add("@Id", SqlDbType.BigInt).Value = 0;
+                ds1 = new DBconnection().ExecuteDataSet(command1, "");
+                string Host = ds1.Tables[0].Rows[0][0].ToString();
+                string CredentialsUserName = ds1.Tables[0].Rows[0][1].ToString();
+                string CredentialsPassword = ds1.Tables[0].Rows[0][2].ToString();
+                int Port = Convert.ToInt16(ds1.Tables[0].Rows[0][3]);
+
+                SqlCommand command = new SqlCommand();
+                DataSet ds = new DataSet();
+                command.CommandText = "SP_PropertyRequestMailConfirm_Help";
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.Add("@Str", SqlDbType.NVarChar).Value = "";
+                command.Parameters.Add("@Id1", SqlDbType.BigInt).Value = All.BookingId;
+                ds = new DBconnection().ExecuteDataSet(command, "");
+
+                var PropertyDtls = ds.Tables[0].AsEnumerable().Select(r => new PropertyDtls
+                {
+                    TrackingNo = r.Field<long>("TrackingNo"),
+                    FirstName = r.Field<string>("FirstName"),
+                    BookedDt = r.Field<string>("BookedDt"),
+                    PropertyName = r.Field<string>("PropertyName"),
+                    Deskno = r.Field<string>("Deskno"),
+                    HBLogo = r.Field<string>("HBLogo"),
+                    UserCode = r.Field<string>("UserCode"),
+                    BookingId = r.Field<long>("BookingId"),
+                    StateId = r.Field<long>("StateId"),
+                    RowId = r.Field<string>("RowId"),
+                    PropertyType = r.Field<string>("PropertyType"),
+                    Email = r.Field<string>("Email"),
+                    FromEmail = r.Field<string>("FromEmail"),
+                    ClientName = r.Field<string>("ClientName"),
+                    singlecount = r.Field<int>("singlecount"),
+                    doublecount = r.Field<int>("doublecount"),
+                    triplecount = r.Field<int>("triplecount"),
+                    Client_RequestNo = r.Field<string>("Client_RequestNo"),
+                    CityName = r.Field<string>("CityName"),
+                    Notes = r.Field<string>("Notes"),
+                    Inclusions = r.Field<string>("Inclusions"),
+                    ClientEmail = r.Field<string>("ClientEmail"),
+                    HBAddress = r.Field<string>("HBAddress"),
+                    FilePath = r.Field<string>("FilePath"),
+
+                }).ToList();
+
+                var GuestDtls = ds.Tables[1].AsEnumerable().Select(r => new GuestDtls
+                {
+                    Name = r.Field<string>("Name"),
+                    MobileNO = r.Field<string>("MobileNO"),
+                    ChkInDt = r.Field<string>("ChkInDt"),
+                    ChkOutDt = r.Field<string>("ChkOutDt"),
+                    RoomNo = r.Field<string>("RoomNo"),
+                    Tariff = r.Field<decimal>("Tariff"),
+                    Inclu = r.Field<string>("Inclu"),
+                    TACDetails = r.Field<decimal>("TACDetails"),
+                    TACInclu = r.Field<string>("TACInclu"),
+                    TACExecption = r.Field<int>("TACExecption"),
+                    Occupancy = r.Field<string>("Occupancy"),
+                    TariffPayMentMode = r.Field<string>("TariffPayMentMode"),
+                    TAC  = r.Field<bool>("TAC"),
+                }).ToList();
+
+                var ClientGSTDtls = ds.Tables[2].AsEnumerable().Select(r => new ClientGSTDtls
+                {
+                    ClientName = r.Field<string>("ClientName"),
+                    GSTNumber = r.Field<string>("GSTNumber"),
+                    ClientAddress = r.Field<string>("ClientAddress"),
+                }).ToList();
+
+                var HBGSTDtls = ds.Tables[3].AsEnumerable().Select(r => new HBGSTDtls
+                {
+                    HBName = r.Field<string>("HBName"),
+                    HBGSTNumber = r.Field<string>("HBGSTNumber"),
+                    HBAddress = r.Field<string>("HBAddress"),
+                }).ToList();
+
+                var GuestDtls01 = ds.Tables[4].AsEnumerable().Select(r => new GuestDtls01
+                {
+                    Name = r.Field<string>("Name"),
+                    Title = r.Field<string>("Title"),
+                    GuestEmail = r.Field<string>("GuestEmail"),
+                }).ToList();
 
 
-    }
+                var GuestDtls_Group_array = GuestDtls.GroupBy(item => new { item.Occupancy, item.Tariff,item.Inclu, item.TACDetails, item.TACInclu,item.TACExecption,item.TariffPayMentMode,item.TAC }).Select(group => new
+                {
+                    Group_array = group.Key 
+
+                }).ToList();
+
+                var TACGuestColumn = 1;
+
+                for (var j=0; j < GuestDtls_Group_array.Count; j++ )
+                {
+                    ////if(GuestDtls_Group_array[j].Group_array.TAC== false && GuestDtls_Group_array[j].Group_array.TariffPayMentMode== "Direct")
+                    if (GuestDtls_Group_array[j].Group_array.TariffPayMentMode == "Direct")
+                    {
+                        TACGuestColumn = 0;
+
+                    }
+                }
+
+                System.Net.Mail.MailMessage message1 = new System.Net.Mail.MailMessage();
+                message1.From = new System.Net.Mail.MailAddress(PropertyDtls[0].FromEmail, "", System.Text.Encoding.UTF8);
+
+                string PropertyMail = PropertyDtls[0].Email.ToString();
+                var PtyMail = PropertyMail.Split(',');
+                int cnt = PtyMail.Length;
+
+                for (int i = 0; i < cnt; i++)
+                {
+                    if (PtyMail[i].ToString() != "")
+                    {
+                        try
+                        {
+                            message1.To.Add(new System.Net.Mail.MailAddress(PtyMail[i].ToString()));
+                        }
+                        catch (Exception ex)
+                        {
+                            CreateLogFiles log = new CreateLogFiles();
+                            log.ErrorLog(" => property Request =>  Property Mail => To => Invalid Email => " + PtyMail[i].ToString());
+                        }
+                    }
+                }
+                message1.CC.Add(new System.Net.Mail.MailAddress("nandhu@warblerit.com"));
+                message1.Bcc.Add(new System.Net.Mail.MailAddress("prabakaran@warblerit.com"));
+
+                ////message1.Bcc.Add(new System.Net.Mail.MailAddress(PropertyDtls[0].FromEmail));
+                ////message1.Bcc.Add(new System.Net.Mail.MailAddress("stay@hummingbirdindia.com"));
+                ////message1.Bcc.Add(new System.Net.Mail.MailAddress("hbconf17@gmail.com"));
+
+                
+
+                message1.Subject = "Hotel Booking Request - " + PropertyDtls[0].TrackingNo;
+
+
+                string typeofpty1 = PropertyDtls[0].PropertyType;
+                string Imagelocation1 = PropertyDtls[0].HBLogo;
+                string Imagealt1 = "HummingBird";
+                string Greetings = "";
+                if (typeofpty1 == "MGH")
+                {
+                    Greetings = "Greetings from " + PropertyDtls[0].ClientName + "!!!";  
+                }
+                else
+                {
+                    Greetings = "Greetings from Hummingbird Digital Pvt Ltd !!!";  
+                }
+                if (typeofpty1 == "ExP")
+                {
+                    PropertyDtls[0].ClientName = "Humming Bird Digital Pvt Ltd";
+                }
+
+                var GSTpaymentmode = GuestDtls[0].TariffPayMentMode;
+
+                if (GuestDtls[0].TariffPayMentMode == "Bill to Company (BTC)")
+                {
+                    GuestDtls[0].TariffPayMentMode = "Bill to HB";
+                }
+             
+                string s = PropertyDtls[0].ClientName;
+                string[] words = s.Split(' ');
+                if (GuestDtls[0].TariffPayMentMode == "Bill to Client")
+                {
+                    GuestDtls[0].TariffPayMentMode = "Bill to " + words[0];
+                }
+                if (GuestDtls[0].TariffPayMentMode == "Direct")
+                {
+                    GuestDtls[0].TariffPayMentMode = "Direct (Cash/Card)";
+                }
+
+
+                string Imagebody1 =
+                        "<table style =\"max-width:600px; width:100%; margin:auto;\" cellpadding =\"0\" cellspacing =\"0\" border = \"0\">" +
+                        "<tr>" +
+                        "<td align = \"center\" style =\"padding:20px 0 20px 0;\">" +
+                        "<table style =\"max-width:600px; width:100%; margin:auto;\">" +
+                        "<tr>" +
+                        "<td style =\"text-align: left;\"><img src=" + Imagelocation1 + " " + "width = \"150\" alt=" + Imagealt1 + "> </td>" +
+                        "<td style =\"font-size:16px;\" align = \"left\"><span style =\"padding:5px;\"><strong> Hotel Booking Request # : " + PropertyDtls[0].TrackingNo + " </strong></span></td>" +
+                        "</tr>" +
+                        "</table>" +
+                        "</td>" +
+                        "</tr>" +
+                        "<tr>" +
+                        "<td>" +
+                        " <p style=\"margin:0px;\">Dear Business Partner,</p><br>" +
+                        " <p style=\"margin:0px;\">" + Greetings + "</p><br>" +
+                        " <p style=\"margin:0px;\">Kindly acknowledge the booking as per the below given details.</p><br>" +
+                        " <p style=\"margin:0px;\"><strong>Kindly also note the GST No. to be mentioned on the Invoice at the time of Billing.</strong></p><br>" +
+                        "</td>" +
+                        "</tr>" +
+                        "<tr>" +
+                        "<td style = \"padding:20px 0 20px 0;\">" +
+                        "<table cellpadding = \"10\" cellspacing = \"1\" border = \"0\" bgcolor = \"#cccccc\" style = \"width:100%;\">" +
+                        "<tr>" +
+                        "<td bgcolor = \"#FFFFFF\" style = \"font-size:13px; width:50%;\" valign = \"top\"><strong> Request Date </strong></td>" +
+                        "<td bgcolor = \"#FFFFFF\" style = \"font-size:13px; width:50%;\" valign = \"top\"> " + PropertyDtls[0].BookedDt + " </td>" +
+                        "</tr>" +
+                        "<tr bgcolor=\"#FAFAFA\">" +
+                        "<td  style = \"font-size:13px; width:50%;\" valign = \"top\"><strong> Hotel/Property Name </strong></td>" +
+                        "<td  style = \"font-size:13px; width:50%;\" valign = \"top\"> " + PropertyDtls[0].PropertyName + " / " + PropertyDtls[0].CityName + "</td>" +
+                        "</tr>" + 
+                        "<tr>" +
+                        "<td  bgcolor = \"#FFFFFF\" style = \"font-size:13px; width:50%;\" valign = \"top\"><strong> Company Name </strong></td>" +
+                        "<td  bgcolor = \"#FFFFFF\" style = \"font-size:13px; width:50%;\" valign = \"top\"> " + PropertyDtls[0].ClientName + "</td>" +
+                        "</tr>" + 
+                        "<tr>" +
+                        "<td  bgcolor = \"#FFFFFF\" style = \"font-size:13px; width:50%;\" valign = \"top\"><strong> Client Request/Booking No </strong></td>" +
+                        "<td  bgcolor = \"#FFFFFF\" style = \"font-size:13px; width:50%;\" valign = \"top\"> " + PropertyDtls[0].Client_RequestNo + "</td>" +
+                        "</tr>" +
+                        "<tr bgcolor=\"#FAFAFA\">" +
+                        "<td  bgcolor = \"#FFFFFF\" style = \"font-size:13px; width:50%;\" valign = \"top\"><strong> Note </strong></td>" +
+                        "<td  bgcolor = \"#FFFFFF\" style = \"font-size:13px; width:50%;\" valign = \"top\"> <strong>" + PropertyDtls[0].Notes + "</strong></td>" +
+                        "</tr>" +
+                        "</table>" +
+                        "</td>" +
+                        "</tr>" +
+                        "<tr>" +
+                        "<td bgcolor = \"#FF4500\" style = \"font-size:16px; color:#FFFFFF; width:50%; padding:10px 0 10px 0;\" valign = \"top\" align = \"center\"><strong> Guest Details </strong></td>" +
+                        "</tr>";
+
+                   string GuestDetailsTable12 = "";
+
+                 
+                    GuestDetailsTable12 =
+                            "<tr>" +
+                            "<td style = \"padding:0 0 20px 0;\">" +
+                            "<table cellpadding = \"10\" cellspacing = \"1\" border = \"0\" bgcolor = \"#cccccc\" style = \"width:100%;\">" +
+                            "<tr  bgcolor=\"#FAFAFA\">" +
+                            "<td bgcolor = \"#FFFFFF\" style = \"font-size:13px; width:16%;\" valign = \"top\" align = \"center\"><strong> Guest Name </strong></td>" +
+                            "<td bgcolor = \"#FFFFFF\" style = \"font-size:13px; width:16%;\" valign = \"top\" align = \"center\"><strong> Mobile No</strong></td>" +
+                            "<td bgcolor = \"#FFFFFF\" style = \"font-size:13px; width:16%;\" valign = \"top\" align = \"center\"><strong> Check - In Date / Expected Time </strong></td>" +
+                            "<td bgcolor = \"#FFFFFF\" style = \"font-size:13px; width:16%;\" valign = \"top\" align = \"center\"><strong> Check - Out Date </strong></td>" +
+                            "<td bgcolor = \"#FFFFFF\" style = \"font-size:13px; width:16%;\" valign = \"top\" align = \"center\"><strong> Room No  </strong></td>" +
+                            "<td bgcolor = \"#FFFFFF\" style = \"font-size:13px; width:16%;\" valign = \"top\" align = \"center\"><strong> Payment Mode for Tariff </strong></td>" +
+                            "</tr>";
+
+                    foreach (var item in GuestDtls)
+                    {
+                        GuestDetailsTable12 +=
+                         "<tr>" +
+                         "<td bgcolor = \"#FFFFFF\" style = \"font-size:13px; width:16%;\" valign = \"top\" align = \"center\"> " + item.Name + " </td>" +
+                         "<td bgcolor = \"#FFFFFF\" style = \"font-size:13px; width:16%;\" valign = \"top\" align = \"center\"> " + item.MobileNO + " </td>" +
+                         "<td bgcolor = \"#FFFFFF\" style = \"font-size:13px; width:16%;\" valign = \"top\" align = \"center\"> " + item.ChkInDt + "</td>" +
+                         "<td bgcolor = \"#FFFFFF\" style = \"font-size:13px; width:16%;\" valign = \"top\" align = \"center\"> " + item.ChkOutDt + " </td>" +
+                         "<td bgcolor = \"#FFFFFF\" style = \"font-size:13px; width:16%;\" valign = \"top\" align = \"center\"> " + item.RoomNo + "</td>" +
+                         "<td bgcolor = \"#FFFFFF\" style = \"font-size:13px; width:16%;\" valign = \"top\" align = \"center\"> " + GuestDtls[0].TariffPayMentMode + " </td>" +
+                         "</tr>";
+                    }
+                    GuestDetailsTable12 += "</table>" +
+                          "</td>" +
+                          "</tr>";
+
+                string ConfirmlinkDtls1 = "";
+
+                if (All.IciciAPIFlag != true)
+                {
+                    ConfirmlinkDtls1 =
+
+                         "<table cellpadding = \"10\" cellspacing = \"1\" border = \"0\" bgcolor = \"#cccccc\" style = \"width:100%;\">" +
+                         "<tr  bgcolor=\"#FAFAFA\">" +
+                         "<td style = \"font-size:13px; width:50%;\" valign = \"top\" align=\"center\"><strong><a href=\"" + APIUrl + "/?redirect=BookingConfirmation&B=" + PropertyDtls[0].BookingId + "&R=" + PropertyDtls[0].RowId + "/" + "Confirm" + "\" style=\"background-color:#1ea914;border:1px solid #1e5021;border-radius:4px;color:#ffffff;display:inline-block;font-family:sans-serif;font-size:13px;font-weight:bold;line-height:40px;text-align:center;text-decoration:none;width:200px;-webkit-text-size-adjust:none;mso-hide:all;\">Confirm Reservation</a></strong></td>" +
+                         "<td style = \"font-size:13px; width:50%;\" valign = \"top\" align=\"center\"><strong><a href=\"" + APIUrl + "/?redirect=NoAvailability&B=" + PropertyDtls[0].BookingId + "&R=" + PropertyDtls[0].RowId + "/" + "SoldOut" + "\" style=\"background-color:#a91414;border:1px solid #1e5021;border-radius:4px;color:#ffffff;display:inline-block;font-family:sans-serif;font-size:13px;font-weight:bold;line-height:40px;text-align:center;text-decoration:none;width:200px;-webkit-text-size-adjust:none;mso-hide:all;\">Notify Sold Out</a></strong></td>" +
+                         "</tr>" +
+                         "</table><br/>";
+                }
+                
+
+               
+                string TariffDtls1 = "";
+                TariffDtls1 = "<tr>" +
+                               "<td bgcolor = \"#FF4500\" style = \"font-size:16px; color:#FFFFFF; width:50%; padding:10px 0 10px 0;\" valign = \"top\" align = \"center\"><strong> Tariff Details<span style=\"font-size:12px;\">(Please do not disclose the rate to Guest) </span></strong></td>" +
+                               "</tr>" +
+                               "<tr>" +
+                               "<td style = \"padding:0 0 20px 0;\">" +
+                               "<table cellpadding = \"10\" cellspacing = \"1\" border = \"0\" bgcolor = \"#cccccc\" style = \"width:100%;\">" +
+                                 "<tr>" +
+                                 "<td   bgcolor = \"#FAFAFA\"  style = \"font-size:13px; width:25%;\" valign = \"top\"><strong> Occupancy </strong></td>" +
+                                 "<td   bgcolor = \"#FAFAFA\"  style = \"font-size:13px; width:25%;\" valign = \"top\"><strong>Rooms</strong> </td>" +
+                                 "<td   bgcolor = \"#FAFAFA\"  style = \"font-size:13px; width:25%;\" valign = \"top\"><strong>Tariff / Room / Day</strong> </td>";
+
+                if(GuestDtls[0].TACExecption ==1)
+                {
+                    TariffDtls1 += "<td   bgcolor = \"#FAFAFA\"  style = \"font-size:13px; width:25%;\" valign = \"top\"><strong>TAC / Room / Day</strong> </td>";
+                }
+                if(TACGuestColumn==0)
+                {
+                    TariffDtls1 += "<td   bgcolor = \"#FAFAFA\"  style = \"font-size:13px; width:25%;\" valign = \"top\"><strong>Tariff to be Charged to Guest</strong> </td>";
+                }
+                TariffDtls1 += "<tr>";
+
+                if(PropertyDtls[0].singlecount !=0)
+                {
+                    foreach (var item in GuestDtls_Group_array)
+                    {
+                        if (item.Group_array.Occupancy == "Single")
+                        {
+                            TariffDtls1 += "<tr>" +
+                                 "<td  bgcolor = \"#FFFFFF\" style = \"font-size:13px; width:20%;\" valign = \"top\">" + item.Group_array.Occupancy + "</td>" +
+                                 "<td  bgcolor = \"#FFFFFF\" style = \"font-size:13px; width:20%;\" valign = \"top\">" + PropertyDtls[0].singlecount + "</td>" +
+                                 "<td  bgcolor = \"#FFFFFF\" style = \"font-size:13px; width:20%;\" valign = \"top\">" + item.Group_array.Tariff + " " + item.Group_array.Inclu + " </td>";
+                            if (item.Group_array.TACExecption == 1)
+                            {
+                                if (item.Group_array.TariffPayMentMode != "Direct")
+                                {
+                                    TariffDtls1 += "<td  bgcolor = \"#FFFFFF\" style = \"font-size:13px; width:20%;\" valign = \"top\">" + item.Group_array.TACDetails + " " + item.Group_array.TACInclu + "</td>";
+                                }
+                                else
+                                {
+                                    if (item.Group_array.TAC == true)
+                                    {
+                                        TariffDtls1 += "<td  bgcolor = \"#FFFFFF\" style = \"font-size:13px; width:20%;\" valign = \"top\">" + item.Group_array.TACDetails + " " + item.Group_array.TACInclu + "</td>";
+                                    }
+                                    else
+                                    {
+                                        TariffDtls1 += "<td  bgcolor = \"#FFFFFF\" style = \"font-size:13px; width:20%;\" valign = \"top\">" + item.Group_array.TACDetails + " " + item.Group_array.Inclu + "</td>";
+                                    }
+                                }
+                            }
+
+                            if (item.Group_array.TariffPayMentMode == "Direct")
+                            {
+                                if(item.Group_array.TAC==true)
+                                {
+                                    TariffDtls1 += "<td  bgcolor = \"#FFFFFF\" style = \"font-size:13px; width:20%;\" valign = \"top\">" + item.Group_array.Tariff  + " " + item.Group_array.Inclu + "</td>";
+                                }
+                                else
+                                {
+                                    TariffDtls1 += "<td  bgcolor = \"#FFFFFF\" style = \"font-size:13px; width:20%;\" valign = \"top\">" + (item.Group_array.Tariff + item.Group_array.TACDetails) + " " + item.Group_array.Inclu + "</td>";
+                                }
+                            }
+
+
+                        }
+                    }
+                    TariffDtls1 += "</tr>";
+                }
+
+                if (PropertyDtls[0].doublecount != 0)
+                {
+                    foreach (var item in GuestDtls_Group_array)
+                    {
+                        if (item.Group_array.Occupancy == "Double")
+                        {
+                            TariffDtls1 += "<tr>" +
+                                 "<td  bgcolor = \"#FFFFFF\" style = \"font-size:13px; width:20%;\" valign = \"top\">" + item.Group_array.Occupancy + "</td>" +
+                                 "<td  bgcolor = \"#FFFFFF\" style = \"font-size:13px; width:20%;\" valign = \"top\">" + PropertyDtls[0].doublecount + "</td>" +
+                                 "<td  bgcolor = \"#FFFFFF\" style = \"font-size:13px; width:20%;\" valign = \"top\">" + item.Group_array.Tariff + " " + item.Group_array.Inclu + " </td>";
+                            if (item.Group_array.TACExecption == 1)
+                            {
+                                if (item.Group_array.TariffPayMentMode != "Direct")
+                                {
+                                    TariffDtls1 += "<td  bgcolor = \"#FFFFFF\" style = \"font-size:13px; width:20%;\" valign = \"top\">" + item.Group_array.TACDetails + " " + item.Group_array.TACInclu + "</td>";
+                                }
+                                else
+                                {
+                                    if (item.Group_array.TAC == true)
+                                    {
+                                        TariffDtls1 += "<td  bgcolor = \"#FFFFFF\" style = \"font-size:13px; width:20%;\" valign = \"top\">" + item.Group_array.TACDetails + " " + item.Group_array.TACInclu + "</td>";
+                                    }
+                                    else
+                                    {
+                                        TariffDtls1 += "<td  bgcolor = \"#FFFFFF\" style = \"font-size:13px; width:20%;\" valign = \"top\">" + item.Group_array.TACDetails + " " + item.Group_array.Inclu + "</td>";
+                                    }
+                                }
+                            }
+                            if (item.Group_array.TariffPayMentMode == "Direct")
+                            {
+                                if (item.Group_array.TAC == true)
+                                {
+                                    TariffDtls1 += "<td  bgcolor = \"#FFFFFF\" style = \"font-size:13px; width:20%;\" valign = \"top\">" + item.Group_array.Tariff + " " + item.Group_array.Inclu + "</td>";
+                                }
+                                else
+                                {
+                                    TariffDtls1 += "<td  bgcolor = \"#FFFFFF\" style = \"font-size:13px; width:20%;\" valign = \"top\">" + (item.Group_array.Tariff + item.Group_array.TACDetails) + " " + item.Group_array.Inclu + "</td>";
+                                }
+                            }
+                        }
+                    }
+                    TariffDtls1 += "</tr>";
+                }
+
+                if (PropertyDtls[0].triplecount != 0)
+                {
+                    foreach (var item in GuestDtls_Group_array)
+                    {
+                        if (item.Group_array.Occupancy == "Triple")
+                        {
+                            TariffDtls1 += "<tr>" +
+                                 "<td  bgcolor = \"#FFFFFF\" style = \"font-size:13px; width:20%;\" valign = \"top\">" + item.Group_array.Occupancy + "</td>" +
+                                 "<td  bgcolor = \"#FFFFFF\" style = \"font-size:13px; width:20%;\" valign = \"top\">" + PropertyDtls[0].triplecount + "</td>" +
+                                 "<td  bgcolor = \"#FFFFFF\" style = \"font-size:13px; width:20%;\" valign = \"top\">" + item.Group_array.Tariff + " " + item.Group_array.Inclu + " </td>";
+                            if (item.Group_array.TACExecption == 1)
+                            {
+                                if (item.Group_array.TariffPayMentMode != "Direct")
+                                {
+                                    TariffDtls1 += "<td  bgcolor = \"#FFFFFF\" style = \"font-size:13px; width:20%;\" valign = \"top\">" + item.Group_array.TACDetails + " " + item.Group_array.TACInclu + "</td>";
+                                }
+                                else
+                                {
+                                    if (item.Group_array.TAC == true)
+                                    {
+                                        TariffDtls1 += "<td  bgcolor = \"#FFFFFF\" style = \"font-size:13px; width:20%;\" valign = \"top\">" + item.Group_array.TACDetails + " " + item.Group_array.TACInclu + "</td>";
+                                    }
+                                    else
+                                    {
+                                        TariffDtls1 += "<td  bgcolor = \"#FFFFFF\" style = \"font-size:13px; width:20%;\" valign = \"top\">" + item.Group_array.TACDetails + " " + item.Group_array.Inclu + "</td>";
+                                    }
+                                }
+                            }
+                            if (item.Group_array.TariffPayMentMode == "Direct")
+                            {
+                                if (item.Group_array.TAC == true)
+                                {
+                                    TariffDtls1 += "<td  bgcolor = \"#FFFFFF\" style = \"font-size:13px; width:20%;\" valign = \"top\">" + item.Group_array.Tariff + " " + item.Group_array.Inclu + "</td>";
+                                }
+                                else
+                                {
+                                    TariffDtls1 += "<td  bgcolor = \"#FFFFFF\" style = \"font-size:13px; width:20%;\" valign = \"top\">" + (item.Group_array.Tariff + item.Group_array.TACDetails) + " " + item.Group_array.Inclu + "</td>";
+                                }
+                            }
+                        }
+                    }
+                    TariffDtls1 += "</tr>";
+                }
+
+                TariffDtls1  += "</table>" +
+                               "</td>" +
+                               "</tr>";
+                if(PropertyDtls[0].Inclusions !="")
+                {
+                    TariffDtls1 += "<tr>" +
+                    "<td style = \"font-size:20px; padding:0px 0 10px 0; line-height:28px;\" align = \"center\"><span style = \"padding:5px;\"><strong> Inclusions : " + PropertyDtls[0].Inclusions + "</strong></span></td>" +
+                    "</tr>";
+                }
+
+
+                string GstDtls = "";
+                if (GSTpaymentmode == "Direct" || GSTpaymentmode == "Bill to Client")
+                {
+                    GstDtls =
+                                "<tr>" +
+                                "<td bgcolor = \"#FF4500\" style = \"font-size:16px; color:#FFFFFF; width:50%; padding:10px 0 10px 0;\" valign = \"top\" align = \"center\"><strong> GSTIN Details for Billing <span style=\"font-size:12px;\">(If GST No. is not mentioned, kindly enquire with the Guest) </span></strong></td>" +
+                                "</tr>" +
+                                "<tr>" +
+                                "<td style = \"padding:0 0 20px 0;\">" +
+                                "<table cellpadding = \"10\" cellspacing = \"1\" border = \"0\" bgcolor = \"#cccccc\" style = \"width:100%;\">" +
+                                "<tr  bgcolor=\"#FAFAFA\">" +
+                                "<td bgcolor = \"#FFFFFF\" style = \"font-size:13px; width:16%;\" valign = \"top\" align = \"center\"><strong> GST Number </strong></td>" +
+                                "<td bgcolor = \"#FFFFFF\" style = \"font-size:13px; width:16%;\" valign = \"top\" align = \"center\"><strong> Legal Name </strong></td>" +
+                                "<td bgcolor = \"#FFFFFF\" style = \"font-size:13px; width:16%;\" valign = \"top\" align = \"center\"><strong> Address </strong></td>" +
+                                "</tr>";
+
+
+                    GstDtls +=
+                     "<tr>" +
+                     "<td bgcolor = \"#FFFFFF\" style = \"font-size:13px; width:16%;\" valign = \"top\" align = \"center\"> " + ClientGSTDtls[0].GSTNumber + " </td>" +
+                     "<td bgcolor = \"#FFFFFF\" style = \"font-size:13px; width:16%;\" valign = \"top\" align = \"center\"> " + ClientGSTDtls[0].ClientName + "</td>" +
+                     "<td bgcolor = \"#FFFFFF\" style = \"font-size:13px; width:16%;\" valign = \"top\" align = \"center\"> " + ClientGSTDtls[0].ClientAddress + " </td>" +
+                     "</tr>";
+
+                    GstDtls += "</table>" +
+                          "</td>" +
+                          "</tr>";
+                }
+                else
+                {
+                    GstDtls =
+                                "<tr>" +
+                                "<td bgcolor = \"#FF4500\" style = \"font-size:16px; color:#FFFFFF; width:50%; padding:10px 0 10px 0;\" valign = \"top\" align = \"center\"><strong> GSTIN Details for Billing</span></strong></td>" +
+                                "</tr>" +
+                                "<tr>" +
+                                "<td style = \"padding:0 0 20px 0;\">" +
+                                "<table cellpadding = \"10\" cellspacing = \"1\" border = \"0\" bgcolor = \"#cccccc\" style = \"width:100%;\">" +
+                                "<tr  bgcolor=\"#FAFAFA\">" +
+                                "<td bgcolor = \"#FFFFFF\" style = \"font-size:13px; width:16%;\" valign = \"top\" align = \"center\"><strong> GST Number </strong></td>" +
+                                "<td bgcolor = \"#FFFFFF\" style = \"font-size:13px; width:16%;\" valign = \"top\" align = \"center\"><strong> Legal Name </strong></td>" +
+                                "<td bgcolor = \"#FFFFFF\" style = \"font-size:13px; width:16%;\" valign = \"top\" align = \"center\"><strong> Address </strong></td>" +
+                                "</tr>";
+
+
+                    GstDtls +=
+                    "<tr>" +
+                    "<td bgcolor = \"#FFFFFF\" style = \"font-size:13px; width:16%;\" valign = \"top\" align = \"center\"> " + HBGSTDtls[0].HBGSTNumber + " </td>" +
+                    "<td bgcolor = \"#FFFFFF\" style = \"font-size:13px; width:16%;\" valign = \"top\" align = \"center\"> " + HBGSTDtls[0].HBName + "</td>" +
+                    "<td bgcolor = \"#FFFFFF\" style = \"font-size:13px; width:16%;\" valign = \"top\" align = \"center\"> " + HBGSTDtls[0].HBAddress + " </td>" +
+                    "</tr>";
+
+                    GstDtls += "</table>" +
+                          "</td>" +
+                          "</tr>";
+                }
+
+                string FooterDtls1 = "";
+
+                if (All.IciciAPIFlag == true)
+                {
+                    FooterDtls1 += "<tr><td style=\"font-size:20px;padding:0px 0 20px 0;line-height:18px;\" align=\"center\">" +
+                        "<span style=\"padding:5px;\"><strong>Kindly arrange to confirm the above booking within 1 hour. </strong>" +
+                        "</span></td></tr>";
+                }
+
+                if (GSTpaymentmode == "Direct" || GSTpaymentmode == "Bill to Client")
+                {
+
+                    FooterDtls1 +=
+                    "<tr>" +
+                    "<td style = \"padding:20px 0 20px 0;\">" +
+                    "<table cellpadding = \"10\" cellspacing = \"1\" border = \"0\" bgcolor = \"#cccccc\" style = \"width:100%;\">" +
+                    "<tr bgcolor=\"#FAFAFA\">" +
+                    "<td  style = \"font-size:13px; width:50%;\" valign = \"top\"><strong> Requested by </strong></td>" +
+                    "<td  style = \"font-size:13px; width:50%;\" valign = \"top\"> " + PropertyDtls[0].FirstName + "</td>" +
+                    "</tr>" +
+                    "<tr>" +
+                    "<td bgcolor = \"#FFFFFF\" style = \"font-size:13px; width:50%;\" valign = \"top\"><strong>Contact no</strong></td>" +
+                    "<td bgcolor = \"#FFFFFF\" style = \"font-size:13px; width:50%;\" valign = \"top\"> " + PropertyDtls[0].Deskno + "</td>" +
+                    "</tr>" +
+                    "<tr  bgcolor=\"#FAFAFA\">" +
+                    "<td style = \"font-size:13px; width:50%;\" valign = \"top\"><strong>Email</strong></td>" +
+                    "<td style = \"font-size:13px; width:50%;\" valign = \"top\">" + PropertyDtls[0].ClientEmail + "</td>" +
+                    "</tr>" +
+                    "<tr  bgcolor=\"#FAFAFA\">" +
+                    "<td style = \"font-size:13px; width:50%;\" valign = \"top\"><strong>Internal Code</strong></td>" +
+                    "<td style = \"font-size:13px; width:50%;\" valign = \"top\">" + PropertyDtls[0].UserCode + "</td>" +
+                    "</tr>";
+                    if (All.IciciAPIFlag != true)
+                    {
+                        FooterDtls1 += "<tr  bgcolor=\"#FAFAFA\">" +
+                                  "<td style = \"font-size:13px; width:50%;\" valign = \"top\" align=\"center\"><strong><a href=\"" + APIUrl + "/?redirect=BookingConfirmation&B=" + PropertyDtls[0].BookingId + "&R=" + PropertyDtls[0].RowId + "/" + "Confirm" + "\" style=\"background-color:#1ea914;border:1px solid #1e5021;border-radius:4px;color:#ffffff;display:inline-block;font-family:sans-serif;font-size:13px;font-weight:bold;line-height:40px;text-align:center;text-decoration:none;width:200px;-webkit-text-size-adjust:none;mso-hide:all;\">Confirm Reservation</a></strong></td>" +
+                                  "<td style = \"font-size:13px; width:50%;\" valign = \"top\" align=\"center\"><strong><a href=\"" + APIUrl + "/?redirect=NoAvailability&B=" + PropertyDtls[0].BookingId + "&R=" + PropertyDtls[0].RowId + "/" + "SoldOut" + "\" style=\"background-color:#a91414;border:1px solid #1e5021;border-radius:4px;color:#ffffff;display:inline-block;font-family:sans-serif;font-size:13px;font-weight:bold;line-height:40px;text-align:center;text-decoration:none;width:200px;-webkit-text-size-adjust:none;mso-hide:all;\">Notify Sold Out</a></strong></td>" +
+                                  "</tr>";
+                    }
+
+                    FooterDtls1 += "</table>" +
+                        "</td>" +
+                        "</tr>" +
+                        "<tr>" +
+                        "<td style = \"font-size:13px; padding:20px 0 20px 0;\">   Powered by HummingBird   </td>" +
+                        "</tr>" +
+                        "</table>";
+                    
+                }
+                else
+                {
+
+                    FooterDtls1 +=
+                    "<tr>" +
+                    "<td style = \"padding:20px 0 20px 0;\">" +
+                    "<table cellpadding = \"10\" cellspacing = \"1\" border = \"0\" bgcolor = \"#cccccc\" style = \"width:100%;\">" +
+                    "<tr bgcolor=\"#FAFAFA\">" +
+                    "<td  style = \"font-size:13px; width:50%;\" valign = \"top\"><strong> Requested by </strong></td>" +
+                    "<td  style = \"font-size:13px; width:50%;\" valign = \"top\"> " + PropertyDtls[0].FirstName + "</td>" +
+                    "</tr>" +
+                    "<tr>" +
+                    "<td bgcolor = \"#FFFFFF\" style = \"font-size:13px; width:50%;\" valign = \"top\"><strong>Contact no</strong></td>" +
+                    "<td bgcolor = \"#FFFFFF\" style = \"font-size:13px; width:50%;\" valign = \"top\"> " + PropertyDtls[0].Deskno + "</td>" +
+                    "</tr>" +
+                    "<tr  bgcolor=\"#FAFAFA\">" +
+                    "<td style = \"font-size:13px; width:50%;\" valign = \"top\"><strong>Email</strong></td>" +
+                    "<td style = \"font-size:13px; width:50%;\" valign = \"top\">" + PropertyDtls[0].ClientEmail + "</td>" +
+                    "</tr>" +
+                    "<tr  bgcolor=\"#FAFAFA\">" +
+                    "<td style = \"font-size:13px; width:50%;\" valign = \"top\"><strong>Invoice to be sent to</strong></td>" +
+                    "<td style = \"font-size:13px; width:50%;\" valign = \"top\">" + PropertyDtls[0].HBAddress + "</td>" +
+                    "</tr>" +
+                    "<tr  bgcolor=\"#FAFAFA\">" +
+                    "<td style = \"font-size:13px; width:50%;\" valign = \"top\"><strong>Internal Code</strong></td>" +
+                    "<td style = \"font-size:13px; width:50%;\" valign = \"top\">" + PropertyDtls[0].UserCode + "</td>" +
+                    "</tr>";
+
+                    if (All.IciciAPIFlag != true)
+                    {
+
+                        FooterDtls1 += "<tr  bgcolor=\"#FAFAFA\">" +
+                        "<td style = \"font-size:13px; width:50%;\" valign = \"top\" align=\"center\"><strong><a href=\"" + APIUrl + "/?redirect=BookingConfirmation&B=" + PropertyDtls[0].BookingId + "&R=" + PropertyDtls[0].RowId + "/" + "Confirm" + "\" style=\"background-color:#1ea914;border:1px solid #1e5021;border-radius:4px;color:#ffffff;display:inline-block;font-family:sans-serif;font-size:13px;font-weight:bold;line-height:40px;text-align:center;text-decoration:none;width:200px;-webkit-text-size-adjust:none;mso-hide:all;\">Confirm Reservation</a></strong></td>" +
+                        "<td style = \"font-size:13px; width:50%;\" valign = \"top\" align=\"center\"><strong><a href=\"" + APIUrl + "/?redirect=NoAvailability&B=" + PropertyDtls[0].BookingId + "&R=" + PropertyDtls[0].RowId + "/" + "SoldOut" + "\" style=\"background-color:#a91414;border:1px solid #1e5021;border-radius:4px;color:#ffffff;display:inline-block;font-family:sans-serif;font-size:13px;font-weight:bold;line-height:40px;text-align:center;text-decoration:none;width:200px;-webkit-text-size-adjust:none;mso-hide:all;\">Notify Sold Out</a></strong></td>" +
+                        "</tr>";
+                    }
+
+                    FooterDtls1 += "</table>" +
+                        "</td>" +
+                        "</tr>" +
+                        "<tr>" +
+                        "<td style = \"font-size:13px; padding:20px 0 20px 0;\">   Powered by HummingBird   </td>" +
+                        "</tr>" +
+                        "</table>";
+                     
+                }
+
+                if (GuestDtls[0].TariffPayMentMode == "Bill to HB")
+                {
+
+                    try
+                    {
+                        string uriPath = "file:\\D:\\home\\site\\wwwroot\\App_Data\\Proof_of_Stay.pdf";
+                        string localPath = new Uri(uriPath).LocalPath;
+                        System.Net.Mail.Attachment att1 = new System.Net.Mail.Attachment(localPath);
+                        att1.Name = "Proof_of_Stay.pdf";
+                        message1.Attachments.Add(att1);
+                    }
+                    catch (Exception ex)
+                    {
+                        CreateLogFiles log = new CreateLogFiles();
+                        log.ErrorLog(" => Property Request Mail Confirm API => BookingId => "+ All.BookingId + " => PDF Attachment => Err Msg => " + ex.Message);
+                    }
+
+                }
+                message1.Body = Imagebody1 + GuestDetailsTable12 + ConfirmlinkDtls1 + TariffDtls1 + GstDtls + FooterDtls1;
+                message1.IsBodyHtml = true;
+                System.Net.Mail.SmtpClient smtp1 = new System.Net.Mail.SmtpClient();
+                smtp1.EnableSsl = true;
+                smtp1.Port = Port;
+                smtp1.Host = Host; smtp1.Credentials = new System.Net.NetworkCredential(CredentialsUserName, CredentialsPassword);
+                try
+                {
+                    smtp1.Send(message1);
+                    Response = "Property Request Mail Sent Successfully";
+                }
+                catch (Exception ex)
+                {
+                    CreateLogFiles log = new CreateLogFiles();
+                    log.ErrorLog(" => Property Request Mail Confirm API => BookingId =>" + All.BookingId + " => Err Msg =>" + ex.Message);
+                }
+
+                //Guest Mail Start
+                foreach (var item in GuestDtls01)
+                {
+                    if (item.GuestEmail != "")
+                    {
+                        System.Net.Mail.MailMessage message2 = new System.Net.Mail.MailMessage();
+
+                        message2.From = new System.Net.Mail.MailAddress(PropertyDtls[0].FromEmail, "", System.Text.Encoding.UTF8);
+                        message2.To.Add(new System.Net.Mail.MailAddress(item.GuestEmail));
+                        ////message2.Bcc.Add(new System.Net.Mail.MailAddress("hbconf17@gmail.com"));
+
+                        message2.CC.Add(new System.Net.Mail.MailAddress("nandhu@warblerit.com"));
+                        message2.Bcc.Add(new System.Net.Mail.MailAddress("prabakaran@warblerit.com"));
+
+                        message2.Subject = "Hotel Booking Request";
+                        string typeofpty2 = PropertyDtls[0].PropertyType;
+                        string Imagelocation2 = "";
+                        string Imagealt2 = "";
+
+
+                        if (typeofpty2 == "MGH")
+                        {
+                            Imagelocation2 = "https://endpoint887127.azureedge.net/img/new.png";
+                            Imagealt2 = "HummingBird";
+                            if (Imagelocation2 == "")
+                            {
+                                Imagelocation2 = "";
+                                Imagealt2 = "";
+                            }
+                        }
+                        else
+                        {
+                            Imagelocation2 = "https://endpoint887127.azureedge.net/img/new.png";
+                            Imagealt2 = "HummingBird";
+                        }
+                        string Date = DateTime.Now.ToString("dd/MMM/yyyy");
+
+                        string Imagebody2 =
+                                    " <table cellpadding=\"0\" cellspacing=\"0\" width=\"800px\" border=\"0\" align=\"center\" style=\" position: relative; font-family:  arial, helvetica; font-size: 12px;  border: #cccdcf solid 1px\">" +
+                                    "<tr><td>" +
+                                    "<table cellpadding=\"0\" cellspacing=\"0\" width=\"800px\" border=\"0\" align=\"center\">" +
+                                    "<tr> " +
+                                    "<th align=\"left\" width=\"50%\" style=\"padding: 10px 0px 10px 10px;\">" +
+                                    "<img src=" + Imagelocation2 + " width=\"150px\" height=\"52px\" alt=" + Imagealt2 + ">" + //Image Name Change
+                                    "</th>" +
+                                    "<td></tr><tr>" +
+                                    "<p style=\"margin:0px;color:orange;\">Reservation Date : <span style=\"color:black;\">" + PropertyDtls[0].BookedDt + "</span></p><br>" + //Date
+                                    "</td>" +
+                                     "</tr></table>";
+
+
+                        string SecondRow2 = " <table width=\"800px\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" align=\"left\" style=\" position: relative; font-family:  arial, helvetica; font-size: 12px;  border: #ffffff solid 1px\">" +
+                            " <tr><td>" +
+                            " <p style=\"margin:0px;\">Dear " + item.Title + "." + item.Name + ",</p><br>" +
+                            " <p style=\"margin:0px;\">Greetings from Hummingbird Travel & Stay Pvt Ltd !!!</p><br>" +
+                            " <p style=\"margin:0px;\">We have sent a booking request to" + " " + PropertyDtls[0].PropertyName + ". The booking confirmation will be sent to you as soon as we receive confirmation from the Hotel.</p><br>" +
+                            " </td></tr>" +
+                             "<tr>" +
+                            "<td  bgcolor = \"#FFFFFF\" style = \"font-size:13px; width:50%;\" valign = \"top\"><strong> Client Request/Booking No </strong></td>" +
+                            "<td  bgcolor = \"#FFFFFF\" style = \"font-size:13px; width:50%;\" valign = \"top\"> " + PropertyDtls[0].Client_RequestNo + "</td>" +
+                            "</tr>" +
+                            " </table>";
+
+                        string FooterDtls2 =
+                           " <table cellpadding=\"0\" cellspacing=\"0\" width=\"800px\" border=\"0\" align=\"center\" style=\"padding-top:10px;\">" +
+                           " <tr style=\"font-size:11px; font-weight:normal;\">" +
+                           " <th width=\"100%\" style=\"padding:5px 0px;margin-left:10px;\">" +
+                           " <p style=\"color:orange; text-align:left;font-weight:bold; margin:0px 0px 0px 5px; font-size:12px;\"> Thank you,</p>" +
+                           " <p style=\"color:orange;text-align:left; font-weight:bold; margin:0px 0px 0px 5px; font-size:12px;\"> Regards,</p>" +
+                            " <p style=\"color:orange; text-align:left;font-weight:bold; margin:0px 0px 0px 5px; font-size:12px;\">" + PropertyDtls[0].FirstName + "</p>" +
+                           "</th>" +
+                           " </tr></table><br>" +
+                           "<p style=\"margin-top:0px; margin-left:10px; font-size:11px;\">" + "Powered by HummingBird" + " </p>";
+                        message2.Body = Imagebody2 + SecondRow2 + FooterDtls2;
+                        message2.IsBodyHtml = true;
+                        System.Net.Mail.SmtpClient smtp2 = new System.Net.Mail.SmtpClient();
+                        smtp2.EnableSsl = true;
+                        smtp2.Port = Port;
+                        smtp2.Host = Host; smtp2.Credentials = new System.Net.NetworkCredential(CredentialsUserName, CredentialsPassword);
+                        try
+                        {
+                            smtp2.Send(message2);
+
+                        }
+                        catch (Exception ex)
+                        {
+                            CreateLogFiles log = new CreateLogFiles();
+                            log.ErrorLog(" => Property Request Mail Confirm API => Guest Intimation => BookingId =>" +  All.BookingId + " => Err Msg =>" + ex.Message);
+
+                        }
+
+                    }
+                }
+
+
+                return Json(new { Code = "200", EmailResponse = Response });
+            }
+            catch (Exception Ex)
+            {
+                log = new CreateLogFiles();
+                log.ErrorLog(" => Property Request Mail Confirm API => BookingId => " + All.BookingId + "=>" + Ex.Message);
+                return Json(new { Code = "400", EmailResponse = "Property Request Mail not Sent" });
+            }
+        }
+
+
+
+
+
+
+
+
+
+
+
+        }
 }
