@@ -167,7 +167,9 @@ namespace ConfirmationEMailWebApi.Models
         public string HBAddress { get; set; }
         public string ClientEmail { get; set; }
         public string FilePath { get; set; }
-    
+        public string MembershipID { get; set; }
+
+
 
     }
 
