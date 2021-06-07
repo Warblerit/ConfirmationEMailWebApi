@@ -58,7 +58,7 @@ namespace ConfirmationEMailWebApi.Controllers
                 ds = new DBconnection().ExecuteDataSet(command, "");
 
                 #region
-                if (All.GuestMailChk == false)
+                if (All.GuestMailChk == true)
                 {
                     System.Net.Mail.MailMessage message = new System.Net.Mail.MailMessage();
                     System.Net.Mail.SmtpClient smtp = new System.Net.Mail.SmtpClient();
@@ -1039,38 +1039,38 @@ namespace ConfirmationEMailWebApi.Controllers
                                             }
                                         }
                                     }
-                                    ////for (int i = 0; i < ds.Tables[3].Rows.Count; i++)
-                                    ////{
-                                    ////    if (ds.Tables[3].Rows[i][2].ToString() != "")
-                                    ////    {
-                                    ////        try
-                                    ////        {
-                                    ////            message1.CC.Add(new System.Net.Mail.MailAddress(ds.Tables[3].Rows[i][2].ToString()));
-                                    ////        }
-                                    ////        catch (Exception ex)
-                                    ////        {
-                                    ////            CreateLogFiles log = new CreateLogFiles();
-                                    ////            log.ErrorLog("=> Confirmation Email API => Bed Property Email => BookingId => " + All.BookingId + " => Invaild Email => Cc =>" + ds.Tables[3].Rows[i][2].ToString());
-                                    ////        }
-                                    ////    }
-                                    ////}
-                                    ////if (ds.Tables[2].Rows[0][4].ToString() != "")
-                                    ////{
-                                    ////    try
-                                    ////    {
-                                    ////        message1.Bcc.Add(ds.Tables[2].Rows[0][4].ToString());
-                                    ////    }
-                                    ////    catch (Exception ex)
-                                    ////    {
-                                    ////        CreateLogFiles log = new CreateLogFiles();
-                                    ////        log.ErrorLog("=> Confirmation Email API => Bed Property Email => BookingId => " + All.BookingId + " => Invaild Email => Bcc =>" + ds.Tables[2].Rows[0][4].ToString());
-                                    ////    }
-                                    ////}
-                                    ////message1.Bcc.Add(new System.Net.Mail.MailAddress("bookingbcc@staysimplyfied.com"));
-                                    ////message1.Bcc.Add(new System.Net.Mail.MailAddress("hbconf17@gmail.com"));
+                                    for (int i = 0; i < ds.Tables[3].Rows.Count; i++)
+                                    {
+                                        if (ds.Tables[3].Rows[i][2].ToString() != "")
+                                        {
+                                            try
+                                            {
+                                                message1.CC.Add(new System.Net.Mail.MailAddress(ds.Tables[3].Rows[i][2].ToString()));
+                                            }
+                                            catch (Exception ex)
+                                            {
+                                                CreateLogFiles log = new CreateLogFiles();
+                                                log.ErrorLog("=> Confirmation Email API => Bed Property Email => BookingId => " + All.BookingId + " => Invaild Email => Cc =>" + ds.Tables[3].Rows[i][2].ToString());
+                                            }
+                                        }
+                                    }
+                                    if (ds.Tables[2].Rows[0][4].ToString() != "")
+                                    {
+                                        try
+                                        {
+                                            message1.Bcc.Add(ds.Tables[2].Rows[0][4].ToString());
+                                        }
+                                        catch (Exception ex)
+                                        {
+                                            CreateLogFiles log = new CreateLogFiles();
+                                            log.ErrorLog("=> Confirmation Email API => Bed Property Email => BookingId => " + All.BookingId + " => Invaild Email => Bcc =>" + ds.Tables[2].Rows[0][4].ToString());
+                                        }
+                                    }
+                                    message1.Bcc.Add(new System.Net.Mail.MailAddress("bookingbcc@staysimplyfied.com"));
+                                    message1.Bcc.Add(new System.Net.Mail.MailAddress("hbconf17@gmail.com"));
 
                                 }
-                                message1.Bcc.Add(new System.Net.Mail.MailAddress("prabakaran@warblerit.com"));
+                                //// message1.Bcc.Add(new System.Net.Mail.MailAddress("prabakaran@warblerit.com"));
 
                                 message1.Subject = "Booking Confirmation - " + ds.Tables[2].Rows[0][2].ToString();
 
@@ -1770,41 +1770,41 @@ namespace ConfirmationEMailWebApi.Controllers
                                         }
                                     }
                                 }
-                                ////for (int i = 0; i < ds.Tables[3].Rows.Count; i++)
-                                ////{
-                                ////    if (ds.Tables[3].Rows[i][2].ToString() != "")
-                                ////    {
-                                ////        try
-                                ////        {
-                                ////            message1.CC.Add(new System.Net.Mail.MailAddress(ds.Tables[3].Rows[i][2].ToString()));
-                                ////        }
-                                ////        catch (Exception ex)
-                                ////        {
-                                ////            CreateLogFiles log = new CreateLogFiles();
-                                ////            log.ErrorLog("=> Confirmation Email API => Room Level Confirmation Property Mail => Cc => BookingId => " + All.BookingId + " => Invalid Email => " + ds.Tables[3].Rows[i][2].ToString());
-                                ////        }
-                                ////    }
-                                ////}
-                                ////if (ds.Tables[2].Rows[0][4].ToString() != "")
-                                ////{
-                                ////    try
-                                ////    {
-                                ////        message1.Bcc.Add(new System.Net.Mail.MailAddress(ds.Tables[2].Rows[0][4].ToString()));
-                                ////    }
-                                ////    catch (Exception ex)
-                                ////    {
-                                ////        CreateLogFiles log = new CreateLogFiles();
-                                ////        log.ErrorLog("=> Confirmation Email API => Room Level Confirmation Property Mail => Bcc => BookingId => " + All.BookingId + " => Invalid Email => " + ds.Tables[2].Rows[0][4].ToString());
-                                ////    }
-                                ////}
+                                for (int i = 0; i < ds.Tables[3].Rows.Count; i++)
+                                {
+                                    if (ds.Tables[3].Rows[i][2].ToString() != "")
+                                    {
+                                        try
+                                        {
+                                            message1.CC.Add(new System.Net.Mail.MailAddress(ds.Tables[3].Rows[i][2].ToString()));
+                                        }
+                                        catch (Exception ex)
+                                        {
+                                            CreateLogFiles log = new CreateLogFiles();
+                                            log.ErrorLog("=> Confirmation Email API => Room Level Confirmation Property Mail => Cc => BookingId => " + All.BookingId + " => Invalid Email => " + ds.Tables[3].Rows[i][2].ToString());
+                                        }
+                                    }
+                                }
+                                if (ds.Tables[2].Rows[0][4].ToString() != "")
+                                {
+                                    try
+                                    {
+                                        message1.Bcc.Add(new System.Net.Mail.MailAddress(ds.Tables[2].Rows[0][4].ToString()));
+                                    }
+                                    catch (Exception ex)
+                                    {
+                                        CreateLogFiles log = new CreateLogFiles();
+                                        log.ErrorLog("=> Confirmation Email API => Room Level Confirmation Property Mail => Bcc => BookingId => " + All.BookingId + " => Invalid Email => " + ds.Tables[2].Rows[0][4].ToString());
+                                    }
+                                }
 
-                                ////if (ds.Tables[10].Rows[0][1].ToString() != "stay@hummingbirdindia.com")
-                                ////{
-                                ////    message1.Bcc.Add(new System.Net.Mail.MailAddress("stay@hummingbirdindia.com"));
-                                ////}
-                                ////message1.Bcc.Add(new System.Net.Mail.MailAddress("hbconf17@gmail.com"));
+                                if (ds.Tables[10].Rows[0][1].ToString() != "stay@hummingbirdindia.com")
+                                {
+                                    message1.Bcc.Add(new System.Net.Mail.MailAddress("stay@hummingbirdindia.com"));
+                                }
+                                message1.Bcc.Add(new System.Net.Mail.MailAddress("hbconf17@gmail.com"));
                             }
-                            message1.Bcc.Add(new System.Net.Mail.MailAddress("prabakaran@warblerit.com"));
+                            ////message1.Bcc.Add(new System.Net.Mail.MailAddress("prabakaran@warblerit.com"));
 
                             message1.Subject = "Booking Confirmation - " + ds.Tables[2].Rows[0][2].ToString();
 
@@ -2511,7 +2511,7 @@ namespace ConfirmationEMailWebApi.Controllers
                 #endregion
 
                 #region
-                if (All.SmsChk == false)
+                if (All.SmsChk == true)
                 {
                     string PaymentMode = "";
                     string Maplink = "";
@@ -2715,7 +2715,7 @@ namespace ConfirmationEMailWebApi.Controllers
                 }
 
 
-                if (All.ResendFlag != true && ds.Tables[4].Rows[0][8].ToString() == "ExP" && ds.Tables[0].Rows[0][5].ToString() == "Bill to Company (BTC)")
+                if (All.ResendFlag != true && (ds.Tables[4].Rows[0][8].ToString() == "ExP" || ds.Tables[4].Rows[0][8].ToString() == "CPP") && ds.Tables[0].Rows[0][5].ToString() == "Bill to Company (BTC)")
                 {
                     ZohoObj ZohoObjData = new ZohoObj();
                     ZohoObjData.BookingId = All.BookingId;
@@ -9248,27 +9248,27 @@ namespace ConfirmationEMailWebApi.Controllers
                 var PtyMail = PropertyMail.Split(',');
                 int cnt = PtyMail.Length;
 
-                ////for (int i = 0; i < cnt; i++)
-                ////{
-                ////    if (PtyMail[i].ToString() != "")
-                ////    {
-                ////        try
-                ////        {
-                ////            message1.To.Add(new System.Net.Mail.MailAddress(PtyMail[i].ToString()));
-                ////        }
-                ////        catch (Exception ex)
-                ////        {
-                ////            CreateLogFiles log = new CreateLogFiles();
-                ////            log.ErrorLog(" => property Request =>  Property Mail => To => Invalid Email => " + PtyMail[i].ToString());
-                ////        }
-                ////    }
-                ////}
-                message1.To.Add(new System.Net.Mail.MailAddress("nandhu@warblerit.com"));
-                message1.Bcc.Add(new System.Net.Mail.MailAddress("prabakaran@warblerit.com"));
+                for (int i = 0; i < cnt; i++)
+                {
+                    if (PtyMail[i].ToString() != "")
+                    {
+                        try
+                        {
+                            message1.To.Add(new System.Net.Mail.MailAddress(PtyMail[i].ToString()));
+                        }
+                        catch (Exception ex)
+                        {
+                            CreateLogFiles log = new CreateLogFiles();
+                            log.ErrorLog(" => property Request =>  Property Mail => To => Invalid Email => " + PtyMail[i].ToString());
+                        }
+                    }
+                }
+                ////message1.To.Add(new System.Net.Mail.MailAddress("nandhu@warblerit.com"));
+                ////message1.Bcc.Add(new System.Net.Mail.MailAddress("prabakaran@warblerit.com"));
 
-                ////message1.Bcc.Add(new System.Net.Mail.MailAddress(PropertyDtls[0].FromEmail));
-                ////message1.Bcc.Add(new System.Net.Mail.MailAddress("stay@hummingbirdindia.com"));
-                ////message1.Bcc.Add(new System.Net.Mail.MailAddress("hbconf17@gmail.com"));
+                message1.Bcc.Add(new System.Net.Mail.MailAddress(PropertyDtls[0].FromEmail));
+                message1.Bcc.Add(new System.Net.Mail.MailAddress("stay@hummingbirdindia.com"));
+                message1.Bcc.Add(new System.Net.Mail.MailAddress("hbconf17@gmail.com"));
 
 
 
@@ -9774,99 +9774,99 @@ namespace ConfirmationEMailWebApi.Controllers
                     log.ErrorLog(" => Property Request Mail Confirm API => BookingId =>" + All.BookingId + " => Err Msg =>" + ex.Message);
                 }
 
-                //////Guest Mail Start
-                ////foreach (var item in GuestDtls01)
-                ////{
-                ////    if (item.GuestEmail != "")
-                ////    {
-                ////        System.Net.Mail.MailMessage message2 = new System.Net.Mail.MailMessage();
+                //Guest Mail Start
+                foreach (var item in GuestDtls01)
+                {
+                    if (item.GuestEmail != "")
+                    {
+                        System.Net.Mail.MailMessage message2 = new System.Net.Mail.MailMessage();
 
-                ////        message2.From = new System.Net.Mail.MailAddress(PropertyDtls[0].FromEmail, "", System.Text.Encoding.UTF8);
-                ////        message2.To.Add(new System.Net.Mail.MailAddress(item.GuestEmail));
-                ////        message2.Bcc.Add(new System.Net.Mail.MailAddress("hbconf17@gmail.com"));
+                        message2.From = new System.Net.Mail.MailAddress(PropertyDtls[0].FromEmail, "", System.Text.Encoding.UTF8);
+                        message2.To.Add(new System.Net.Mail.MailAddress(item.GuestEmail));
+                        message2.Bcc.Add(new System.Net.Mail.MailAddress("hbconf17@gmail.com"));
 
-                ////        ////message2.CC.Add(new System.Net.Mail.MailAddress("nandhu@warblerit.com"));
-                ////        ////message2.Bcc.Add(new System.Net.Mail.MailAddress("prabakaran@warblerit.com"));
+                        ////message2.CC.Add(new System.Net.Mail.MailAddress("nandhu@warblerit.com"));
+                        ////message2.Bcc.Add(new System.Net.Mail.MailAddress("prabakaran@warblerit.com"));
 
-                ////        message2.Subject = "Hotel Booking Request";
-                ////        string typeofpty2 = PropertyDtls[0].PropertyType;
-                ////        string Imagelocation2 = "";
-                ////        string Imagealt2 = "";
-
-
-                ////        if (typeofpty2 == "MGH")
-                ////        {
-                ////            Imagelocation2 = "https://endpoint887127.azureedge.net/img/new.png";
-                ////            Imagealt2 = "HummingBird";
-                ////            if (Imagelocation2 == "")
-                ////            {
-                ////                Imagelocation2 = "";
-                ////                Imagealt2 = "";
-                ////            }
-                ////        }
-                ////        else
-                ////        {
-                ////            Imagelocation2 = "https://endpoint887127.azureedge.net/img/new.png";
-                ////            Imagealt2 = "HummingBird";
-                ////        }
-                ////        string Date = DateTime.Now.ToString("dd/MMM/yyyy");
-
-                ////        string Imagebody2 =
-                ////                    " <table cellpadding=\"0\" cellspacing=\"0\" width=\"800px\" border=\"0\" align=\"center\" style=\" position: relative; font-family:  arial, helvetica; font-size: 12px;  border: #cccdcf solid 1px\">" +
-                ////                    "<tr><td>" +
-                ////                    "<table cellpadding=\"0\" cellspacing=\"0\" width=\"800px\" border=\"0\" align=\"center\">" +
-                ////                    "<tr> " +
-                ////                    "<th align=\"left\" width=\"50%\" style=\"padding: 10px 0px 10px 10px;\">" +
-                ////                    "<img src=" + Imagelocation2 + " width=\"150px\" height=\"52px\" alt=" + Imagealt2 + ">" + //Image Name Change
-                ////                    "</th>" +
-                ////                    "<td></tr><tr>" +
-                ////                    "<p style=\"margin:0px;color:orange;\">Reservation Date : <span style=\"color:black;\">" + PropertyDtls[0].BookedDt + "</span></p><br>" + //Date
-                ////                    "</td>" +
-                ////                     "</tr></table>";
+                        message2.Subject = "Hotel Booking Request";
+                        string typeofpty2 = PropertyDtls[0].PropertyType;
+                        string Imagelocation2 = "";
+                        string Imagealt2 = "";
 
 
-                ////        string SecondRow2 = " <table width=\"800px\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" align=\"left\" style=\" position: relative; font-family:  arial, helvetica; font-size: 12px;  border: #ffffff solid 1px\">" +
-                ////            " <tr><td>" +
-                ////            " <p style=\"margin:0px;\">Dear " + item.Title + "." + item.Name + ",</p><br>" +
-                ////            " <p style=\"margin:0px;\">Greetings from Hummingbird Travel & Stay Pvt Ltd !!!</p><br>" +
-                ////            " <p style=\"margin:0px;\">We have sent a booking request to" + " " + PropertyDtls[0].PropertyName + ". The booking confirmation will be sent to you as soon as we receive confirmation from the Hotel.</p><br>" +
-                ////            " </td></tr>" +
-                ////             "<tr>" +
-                ////            "<td  bgcolor = \"#FFFFFF\" style = \"font-size:13px; width:50%;\" valign = \"top\"><strong> Client Request/Booking No </strong></td>" +
-                ////            "<td  bgcolor = \"#FFFFFF\" style = \"font-size:13px; width:50%;\" valign = \"top\"> " + PropertyDtls[0].Client_RequestNo + "</td>" +
-                ////            "</tr>" +
-                ////            " </table>";
+                        if (typeofpty2 == "MGH")
+                        {
+                            Imagelocation2 = "https://endpoint887127.azureedge.net/img/new.png";
+                            Imagealt2 = "HummingBird";
+                            if (Imagelocation2 == "")
+                            {
+                                Imagelocation2 = "";
+                                Imagealt2 = "";
+                            }
+                        }
+                        else
+                        {
+                            Imagelocation2 = "https://endpoint887127.azureedge.net/img/new.png";
+                            Imagealt2 = "HummingBird";
+                        }
+                        string Date = DateTime.Now.ToString("dd/MMM/yyyy");
 
-                ////        string FooterDtls2 =
-                ////           " <table cellpadding=\"0\" cellspacing=\"0\" width=\"800px\" border=\"0\" align=\"center\" style=\"padding-top:10px;\">" +
-                ////           " <tr style=\"font-size:11px; font-weight:normal;\">" +
-                ////           " <th width=\"100%\" style=\"padding:5px 0px;margin-left:10px;\">" +
-                ////           " <p style=\"color:orange; text-align:left;font-weight:bold; margin:0px 0px 0px 5px; font-size:12px;\"> Thank you,</p>" +
-                ////           " <p style=\"color:orange;text-align:left; font-weight:bold; margin:0px 0px 0px 5px; font-size:12px;\"> Regards,</p>" +
-                ////            " <p style=\"color:orange; text-align:left;font-weight:bold; margin:0px 0px 0px 5px; font-size:12px;\">" + PropertyDtls[0].FirstName + "</p>" +
-                ////           "</th>" +
-                ////           " </tr></table><br>" +
-                ////           "<p style=\"margin-top:0px; margin-left:10px; font-size:11px;\">" + "Powered by HummingBird" + " </p>";
-                ////        message2.Body = Imagebody2 + SecondRow2 + FooterDtls2;
-                ////        message2.IsBodyHtml = true;
-                ////        System.Net.Mail.SmtpClient smtp2 = new System.Net.Mail.SmtpClient();
-                ////        smtp2.EnableSsl = true;
-                ////        smtp2.Port = Port;
-                ////        smtp2.Host = Host; smtp2.Credentials = new System.Net.NetworkCredential(CredentialsUserName, CredentialsPassword);
-                ////        try
-                ////        {
-                ////            smtp2.Send(message2);
+                        string Imagebody2 =
+                                    " <table cellpadding=\"0\" cellspacing=\"0\" width=\"800px\" border=\"0\" align=\"center\" style=\" position: relative; font-family:  arial, helvetica; font-size: 12px;  border: #cccdcf solid 1px\">" +
+                                    "<tr><td>" +
+                                    "<table cellpadding=\"0\" cellspacing=\"0\" width=\"800px\" border=\"0\" align=\"center\">" +
+                                    "<tr> " +
+                                    "<th align=\"left\" width=\"50%\" style=\"padding: 10px 0px 10px 10px;\">" +
+                                    "<img src=" + Imagelocation2 + " width=\"150px\" height=\"52px\" alt=" + Imagealt2 + ">" + //Image Name Change
+                                    "</th>" +
+                                    "<td></tr><tr>" +
+                                    "<p style=\"margin:0px;color:orange;\">Reservation Date : <span style=\"color:black;\">" + PropertyDtls[0].BookedDt + "</span></p><br>" + //Date
+                                    "</td>" +
+                                     "</tr></table>";
 
-                ////        }
-                ////        catch (Exception ex)
-                ////        {
-                ////            CreateLogFiles log = new CreateLogFiles();
-                ////            log.ErrorLog(" => Property Request Mail Confirm API => Guest Intimation => BookingId =>" +  All.BookingId + " => Err Msg =>" + ex.Message);
 
-                ////        }
+                        string SecondRow2 = " <table width=\"800px\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" align=\"left\" style=\" position: relative; font-family:  arial, helvetica; font-size: 12px;  border: #ffffff solid 1px\">" +
+                            " <tr><td>" +
+                            " <p style=\"margin:0px;\">Dear " + item.Title + "." + item.Name + ",</p><br>" +
+                            " <p style=\"margin:0px;\">Greetings from Hummingbird Travel & Stay Pvt Ltd !!!</p><br>" +
+                            " <p style=\"margin:0px;\">We have sent a booking request to" + " " + PropertyDtls[0].PropertyName + ". The booking confirmation will be sent to you as soon as we receive confirmation from the Hotel.</p><br>" +
+                            " </td></tr>" +
+                             "<tr>" +
+                            "<td  bgcolor = \"#FFFFFF\" style = \"font-size:13px; width:50%;\" valign = \"top\"><strong> Client Request/Booking No </strong></td>" +
+                            "<td  bgcolor = \"#FFFFFF\" style = \"font-size:13px; width:50%;\" valign = \"top\"> " + PropertyDtls[0].Client_RequestNo + "</td>" +
+                            "</tr>" +
+                            " </table>";
 
-                ////    }
-                ////}
+                        string FooterDtls2 =
+                           " <table cellpadding=\"0\" cellspacing=\"0\" width=\"800px\" border=\"0\" align=\"center\" style=\"padding-top:10px;\">" +
+                           " <tr style=\"font-size:11px; font-weight:normal;\">" +
+                           " <th width=\"100%\" style=\"padding:5px 0px;margin-left:10px;\">" +
+                           " <p style=\"color:orange; text-align:left;font-weight:bold; margin:0px 0px 0px 5px; font-size:12px;\"> Thank you,</p>" +
+                           " <p style=\"color:orange;text-align:left; font-weight:bold; margin:0px 0px 0px 5px; font-size:12px;\"> Regards,</p>" +
+                            " <p style=\"color:orange; text-align:left;font-weight:bold; margin:0px 0px 0px 5px; font-size:12px;\">" + PropertyDtls[0].FirstName + "</p>" +
+                           "</th>" +
+                           " </tr></table><br>" +
+                           "<p style=\"margin-top:0px; margin-left:10px; font-size:11px;\">" + "Powered by HummingBird" + " </p>";
+                        message2.Body = Imagebody2 + SecondRow2 + FooterDtls2;
+                        message2.IsBodyHtml = true;
+                        System.Net.Mail.SmtpClient smtp2 = new System.Net.Mail.SmtpClient();
+                        smtp2.EnableSsl = true;
+                        smtp2.Port = Port;
+                        smtp2.Host = Host; smtp2.Credentials = new System.Net.NetworkCredential(CredentialsUserName, CredentialsPassword);
+                        try
+                        {
+                            smtp2.Send(message2);
+
+                        }
+                        catch (Exception ex)
+                        {
+                            CreateLogFiles log = new CreateLogFiles();
+                            log.ErrorLog(" => Property Request Mail Confirm API => Guest Intimation => BookingId =>" + All.BookingId + " => Err Msg =>" + ex.Message);
+
+                        }
+
+                    }
+                }
 
 
                 return Json(new { Code = "200", EmailResponse = Response });
@@ -9880,8 +9880,509 @@ namespace ConfirmationEMailWebApi.Controllers
         }
 
 
+        [HttpPost]
+        [Route("PoCreate")]
+        public string PoCreate()
+        {
+            string Responses = ""; 
+            string body = "";
+
+            SqlCommand command9 = new SqlCommand();
+            DataSet ds9 = new DataSet();
+            command9.CommandText = "SP_ZohoContactVendor_PO_Help";
+            command9.CommandType = CommandType.StoredProcedure;
+            command9.Parameters.Add("@Action", SqlDbType.NVarChar).Value = "CPPPOCreation";
+            command9.Parameters.Add("@Str1", SqlDbType.NVarChar).Value = "";
+            command9.Parameters.Add("@Id", SqlDbType.BigInt).Value = 0;
+            ds9 = new DBconnection().ExecuteDataSet(command9, "");
+            var myDatass = ds9.Tables[0].AsEnumerable().Select(r => new ConfirmationEMail
+            {
+                BookingId = r.Field<long>("id"),
+            }).ToList();
+
+            int Tbl12RCount = myDatass.Count;
+            try
+            {
+                for (var g = 0; g < Tbl12RCount; g++)
+                {
+                    SqlCommand command1 = new SqlCommand();
+                    DataSet ds1 = new DataSet();
+                    command1.CommandText = "SP_Zoho_PO_Help_CPP";
+                    command1.CommandType = CommandType.StoredProcedure;
+                    command1.Parameters.Add("@Action", SqlDbType.NVarChar).Value = "GetData";
+                    command1.Parameters.Add("@Id", SqlDbType.BigInt).Value = myDatass[g].BookingId;
+                    command1.Parameters.Add("@Str1", SqlDbType.NVarChar).Value = "";
+                    ds1 = new DBconnection().ExecuteDataSet(command1, "");
+                    string ClientId = ds1.Tables[0].Rows[0][0].ToString();
+                    string ClientSecret = ds1.Tables[0].Rows[0][1].ToString();
+                    string AccessToken = ds1.Tables[0].Rows[0][2].ToString();
+                    string OrganizationId = ds1.Tables[0].Rows[0][3].ToString();
 
 
+                var myData = ds1.Tables[1].AsEnumerable().Select(r => new PoData
+                {
+
+                    // item_id = r.Field<string>("ItemId"),
+                    item_id = "",
+                    rate = r.Field<decimal>("Tariff"),
+                    quantity = r.Field<int>("NoOfDays"),
+                    tax_id = r.Field<string>("TaxId"),
+                    vendor_id = r.Field<string>("VendorId"),
+                    purchaseorder_number = r.Field<string>("PONo"),
+                    reference_number = r.Field<string>("BookingCode"),
+                    date = r.Field<string>("BookedDt"),
+                    delivery_date = r.Field<string>("CheckInDate"),
+                    payment_terms = r.Field<int>("PaymentTerms"),
+                    payment_terms_label = r.Field<string>("PaymentTermsLabel"),
+                    is_inclusive_tax = r.Field<bool>("InclusiveTax"),
+                    notes = r.Field<string>("Notes"),
+                    terms = r.Field<string>("Terms"),
+                    Zoho_Branch_Id = r.Field<string>("Zoho_Branch_Id"),
+                    RoomCaptured = r.Field<int>("RoomCaptured"),
+                }).ToList();
+
+                    if (myData[0].vendor_id != "0")
+                    {
+                        var line_items = new List<LineItemDt>();
+                        int Tbl1RCount = myData.Count;
+
+                        string ItemURL = "https://books.zoho.in/api/v3/items?organization_id=" + OrganizationId;
+
+                        for (var k = 0; k < Tbl1RCount; k++)
+                        {
+
+                            ServicePointManager.Expect100Continue = true;
+                            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls
+                                   | SecurityProtocolType.Tls11
+                                   | SecurityProtocolType.Tls12
+                                   | SecurityProtocolType.Ssl3;
+                            WebRequest IwebReq = WebRequest.Create(ItemURL);
+                            IwebReq.Proxy = null;
+                            HttpWebRequest IhttpReq = (HttpWebRequest)IwebReq;
+                            IhttpReq.ContentType = "application/json";
+                            IhttpReq.Method = "POST";
+                            IhttpReq.Headers.Add("Authorization", "Zoho-oauthtoken " + AccessToken);
+                            IhttpReq.ProtocolVersion = HttpVersion.Version11;
+                            IhttpReq.Credentials = CredentialCache.DefaultCredentials;
+                            Stream IreqStream = IhttpReq.GetRequestStream();
+                            StreamWriter IstreamWrite = new StreamWriter(IreqStream);
+
+                            var Itembody = new JavaScriptSerializer().Serialize(new
+                            {
+                                name = "Tariff-" + myDatass[g].BookingId + "-" + myData[k].RoomCaptured,
+                                purchase_rate = 1,
+                                hsn_or_sac = "996311",
+                                is_taxable = true,
+                                purchase_account_name = "Cost of Goods Sold",
+                                item_type = "purchases",
+                                product_type = "service"
+
+                            });
+
+                            IstreamWrite.Write(Itembody);
+                            IstreamWrite.Close();
+                            HttpWebResponse Iwrres = (HttpWebResponse)IhttpReq.GetResponse();
+                            StreamReader IstrmReader = new StreamReader(Iwrres.GetResponseStream(), Encoding.Default, true);
+                            string IResobj1 = IstrmReader.ReadToEnd();
+                            JavaScriptSerializer IjsonSerializer = new JavaScriptSerializer();
+                            ItemRootRes ItemResponse = IjsonSerializer.Deserialize<ItemRootRes>(IResobj1);
+
+                            if (ItemResponse.code == 0)
+                            {
+                                myData[k].item_id = ItemResponse.item.item_id;
+                            }
+                            else
+                            {
+                                CreateLogFiles log = new CreateLogFiles();
+                                log.ErrorLog(" => Confirmation Email API => PO Insert => Item Id Create => Err msg => Booking Id -" + myDatass[g].BookingId + " => " + ItemResponse.message);
+                            }
+
+                        }
+
+                        for (var j = 0; j < Tbl1RCount; j++)
+                        {
+
+                            line_items.Add(new LineItemDt
+                            {
+                                item_id = myData[j].item_id,
+                                rate = myData[j].rate,
+                                quantity = myData[j].quantity,
+                                tax_id = myData[j].tax_id,
+                                item_order = myData[j].RoomCaptured
+                            });
+                        }
+
+
+                        body = new JavaScriptSerializer().Serialize(new
+                        {
+                            vendor_id = myData[0].vendor_id,
+                            purchaseorder_number = myData[0].purchaseorder_number,
+                            reference_number = myData[0].reference_number,
+                            date = myData[0].date,
+                            delivery_date = myData[0].delivery_date,
+                            payment_terms = myData[0].payment_terms,
+                            payment_terms_label = myData[0].payment_terms_label,
+                            is_inclusive_tax = myData[0].is_inclusive_tax,
+                            notes = myData[0].notes,
+                            terms = myData[0].terms,
+                            branch_id = myData[0].Zoho_Branch_Id,
+                            line_items
+
+                        });
+
+
+                        string URL = "https://books.zoho.in/api/v3/purchaseorders?organization_id=" + OrganizationId;
+
+                        ServicePointManager.Expect100Continue = true;
+                        ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls
+                               | SecurityProtocolType.Tls11
+                               | SecurityProtocolType.Tls12
+                               | SecurityProtocolType.Ssl3;
+                        WebRequest webReq = WebRequest.Create(URL);
+                        webReq.Proxy = null;
+                        HttpWebRequest httpReq = (HttpWebRequest)webReq;
+                        httpReq.ContentType = "application/json";
+                        httpReq.Method = "POST";
+                        httpReq.Headers.Add("Authorization", "Zoho-oauthtoken " + AccessToken);
+                        httpReq.ProtocolVersion = HttpVersion.Version11;
+                        httpReq.Credentials = CredentialCache.DefaultCredentials;
+                        Stream reqStream = httpReq.GetRequestStream();
+                        StreamWriter streamWrite = new StreamWriter(reqStream);
+
+                        streamWrite.Write(body);
+                        streamWrite.Close();
+                        HttpWebResponse wrres = (HttpWebResponse)httpReq.GetResponse();
+                        StreamReader strmReader = new StreamReader(wrres.GetResponseStream(), Encoding.Default, true);
+                        string Resobj1 = strmReader.ReadToEnd();
+                        JavaScriptSerializer jsonSerializer = new JavaScriptSerializer();
+                        PORootRes POResponse = jsonSerializer.Deserialize<PORootRes>(Resobj1);
+
+                        if (POResponse.code == 0)
+                        {
+
+                            SqlCommand command2 = new SqlCommand();
+                            DataSet ds2 = new DataSet();
+                            command2.CommandText = "SP_Zoho_PO_Help";
+                            command2.CommandType = CommandType.StoredProcedure;
+                            command2.Parameters.Add("@Action", SqlDbType.NVarChar).Value = "POUpdate";
+                            command2.Parameters.Add("@Id", SqlDbType.BigInt).Value = myDatass[g].BookingId;
+                            command2.Parameters.Add("@Str1", SqlDbType.NVarChar).Value = POResponse.purchaseorder.purchaseorder_id;
+                            ds2 = new DBconnection().ExecuteDataSet(command2, "");
+
+                            foreach (var item in POResponse.purchaseorder.line_items)
+                            {
+
+                                SqlCommand command3 = new SqlCommand();
+                                DataSet ds3 = new DataSet();
+                                command3.CommandText = "SP_Zoho_PO_LineItem_Update";
+                                command3.CommandType = CommandType.StoredProcedure;
+                                command3.Parameters.Add("@Action", SqlDbType.NVarChar).Value = "Update";
+                                command3.Parameters.Add("@Id", SqlDbType.BigInt).Value = myDatass[g].BookingId;
+                                command3.Parameters.Add("@OrderId", SqlDbType.Int).Value = item.item_order;
+                                command3.Parameters.Add("@Str1", SqlDbType.NVarChar).Value = item.line_item_id;
+                                command3.Parameters.Add("@Str2", SqlDbType.NVarChar).Value = item.item_id;
+                                ds3 = new DBconnection().ExecuteDataSet(command3, "");
+
+                            }
+
+
+                        }
+                        else
+                        {
+
+                            CreateLogFiles log = new CreateLogFiles();
+                            log.ErrorLog(" => Confirmation Email API => PO Insert => Err msg => Booking Id -" + myDatass[g].BookingId + " => " + POResponse.message);
+                        }
+                    }
+                    else
+                    {
+                        SqlCommand command = new SqlCommand();
+                        DataSet ds = new DataSet();
+                        command.CommandText = "SP_ZohoContactVendor_PO_Help";
+                        command.CommandType = CommandType.StoredProcedure;
+                        command.Parameters.Add("@Action", SqlDbType.NVarChar).Value = "GetHotelDetails";
+                        command.Parameters.Add("@Str1", SqlDbType.NVarChar).Value = "";
+                        command.Parameters.Add("@Id", SqlDbType.BigInt).Value = myDatass[g].BookingId;
+                        ds = new DBconnection().ExecuteDataSet(command, "");
+                        var myDatas = ds.Tables[0].AsEnumerable().Select(r => new ZohoPropertyDtls
+                        {
+
+                            PropertyName = r.Field<string>("PropertyName"),
+                            LegalName = r.Field<string>("LegalName"),
+                            LegalAddress = r.Field<string>("LegalAddress"),
+                            City = r.Field<string>("City"),
+                            State = r.Field<string>("State"),
+                            Postal = r.Field<string>("Postal"),
+                            CreditPeriod = r.Field<int>("CreditPeriod"),
+                            GSTNumber = r.Field<string>("GSTNumber"),
+                            PropertyId = r.Field<Int64>("PropertyId")
+                        }).ToList();
+                        //Zoho Vendor Creation Insert Start
+
+                        try
+                        {
+                            string FinalAPIUrl = "";
+                            FinalAPIUrl = System.Configuration.ConfigurationManager.AppSettings["UrlShortner"] + "/API/zohocontact/zohohotelcontactcreate";
+
+                            WebRequest webReq1 = WebRequest.Create("https://warsoftapi.warsoft.in/API/zohocontact/zohohotelcontactcreate");
+                            //WebRequest webReq1 = WebRequest.Create("http://localhost:1520/API/zohocontact/zohohotelcontactcreate");
+                            //WebRequest webReq1 = WebRequest.Create("http://zohoapi.staysimplyfied.com/API/zohocontact/zohohotelcontactcreate");
+                            webReq1.Proxy = null;
+                            HttpWebRequest httpReq1 = (HttpWebRequest)webReq1;
+                            httpReq1.ContentType = "application/json";
+                            httpReq1.Method = "POST";
+                            httpReq1.ProtocolVersion = HttpVersion.Version11;
+                            httpReq1.Credentials = CredentialCache.DefaultCredentials;
+                            Stream reqStream1 = httpReq1.GetRequestStream();
+                            StreamWriter streamWrite1 = new StreamWriter(reqStream1);
+                            var billing_address = new
+                            {
+                                attention = "",
+                                address = myDatas[0].LegalAddress,
+                                street2 = "",
+                                state_code = "",
+                                city = myDatas[0].City,
+                                state = myDatas[0].State,
+                                zip = myDatas[0].Postal,
+                                country = "India",
+                                fax = "",
+                                phone = ""
+                            };
+                            var shipping_address = new
+                            {
+                                attention = "",
+                                address = myDatas[0].LegalAddress,
+                                street2 = "",
+                                state_code = "",
+                                city = myDatas[0].City,
+                                state = myDatas[0].State,
+                                zip = myDatas[0].Postal,
+                                country = "India",
+                                fax = "",
+                                phone = ""
+                            };
+                            var custom_fields = new
+                            {
+
+                            };
+
+
+
+                            string body1 = new JavaScriptSerializer().Serialize(new
+                            {
+
+                                contact_name = myDatas[0].PropertyName,
+                                place_of_contact = "", //Source of Display
+                                currency_id = "", //currency Code
+                                company_name = myDatas[0].LegalName, //Legal Name
+                                website = "",
+                                contact_type = "vendor",
+                                customer_sub_type = "",
+                                is_portal_enabled = true,
+                                custom_fields = custom_fields,
+                                billing_address = billing_address,
+                                shipping_address = shipping_address,
+                                payment_terms = myDatas[0].CreditPeriod,
+                                payment_terms_label = "Net" + " " + myDatas[0].CreditPeriod,
+                                notes = "Hotel",
+                                gst_no = myDatas[0].GSTNumber,
+                                gst_treatment = "",
+                                PropertyId = myDatas[0].PropertyId
+
+                            });
+                            streamWrite1.Write(body1);
+                            streamWrite1.Close();
+                            HttpWebResponse wrres = (HttpWebResponse)httpReq1.GetResponse();
+                            StreamReader strmReader = new StreamReader(wrres.GetResponseStream(), Encoding.Default, true);
+                            string Resobj2 = strmReader.ReadToEnd();
+                            JavaScriptSerializer jsonSerializer = new JavaScriptSerializer();
+                            RootObjNew Response = jsonSerializer.Deserialize<RootObjNew>(Resobj2);
+                            //Zoho Vendor Creation Insert End
+
+
+                            //Get VendorId
+                            SqlCommand commands = new SqlCommand();
+                            DataSet dss = new DataSet();
+                            commands.CommandText = "SP_ZohoContactVendor_PO_Help";
+                            commands.CommandType = CommandType.StoredProcedure;
+                            commands.Parameters.Add("@Action", SqlDbType.NVarChar).Value = "GetVendorId";
+                            commands.Parameters.Add("@Str1", SqlDbType.NVarChar).Value = "";
+                            commands.Parameters.Add("@Id", SqlDbType.BigInt).Value = myDatass[g].BookingId;
+                            dss = new DBconnection().ExecuteDataSet(commands, "");
+                            string Vendor_Id = dss.Tables[0].Rows[0][0].ToString();
+
+
+                            var line_items = new List<LineItemDt>();
+                            int Tbl1RCount = myData.Count;
+
+                            string ItemURL = "https://books.zoho.in/api/v3/items?organization_id=" + OrganizationId;
+
+                            for (var k = 0; k < Tbl1RCount; k++)
+                            {
+
+                                ServicePointManager.Expect100Continue = true;
+                                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls
+                                       | SecurityProtocolType.Tls11
+                                       | SecurityProtocolType.Tls12
+                                       | SecurityProtocolType.Ssl3;
+                                WebRequest IwebReq = WebRequest.Create(ItemURL);
+                                IwebReq.Proxy = null;
+                                HttpWebRequest IhttpReq = (HttpWebRequest)IwebReq;
+                                IhttpReq.ContentType = "application/json";
+                                IhttpReq.Method = "POST";
+                                IhttpReq.Headers.Add("Authorization", "Zoho-oauthtoken " + AccessToken);
+                                IhttpReq.ProtocolVersion = HttpVersion.Version11;
+                                IhttpReq.Credentials = CredentialCache.DefaultCredentials;
+                                Stream IreqStream = IhttpReq.GetRequestStream();
+                                StreamWriter IstreamWrite = new StreamWriter(IreqStream);
+
+                                var Itembody = new JavaScriptSerializer().Serialize(new
+                                {
+                                    name = "Tariff-" + myDatass[g].BookingId + "-" + myData[k].RoomCaptured,
+                                    purchase_rate = 1,
+                                    hsn_or_sac = "996311",
+                                    is_taxable = true,
+                                    purchase_account_name = "Cost of Goods Sold",
+                                    item_type = "purchases",
+                                    product_type = "service"
+
+                                });
+
+                                IstreamWrite.Write(Itembody);
+                                IstreamWrite.Close();
+                                HttpWebResponse Iwrres = (HttpWebResponse)IhttpReq.GetResponse();
+                                StreamReader IstrmReader = new StreamReader(Iwrres.GetResponseStream(), Encoding.Default, true);
+                                string IResobj1 = IstrmReader.ReadToEnd();
+                                JavaScriptSerializer IjsonSerializer = new JavaScriptSerializer();
+                                ItemRootRes ItemResponse = IjsonSerializer.Deserialize<ItemRootRes>(IResobj1);
+
+                                if (ItemResponse.code == 0)
+                                {
+                                    myData[k].item_id = ItemResponse.item.item_id;
+                                }
+                                else
+                                {
+                                    CreateLogFiles log = new CreateLogFiles();
+                                    log.ErrorLog(" => Confirmation Email API => PO Insert => Item Id Create => Err msg => Booking Id -" + myDatass[g].BookingId + " => " + ItemResponse.message);
+                                }
+
+                            }
+
+                            for (var j = 0; j < Tbl1RCount; j++)
+                            {
+                                line_items.Add(new LineItemDt
+                                {
+                                    item_id = myData[j].item_id,
+                                    rate = myData[j].rate,
+                                    quantity = myData[j].quantity,
+                                    tax_id = myData[j].tax_id,
+                                    item_order = myData[j].RoomCaptured
+                                });
+                            }
+
+                            string body3 = new JavaScriptSerializer().Serialize(new
+                            {
+                                vendor_id = Vendor_Id,
+                                purchaseorder_number = myData[0].purchaseorder_number,
+                                reference_number = myData[0].reference_number,
+                                date = myData[0].date,
+                                delivery_date = myData[0].delivery_date,
+                                payment_terms = myData[0].payment_terms,
+                                payment_terms_label = myData[0].payment_terms_label,
+                                is_inclusive_tax = myData[0].is_inclusive_tax,
+                                notes = myData[0].notes,
+                                terms = myData[0].terms,
+                                branch_id = myData[0].Zoho_Branch_Id,
+                                line_items
+
+                            });
+
+                            string URL1 = "https://books.zoho.in/api/v3/purchaseorders?organization_id=" + OrganizationId;
+
+                            ServicePointManager.Expect100Continue = true;
+                            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls
+                                   | SecurityProtocolType.Tls11
+                                   | SecurityProtocolType.Tls12
+                                   | SecurityProtocolType.Ssl3;
+                            WebRequest webReq3 = WebRequest.Create(URL1);
+                            webReq3.Proxy = null;
+                            HttpWebRequest httpReq3 = (HttpWebRequest)webReq3;
+                            httpReq3.ContentType = "application/json";
+                            httpReq3.Method = "POST";
+                            httpReq3.Headers.Add("Authorization", "Zoho-oauthtoken " + AccessToken);
+                            httpReq3.ProtocolVersion = HttpVersion.Version11;
+                            httpReq3.Credentials = CredentialCache.DefaultCredentials;
+                            Stream reqStream3 = httpReq3.GetRequestStream();
+                            StreamWriter streamWrite3 = new StreamWriter(reqStream3);
+
+                            streamWrite3.Write(body3);
+                            streamWrite3.Close();
+                            HttpWebResponse wrres3 = (HttpWebResponse)httpReq3.GetResponse();
+                            StreamReader strmReader3 = new StreamReader(wrres3.GetResponseStream(), Encoding.Default, true);
+                            string Resobj3 = strmReader3.ReadToEnd();
+                            JavaScriptSerializer jsonSerializer3 = new JavaScriptSerializer();
+                            PORootRes POResponses = jsonSerializer3.Deserialize<PORootRes>(Resobj3);
+
+                            if (POResponses.code == 0)
+                            {
+
+                                SqlCommand command2 = new SqlCommand();
+                                DataSet ds2 = new DataSet();
+                                command2.CommandText = "SP_Zoho_PO_Help";
+                                command2.CommandType = CommandType.StoredProcedure;
+                                command2.Parameters.Add("@Action", SqlDbType.NVarChar).Value = "POUpdate";
+                                command2.Parameters.Add("@Id", SqlDbType.BigInt).Value = myDatass[g].BookingId;
+                                command2.Parameters.Add("@Str1", SqlDbType.NVarChar).Value = POResponses.purchaseorder.purchaseorder_id;
+                                ds2 = new DBconnection().ExecuteDataSet(command2, "");
+
+                                foreach (var item in POResponses.purchaseorder.line_items)
+                                {
+
+                                    SqlCommand command3 = new SqlCommand();
+                                    DataSet ds3 = new DataSet();
+                                    command3.CommandText = "SP_Zoho_PO_LineItem_Update";
+                                    command3.CommandType = CommandType.StoredProcedure;
+                                    command3.Parameters.Add("@Action", SqlDbType.NVarChar).Value = "Update";
+                                    command3.Parameters.Add("@Id", SqlDbType.BigInt).Value = myDatass[g].BookingId;
+                                    command3.Parameters.Add("@OrderId", SqlDbType.Int).Value = item.item_order;
+                                    command3.Parameters.Add("@Str1", SqlDbType.NVarChar).Value = item.line_item_id;
+                                    command3.Parameters.Add("@Str2", SqlDbType.NVarChar).Value = item.item_id;
+                                    ds3 = new DBconnection().ExecuteDataSet(command3, "");
+
+                                }
+
+
+                            }
+                            else
+                            {
+
+                                CreateLogFiles log = new CreateLogFiles();
+                                log.ErrorLog(" => Confirmation Email API => PO Insert => Err msg => Booking Id -" + myDatass[g].BookingId + " => " + POResponses.message);
+                            }
+
+
+                        }
+                        catch (Exception ex)
+                        {
+                            log = new CreateLogFiles();
+                            log.ErrorLog("Confirmation Email API => Zoho Insert => Err msg => Missed Property Add => " + ex.Message);
+
+                        }
+
+                    }
+                }
+                return Responses;
+            }
+            catch (Exception Ex)
+            {
+            
+                log = new CreateLogFiles();
+                log.ErrorLog(" => Confirmation Email API => Zoho PO Insert Only" + Ex.Message + "=>" + body);
+                return Responses;
+            }
+
+
+        }
 
 
 
@@ -9890,4 +10391,4 @@ namespace ConfirmationEMailWebApi.Controllers
 
 
         }
-}
+    }
