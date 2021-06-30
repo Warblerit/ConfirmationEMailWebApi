@@ -141,72 +141,72 @@ namespace ConfirmationEMailWebApi.Controllers
                                         break;
                                     }
                                 }
-                                if (ds.Tables[8].Rows[0][0].ToString() != "")
-                                {
-                                    try
-                                    {
-                                        message.CC.Add(new System.Net.Mail.MailAddress(ds.Tables[8].Rows[0][0].ToString()));
-                                    }
-                                    catch (Exception ex)
-                                    {
-                                        CreateLogFiles log = new CreateLogFiles();
-                                        log.ErrorLog("=> Confirmation Email API => Bed Email => BookingId => " + All.BookingId + " => Invaild Email => CC =>" + ds.Tables[8].Rows[0][0].ToString());
-                                    }
-                                }
+                                ////if (ds.Tables[8].Rows[0][0].ToString() != "")
+                                ////{
+                                ////    try
+                                ////    {
+                                ////        message.CC.Add(new System.Net.Mail.MailAddress(ds.Tables[8].Rows[0][0].ToString()));
+                                ////    }
+                                ////    catch (Exception ex)
+                                ////    {
+                                ////        CreateLogFiles log = new CreateLogFiles();
+                                ////        log.ErrorLog("=> Confirmation Email API => Bed Email => BookingId => " + All.BookingId + " => Invaild Email => CC =>" + ds.Tables[8].Rows[0][0].ToString());
+                                ////    }
+                                ////}
                             }
                             //Extra CC
-                            for (int i = 0; i < ds.Tables[7].Rows.Count; i++)
-                            {
-                                if (ds.Tables[7].Rows[i][0].ToString() != "")
-                                {
-                                    try
-                                    {
-                                        message.CC.Add(new System.Net.Mail.MailAddress(ds.Tables[7].Rows[i][0].ToString()));
-                                    }
-                                    catch (Exception ex)
-                                    {
-                                        CreateLogFiles log = new CreateLogFiles();
-                                        log.ErrorLog("=> Confirmation Email API => Bed Email => BookingId => " + All.BookingId + " => Invaild Email => Extra CC =>" + ds.Tables[7].Rows[i][0].ToString());
-                                    }
-                                }
-                            }
-                            // Extra CC email from Front end
-                            if (ds.Tables[8].Rows[0][1].ToString() != "")
-                            {
-                                string ExtraCC = ds.Tables[8].Rows[0][1].ToString();
-                                var ExtraCCEmail = ExtraCC.Split(',');
-                                int cnt = ExtraCCEmail.Length;
-                                for (int i = 0; i < cnt; i++)
-                                {
-                                    if (ExtraCCEmail[i].ToString() != "")
-                                    {
-                                        try
-                                        {
-                                            message.CC.Add(new System.Net.Mail.MailAddress(ExtraCCEmail[i].ToString()));
-                                        }
-                                        catch (Exception ex)
-                                        {
-                                            CreateLogFiles log = new CreateLogFiles();
-                                            log.ErrorLog("=> Confirmation Email API => Bed Email => BookingId => " + All.BookingId + " => Invaild Email => Extra CC From Front End =>" + ExtraCCEmail[i].ToString());
-                                        }
-                                    }
-                                }
-                            }
-                            if (ds.Tables[2].Rows[0][4].ToString() != "")
-                            {
-                                try
-                                {
-                                    message.Bcc.Add(new System.Net.Mail.MailAddress(ds.Tables[2].Rows[0][4].ToString()));
-                                }
-                                catch (Exception ex)
-                                {
-                                    CreateLogFiles log = new CreateLogFiles();
-                                    log.ErrorLog("=> Confirmation Email API => Bed Email => BookingId => " + All.BookingId + " => Invaild Email => BCc =>" + ds.Tables[2].Rows[0][4].ToString());
-                                }
-                            }
-                            message.Bcc.Add(new System.Net.Mail.MailAddress("booking_confirmation@staysimplyfied.com"));
-                            message.Bcc.Add(new System.Net.Mail.MailAddress("bookingbcc@staysimplyfied.com"));
-                            message.Bcc.Add(new System.Net.Mail.MailAddress("hbconf17@gmail.com"));
+                            ////for (int i = 0; i < ds.Tables[7].Rows.Count; i++)
+                            ////{
+                            ////    if (ds.Tables[7].Rows[i][0].ToString() != "")
+                            ////    {
+                            ////        try
+                            ////        {
+                            ////            message.CC.Add(new System.Net.Mail.MailAddress(ds.Tables[7].Rows[i][0].ToString()));
+                            ////        }
+                            ////        catch (Exception ex)
+                            ////        {
+                            ////            CreateLogFiles log = new CreateLogFiles();
+                            ////            log.ErrorLog("=> Confirmation Email API => Bed Email => BookingId => " + All.BookingId + " => Invaild Email => Extra CC =>" + ds.Tables[7].Rows[i][0].ToString());
+                            ////        }
+                            ////    }
+                            ////}
+                            ////// Extra CC email from Front end
+                            ////if (ds.Tables[8].Rows[0][1].ToString() != "")
+                            ////{
+                            ////    string ExtraCC = ds.Tables[8].Rows[0][1].ToString();
+                            ////    var ExtraCCEmail = ExtraCC.Split(',');
+                            ////    int cnt = ExtraCCEmail.Length;
+                            ////    for (int i = 0; i < cnt; i++)
+                            ////    {
+                            ////        if (ExtraCCEmail[i].ToString() != "")
+                            ////        {
+                            ////            try
+                            ////            {
+                            ////                message.CC.Add(new System.Net.Mail.MailAddress(ExtraCCEmail[i].ToString()));
+                            ////            }
+                            ////            catch (Exception ex)
+                            ////            {
+                            ////                CreateLogFiles log = new CreateLogFiles();
+                            ////                log.ErrorLog("=> Confirmation Email API => Bed Email => BookingId => " + All.BookingId + " => Invaild Email => Extra CC From Front End =>" + ExtraCCEmail[i].ToString());
+                            ////            }
+                            ////        }
+                            ////    }
+                            ////}
+                            ////if (ds.Tables[2].Rows[0][4].ToString() != "")
+                            ////{
+                            ////    try
+                            ////    {
+                            ////        message.Bcc.Add(new System.Net.Mail.MailAddress(ds.Tables[2].Rows[0][4].ToString()));
+                            ////    }
+                            ////    catch (Exception ex)
+                            ////    {
+                            ////        CreateLogFiles log = new CreateLogFiles();
+                            ////        log.ErrorLog("=> Confirmation Email API => Bed Email => BookingId => " + All.BookingId + " => Invaild Email => BCc =>" + ds.Tables[2].Rows[0][4].ToString());
+                            ////    }
+                            ////}
+                            ////message.Bcc.Add(new System.Net.Mail.MailAddress("booking_confirmation@staysimplyfied.com"));
+                            ////message.Bcc.Add(new System.Net.Mail.MailAddress("bookingbcc@staysimplyfied.com"));
+                            ////message.Bcc.Add(new System.Net.Mail.MailAddress("hbconf17@gmail.com"));
                         }
                         ////message.Bcc.Add(new System.Net.Mail.MailAddress("prabakaran@warblerit.com"));
 
@@ -550,80 +550,80 @@ namespace ConfirmationEMailWebApi.Controllers
                                         break;
                                     }
                                 }
-                                if (ds.Tables[8].Rows[0][0].ToString() != "")
-                                {
-                                    try
-                                    {
-                                        message.CC.Add(new System.Net.Mail.MailAddress(ds.Tables[8].Rows[0][0].ToString()));
-                                    }
-                                    catch (Exception wer)
-                                    {
-                                        CreateLogFiles log = new CreateLogFiles();
-                                        log.ErrorLog("=> Confirmation Email API => Room Email => Invalid Email => CC => " + ds.Tables[8].Rows[0][0].ToString() +
-                                            " => BookingId => " + All.BookingId + ", Err Msg => " + wer.Message);
-                                    }
+                                ////if (ds.Tables[8].Rows[0][0].ToString() != "")
+                                ////{
+                                ////    try
+                                ////    {
+                                ////        message.CC.Add(new System.Net.Mail.MailAddress(ds.Tables[8].Rows[0][0].ToString()));
+                                ////    }
+                                ////    catch (Exception wer)
+                                ////    {
+                                ////        CreateLogFiles log = new CreateLogFiles();
+                                ////        log.ErrorLog("=> Confirmation Email API => Room Email => Invalid Email => CC => " + ds.Tables[8].Rows[0][0].ToString() +
+                                ////            " => BookingId => " + All.BookingId + ", Err Msg => " + wer.Message);
+                                ////    }
 
-                                }
+                                ////}
                             }
                             //Extra CC
-                            for (int i = 0; i < ds.Tables[7].Rows.Count; i++)
-                            {
-                                if (ds.Tables[7].Rows[i][0].ToString() != "")
-                                {
-                                    try
-                                    {
-                                        message.CC.Add(new System.Net.Mail.MailAddress(ds.Tables[7].Rows[i][0].ToString()));
-                                    }
-                                    catch (Exception wer)
-                                    {
-                                        CreateLogFiles log = new CreateLogFiles();
-                                        log.ErrorLog("=> Confirmation Email API => Room Email => Invalid Email => Extra CC => " + ds.Tables[7].Rows[i][0].ToString() +
-                                            " => BookingId => " + All.BookingId + ", Err Msg => " + wer.Message);
-                                    }
-                                }
-                            }
-                            //Extra CC email from Front end
-                            if (ds.Tables[8].Rows[0][2].ToString() != "")
-                            {
-                                string ExtraCC = ds.Tables[8].Rows[0][2].ToString();
-                                var ExtraCCEmail = ExtraCC.Split(',');
-                                int cnt = ExtraCCEmail.Length;
-                                for (int i = 0; i < cnt; i++)
-                                {
-                                    if (ExtraCCEmail[i].ToString() != "")
-                                    {
-                                        try
-                                        {
-                                            message.CC.Add(new System.Net.Mail.MailAddress(ExtraCCEmail[i].ToString()));
-                                        }
-                                        catch (Exception wer)
-                                        {
-                                            CreateLogFiles log = new CreateLogFiles();
-                                            log.ErrorLog("=> Confirmation Email API => Room Email => Invalid Email => Extra CC email from Front end => " + ExtraCCEmail[i].ToString() +
-                                                " => BookingId => " + All.BookingId + ", Err Msg => " + wer.Message);
-                                        }
-                                    }
-                                }
-                            }
-                            if (ds.Tables[2].Rows[0][4].ToString() != "")
-                            {
-                                try
-                                {
-                                    message.Bcc.Add(new System.Net.Mail.MailAddress(ds.Tables[2].Rows[0][4].ToString()));
-                                }
-                                catch (Exception wer)
-                                {
-                                    CreateLogFiles log = new CreateLogFiles();
-                                    log.ErrorLog("=> Confirmation Email API => Room Email => Invalid Email => Bcc => " + ds.Tables[2].Rows[0][4].ToString() +
-                                        " => BookingId => " + All.BookingId + ", Err Msg => " + wer.Message);
-                                }
-                            }
-                            message.Bcc.Add(new System.Net.Mail.MailAddress(ds.Tables[10].Rows[0][0].ToString()));
-                            if (ds.Tables[10].Rows[0][0].ToString() != "stay@hummingbirdindia.com")
-                            {
-                                message.Bcc.Add(new System.Net.Mail.MailAddress("stay@hummingbirdindia.com"));
-                            }
-                            message.Bcc.Add(new System.Net.Mail.MailAddress("hbconf17@gmail.com"));
+                            ////for (int i = 0; i < ds.Tables[7].Rows.Count; i++)
+                            ////{
+                            ////    if (ds.Tables[7].Rows[i][0].ToString() != "")
+                            ////    {
+                            ////        try
+                            ////        {
+                            ////            message.CC.Add(new System.Net.Mail.MailAddress(ds.Tables[7].Rows[i][0].ToString()));
+                            ////        }
+                            ////        catch (Exception wer)
+                            ////        {
+                            ////            CreateLogFiles log = new CreateLogFiles();
+                            ////            log.ErrorLog("=> Confirmation Email API => Room Email => Invalid Email => Extra CC => " + ds.Tables[7].Rows[i][0].ToString() +
+                            ////                " => BookingId => " + All.BookingId + ", Err Msg => " + wer.Message);
+                            ////        }
+                            ////    }
+                            ////}
+                            //////Extra CC email from Front end
+                            ////if (ds.Tables[8].Rows[0][2].ToString() != "")
+                            ////{
+                            ////    string ExtraCC = ds.Tables[8].Rows[0][2].ToString();
+                            ////    var ExtraCCEmail = ExtraCC.Split(',');
+                            ////    int cnt = ExtraCCEmail.Length;
+                            ////    for (int i = 0; i < cnt; i++)
+                            ////    {
+                            ////        if (ExtraCCEmail[i].ToString() != "")
+                            ////        {
+                            ////            try
+                            ////            {
+                            ////                message.CC.Add(new System.Net.Mail.MailAddress(ExtraCCEmail[i].ToString()));
+                            ////            }
+                            ////            catch (Exception wer)
+                            ////            {
+                            ////                CreateLogFiles log = new CreateLogFiles();
+                            ////                log.ErrorLog("=> Confirmation Email API => Room Email => Invalid Email => Extra CC email from Front end => " + ExtraCCEmail[i].ToString() +
+                            ////                    " => BookingId => " + All.BookingId + ", Err Msg => " + wer.Message);
+                            ////            }
+                            ////        }
+                            ////    }
+                            ////}
+                            ////if (ds.Tables[2].Rows[0][4].ToString() != "")
+                            ////{
+                            ////    try
+                            ////    {
+                            ////        message.Bcc.Add(new System.Net.Mail.MailAddress(ds.Tables[2].Rows[0][4].ToString()));
+                            ////    }
+                            ////    catch (Exception wer)
+                            ////    {
+                            ////        CreateLogFiles log = new CreateLogFiles();
+                            ////        log.ErrorLog("=> Confirmation Email API => Room Email => Invalid Email => Bcc => " + ds.Tables[2].Rows[0][4].ToString() +
+                            ////            " => BookingId => " + All.BookingId + ", Err Msg => " + wer.Message);
+                            ////    }
+                            ////}
+                            ////message.Bcc.Add(new System.Net.Mail.MailAddress(ds.Tables[10].Rows[0][0].ToString()));
+                            ////if (ds.Tables[10].Rows[0][0].ToString() != "stay@hummingbirdindia.com")
+                            ////{
+                            ////    message.Bcc.Add(new System.Net.Mail.MailAddress("stay@hummingbirdindia.com"));
+                            ////}
+                            ////message.Bcc.Add(new System.Net.Mail.MailAddress("hbconf17@gmail.com"));
                         }
                         ////message.Bcc.Add(new System.Net.Mail.MailAddress("prabakaran@warblerit.com"));
 
@@ -1039,35 +1039,35 @@ namespace ConfirmationEMailWebApi.Controllers
                                             }
                                         }
                                     }
-                                    for (int i = 0; i < ds.Tables[3].Rows.Count; i++)
-                                    {
-                                        if (ds.Tables[3].Rows[i][2].ToString() != "")
-                                        {
-                                            try
-                                            {
-                                                message1.CC.Add(new System.Net.Mail.MailAddress(ds.Tables[3].Rows[i][2].ToString()));
-                                            }
-                                            catch (Exception ex)
-                                            {
-                                                CreateLogFiles log = new CreateLogFiles();
-                                                log.ErrorLog("=> Confirmation Email API => Bed Property Email => BookingId => " + All.BookingId + " => Invaild Email => Cc =>" + ds.Tables[3].Rows[i][2].ToString());
-                                            }
-                                        }
-                                    }
-                                    if (ds.Tables[2].Rows[0][4].ToString() != "")
-                                    {
-                                        try
-                                        {
-                                            message1.Bcc.Add(ds.Tables[2].Rows[0][4].ToString());
-                                        }
-                                        catch (Exception ex)
-                                        {
-                                            CreateLogFiles log = new CreateLogFiles();
-                                            log.ErrorLog("=> Confirmation Email API => Bed Property Email => BookingId => " + All.BookingId + " => Invaild Email => Bcc =>" + ds.Tables[2].Rows[0][4].ToString());
-                                        }
-                                    }
-                                    message1.Bcc.Add(new System.Net.Mail.MailAddress("bookingbcc@staysimplyfied.com"));
-                                    message1.Bcc.Add(new System.Net.Mail.MailAddress("hbconf17@gmail.com"));
+                                    ////for (int i = 0; i < ds.Tables[3].Rows.Count; i++)
+                                    ////{
+                                    ////    if (ds.Tables[3].Rows[i][2].ToString() != "")
+                                    ////    {
+                                    ////        try
+                                    ////        {
+                                    ////            message1.CC.Add(new System.Net.Mail.MailAddress(ds.Tables[3].Rows[i][2].ToString()));
+                                    ////        }
+                                    ////        catch (Exception ex)
+                                    ////        {
+                                    ////            CreateLogFiles log = new CreateLogFiles();
+                                    ////            log.ErrorLog("=> Confirmation Email API => Bed Property Email => BookingId => " + All.BookingId + " => Invaild Email => Cc =>" + ds.Tables[3].Rows[i][2].ToString());
+                                    ////        }
+                                    ////    }
+                                    ////}
+                                    ////if (ds.Tables[2].Rows[0][4].ToString() != "")
+                                    ////{
+                                    ////    try
+                                    ////    {
+                                    ////        message1.Bcc.Add(ds.Tables[2].Rows[0][4].ToString());
+                                    ////    }
+                                    ////    catch (Exception ex)
+                                    ////    {
+                                    ////        CreateLogFiles log = new CreateLogFiles();
+                                    ////        log.ErrorLog("=> Confirmation Email API => Bed Property Email => BookingId => " + All.BookingId + " => Invaild Email => Bcc =>" + ds.Tables[2].Rows[0][4].ToString());
+                                    ////    }
+                                    ////}
+                                    ////message1.Bcc.Add(new System.Net.Mail.MailAddress("bookingbcc@staysimplyfied.com"));
+                                    ////message1.Bcc.Add(new System.Net.Mail.MailAddress("hbconf17@gmail.com"));
 
                                 }
                                 //// message1.Bcc.Add(new System.Net.Mail.MailAddress("prabakaran@warblerit.com"));
@@ -1770,39 +1770,39 @@ namespace ConfirmationEMailWebApi.Controllers
                                         }
                                     }
                                 }
-                                for (int i = 0; i < ds.Tables[3].Rows.Count; i++)
-                                {
-                                    if (ds.Tables[3].Rows[i][2].ToString() != "")
-                                    {
-                                        try
-                                        {
-                                            message1.CC.Add(new System.Net.Mail.MailAddress(ds.Tables[3].Rows[i][2].ToString()));
-                                        }
-                                        catch (Exception ex)
-                                        {
-                                            CreateLogFiles log = new CreateLogFiles();
-                                            log.ErrorLog("=> Confirmation Email API => Room Level Confirmation Property Mail => Cc => BookingId => " + All.BookingId + " => Invalid Email => " + ds.Tables[3].Rows[i][2].ToString());
-                                        }
-                                    }
-                                }
-                                if (ds.Tables[2].Rows[0][4].ToString() != "")
-                                {
-                                    try
-                                    {
-                                        message1.Bcc.Add(new System.Net.Mail.MailAddress(ds.Tables[2].Rows[0][4].ToString()));
-                                    }
-                                    catch (Exception ex)
-                                    {
-                                        CreateLogFiles log = new CreateLogFiles();
-                                        log.ErrorLog("=> Confirmation Email API => Room Level Confirmation Property Mail => Bcc => BookingId => " + All.BookingId + " => Invalid Email => " + ds.Tables[2].Rows[0][4].ToString());
-                                    }
-                                }
+                                ////for (int i = 0; i < ds.Tables[3].Rows.Count; i++)
+                                ////{
+                                ////    if (ds.Tables[3].Rows[i][2].ToString() != "")
+                                ////    {
+                                ////        try
+                                ////        {
+                                ////            message1.CC.Add(new System.Net.Mail.MailAddress(ds.Tables[3].Rows[i][2].ToString()));
+                                ////        }
+                                ////        catch (Exception ex)
+                                ////        {
+                                ////            CreateLogFiles log = new CreateLogFiles();
+                                ////            log.ErrorLog("=> Confirmation Email API => Room Level Confirmation Property Mail => Cc => BookingId => " + All.BookingId + " => Invalid Email => " + ds.Tables[3].Rows[i][2].ToString());
+                                ////        }
+                                ////    }
+                                ////}
+                                ////if (ds.Tables[2].Rows[0][4].ToString() != "")
+                                ////{
+                                ////    try
+                                ////    {
+                                ////        message1.Bcc.Add(new System.Net.Mail.MailAddress(ds.Tables[2].Rows[0][4].ToString()));
+                                ////    }
+                                ////    catch (Exception ex)
+                                ////    {
+                                ////        CreateLogFiles log = new CreateLogFiles();
+                                ////        log.ErrorLog("=> Confirmation Email API => Room Level Confirmation Property Mail => Bcc => BookingId => " + All.BookingId + " => Invalid Email => " + ds.Tables[2].Rows[0][4].ToString());
+                                ////    }
+                                ////}
 
-                                if (ds.Tables[10].Rows[0][1].ToString() != "stay@hummingbirdindia.com")
-                                {
-                                    message1.Bcc.Add(new System.Net.Mail.MailAddress("stay@hummingbirdindia.com"));
-                                }
-                                message1.Bcc.Add(new System.Net.Mail.MailAddress("hbconf17@gmail.com"));
+                                ////if (ds.Tables[10].Rows[0][1].ToString() != "stay@hummingbirdindia.com")
+                                ////{
+                                ////    message1.Bcc.Add(new System.Net.Mail.MailAddress("stay@hummingbirdindia.com"));
+                                ////}
+                                ////message1.Bcc.Add(new System.Net.Mail.MailAddress("hbconf17@gmail.com"));
                             }
                             ////message1.Bcc.Add(new System.Net.Mail.MailAddress("prabakaran@warblerit.com"));
 
@@ -2999,7 +2999,7 @@ namespace ConfirmationEMailWebApi.Controllers
 
                         var Itembody = new JavaScriptSerializer().Serialize(new
                         {
-                            name = "Tariff-" + All.BookingId + "-" + myData[k].RoomCaptured,
+                            name = "Tariff-BNo-" + myData[k].reference_number + "-" + myData[k].RoomCaptured,
                             purchase_rate = 1,
                             hsn_or_sac = "996311",
                             is_taxable = true,
@@ -3157,8 +3157,8 @@ namespace ConfirmationEMailWebApi.Controllers
                         string FinalAPIUrl = "";
                         FinalAPIUrl = System.Configuration.ConfigurationManager.AppSettings["UrlShortner"] + "/API/zohocontact/zohohotelcontactcreate";
 
-                        WebRequest webReq1 = WebRequest.Create("https://warsoftapi.warsoft.in/API/zohocontact/zohohotelcontactcreate");
-                        //WebRequest webReq1 = WebRequest.Create("http://localhost:1520/API/zohocontact/zohohotelcontactcreate");
+                        //WebRequest webReq1 = WebRequest.Create("https://warsoftapi.warsoft.in/API/zohocontact/zohohotelcontactcreate");
+                        WebRequest webReq1 = WebRequest.Create("http://localhost:1520/API/zohocontact/zohohotelcontactcreate");
                         //WebRequest webReq1 = WebRequest.Create("http://zohoapi.staysimplyfied.com/API/zohocontact/zohohotelcontactcreate");
                         webReq1.Proxy = null;
                         HttpWebRequest httpReq1 = (HttpWebRequest)webReq1;
@@ -3271,7 +3271,7 @@ namespace ConfirmationEMailWebApi.Controllers
 
                             var Itembody = new JavaScriptSerializer().Serialize(new
                             {
-                                name = "Tariff-" + All.BookingId + "-" + myData[k].RoomCaptured,
+                                name = "Tariff-BNo-" + myData[k].reference_number + "-" + myData[k].RoomCaptured,
                                 purchase_rate = 1,
                                 hsn_or_sac = "996311",
                                 is_taxable = true,
@@ -3425,94 +3425,94 @@ namespace ConfirmationEMailWebApi.Controllers
         public string ZohoErrorAPI(ZohoObj All, string APIBlock, string ErrorMsg)
         {
             string Response = "";
+            ////string DBStatus = System.Configuration.ConfigurationManager.AppSettings["DatabaseStatus"];
+            ////SqlCommand command5 = new SqlCommand();
+            ////DataSet ds5 = new DataSet();
+            ////command5.CommandText = "SP_SMTPMailSetting_Help";
+            ////command5.CommandType = CommandType.StoredProcedure;
+            ////command5.Parameters.Add("@Action", SqlDbType.NVarChar).Value = "SMTP";
+            ////command5.Parameters.Add("@Str1", SqlDbType.NVarChar).Value = "";
+            ////command5.Parameters.Add("@Id", SqlDbType.BigInt).Value = 0;
+            ////ds5 = new DBconnection().ExecuteDataSet(command5, "");
+            ////string Host = ds5.Tables[0].Rows[0][0].ToString();
+            ////string CredentialsUserName = ds5.Tables[0].Rows[0][1].ToString();
+            ////string CredentialsPassword = ds5.Tables[0].Rows[0][2].ToString();
+            ////int Port = Convert.ToInt16(ds5.Tables[0].Rows[0][3]);
 
-            SqlCommand command5 = new SqlCommand();
-            DataSet ds5 = new DataSet();
-            command5.CommandText = "SP_SMTPMailSetting_Help";
-            command5.CommandType = CommandType.StoredProcedure;
-            command5.Parameters.Add("@Action", SqlDbType.NVarChar).Value = "SMTP";
-            command5.Parameters.Add("@Str1", SqlDbType.NVarChar).Value = "";
-            command5.Parameters.Add("@Id", SqlDbType.BigInt).Value = 0;
-            ds5 = new DBconnection().ExecuteDataSet(command5, "");
-            string Host = ds5.Tables[0].Rows[0][0].ToString();
-            string CredentialsUserName = ds5.Tables[0].Rows[0][1].ToString();
-            string CredentialsPassword = ds5.Tables[0].Rows[0][2].ToString();
-            int Port = Convert.ToInt16(ds5.Tables[0].Rows[0][3]);
+            ////System.Net.Mail.MailMessage message2 = new System.Net.Mail.MailMessage();
+            ////message2.From = new System.Net.Mail.MailAddress("noreply@hummingbirdindia.com", "noreply", System.Text.Encoding.UTF8);
+            ////message2.To.Add(new System.Net.Mail.MailAddress("prabakaran@warblerit.com"));  
+            ////message2.Subject = "Zoho Books ( " + DBStatus + " ) - " + APIBlock + " Status - " + All.BookingCode;
 
-            System.Net.Mail.MailMessage message2 = new System.Net.Mail.MailMessage();
-            message2.From = new System.Net.Mail.MailAddress("noreply@hummingbirdindia.com", "noreply", System.Text.Encoding.UTF8);
-            message2.To.Add(new System.Net.Mail.MailAddress("prabakaran@warblerit.com"));
-            //message2.To.Add(new System.Net.Mail.MailAddress("nandhu@warblerit.com")); 
-            message2.Subject = APIBlock + " Status(Live) - " + All.BookingCode;
-            string Imagebody = "<div style=\"text-align: center;  padding: 10px 0 10px 0;\">" +
-                   "<img src=\"https://portalvhds4prl9ymlwxnt8.blob.core.windows.net/img/HB_logo_small.png\" alt=\"logo\">" +
-                   "</div>";
-            string header = "<div  style=\"width: 700px;margin: 10px auto;\">" +
-                     "<p style=\"margin: 0; padding: 10px 0 10px 0; color: #556DE5; letter-spacing: 125%; word-spacing: 150%;font-weight: bold; font-family: 'Open Sans', sans-serif\">Hello ,</p>";
+            ////string Imagebody = "<div style=\"text-align: center;  padding: 10px 0 10px 0;\">" +
+            ////       "<img src=\"https://portalvhds4prl9ymlwxnt8.blob.core.windows.net/img/HB_logo_small.png\" alt=\"logo\">" +
+            ////       "</div>";
+            ////string header = "<div  style=\"width: 700px;margin: 10px auto;\">" +
+            ////         "<p style=\"margin: 0; padding: 10px 0 10px 0; color: #556DE5; letter-spacing: 125%; word-spacing: 150%;font-weight: bold; font-family: 'Open Sans', sans-serif\">Hello ,</p>";
 
-            if (APIBlock == "Item Creation")
-            {
-                header += "<p style=\"margin: 0; padding: 10px 0 10px 0;  letter-spacing: 125%; word-spacing: 150%;font-weight: bold; font-family: 'Open Sans', sans-serif\">Item[Purchase Order] not created. Please find the details below for your reference.</p>" +
-                "<table style=\"background-color: #ffffff;border-radius: 4px 4px 0 0;overflow: hidden; width: 100%;margin-bottom: 1rem;background-color: transparent;border-collapse: collapse;font-family: ''Open Sans', sans-serif';\">" +
-                "<thead style=\"text-align: left;\">" +
-                "<tr>" +
-                "<th style=\"padding-left: 5px;background-color: #ebebeb;padding: 20px;border-bottom: transparent;color: #000000;font-weight: bold;border-color: #dee2e6;  vertical-align: bottom;border: 1px solid #dee2e6;padding: .75rem;vertical-align: top;width: 30%\">Booking Code</th>" +
-               "<th style=\"padding-left: 5px;background-color: #ebebeb;padding: 20px;border-bottom: transparent;color: #000000;font-weight: bold;border-color: #dee2e6;  vertical-align: bottom;border: 1px solid #dee2e6;padding: .75rem;vertical-align: top;width: 50%\">Error Message</th>" +
-                "</tr>" +
-                "</thead>" +
-                "<tbody>" +
-                "<tr>" +
-                "<td style=\"padding-left: 5px;padding: .75rem;vertical-align: top;border: 1px solid #dee2e6;width: 30%\">" + All.BookingCode + "</td>" +
-                "<td style=\"padding-left: 5px;padding: .75rem;vertical-align: top;border: 1px solid #dee2e6;width: 50%\">" + ErrorMsg + "</td>" +
-                "<tr/>" +
-                "</tbody>" +
-                "</table>";
-            }
-            else if (APIBlock == "PO Creation")
-            {
-                header += "<p style=\"margin: 0; padding: 10px 0 10px 0;  letter-spacing: 125%; word-spacing: 150%;font-weight: bold; font-family: 'Open Sans', sans-serif\">Purchase order not created. Please find the details below for your reference.</p>" +
-                    "<table style=\"background-color: #ffffff;border-radius: 4px 4px 0 0;overflow: hidden; width: 100%;margin-bottom: 1rem;background-color: transparent;border-collapse: collapse;font-family: ''Open Sans', sans-serif';\">" +
-                    "<thead style=\"text-align: left;\">" +
-                    "<tr>" +
-                    "<th style=\"padding-left: 5px;background-color: #ebebeb;padding: 20px;border-bottom: transparent;color: #000000;font-weight: bold;border-color: #dee2e6;  vertical-align: bottom;border: 1px solid #dee2e6;padding: .75rem;vertical-align: top;width: 30%\">Booking Code</th>" +
-                    "<th style=\"padding-left: 5px;background-color: #ebebeb;padding: 20px;border-bottom: transparent;color: #000000;font-weight: bold;border-color: #dee2e6;  vertical-align: bottom;border: 1px solid #dee2e6;padding: .75rem;vertical-align: top;width: 50%\">Error Message</th>" +
-                    "</tr>" +
-                    "</thead>" +
-                    "<tbody>" +
-                    "<tr>" +
-                    "<td style=\"padding-left: 5px;padding: .75rem;vertical-align: top;border: 1px solid #dee2e6;width: 30%\">" + All.BookingCode + "</td>" +
-                    "<td style=\"padding-left: 5px;padding: .75rem;vertical-align: top;border: 1px solid #dee2e6;width: 50%\">" + ErrorMsg + "</td>" +
-                    "<tr/>" +
-                    "</tbody>" +
-                    "</table>";
-            }
-
-
+            ////if (APIBlock == "Item Creation")
+            ////{
+            ////    header += "<p style=\"margin: 0; padding: 10px 0 10px 0;  letter-spacing: 125%; word-spacing: 150%;font-weight: bold; font-family: 'Open Sans', sans-serif\">Item[Purchase Order] not created. Please find the details below for your reference.</p>" +
+            ////    "<table style=\"background-color: #ffffff;border-radius: 4px 4px 0 0;overflow: hidden; width: 100%;margin-bottom: 1rem;background-color: transparent;border-collapse: collapse;font-family: ''Open Sans', sans-serif';\">" +
+            ////    "<thead style=\"text-align: left;\">" +
+            ////    "<tr>" +
+            ////    "<th style=\"padding-left: 5px;background-color: #ebebeb;padding: 20px;border-bottom: transparent;color: #000000;font-weight: bold;border-color: #dee2e6;  vertical-align: bottom;border: 1px solid #dee2e6;padding: .75rem;vertical-align: top;width: 30%\">Booking Code</th>" +
+            ////   "<th style=\"padding-left: 5px;background-color: #ebebeb;padding: 20px;border-bottom: transparent;color: #000000;font-weight: bold;border-color: #dee2e6;  vertical-align: bottom;border: 1px solid #dee2e6;padding: .75rem;vertical-align: top;width: 50%\">Error Message</th>" +
+            ////    "</tr>" +
+            ////    "</thead>" +
+            ////    "<tbody>" +
+            ////    "<tr>" +
+            ////    "<td style=\"padding-left: 5px;padding: .75rem;vertical-align: top;border: 1px solid #dee2e6;width: 30%\">" + All.BookingCode + "</td>" +
+            ////    "<td style=\"padding-left: 5px;padding: .75rem;vertical-align: top;border: 1px solid #dee2e6;width: 50%\">" + ErrorMsg + "</td>" +
+            ////    "<tr/>" +
+            ////    "</tbody>" +
+            ////    "</table>";
+            ////}
+            ////else if (APIBlock == "PO Creation")
+            ////{
+            ////    header += "<p style=\"margin: 0; padding: 10px 0 10px 0;  letter-spacing: 125%; word-spacing: 150%;font-weight: bold; font-family: 'Open Sans', sans-serif\">Purchase order not created. Please find the details below for your reference.</p>" +
+            ////        "<table style=\"background-color: #ffffff;border-radius: 4px 4px 0 0;overflow: hidden; width: 100%;margin-bottom: 1rem;background-color: transparent;border-collapse: collapse;font-family: ''Open Sans', sans-serif';\">" +
+            ////        "<thead style=\"text-align: left;\">" +
+            ////        "<tr>" +
+            ////        "<th style=\"padding-left: 5px;background-color: #ebebeb;padding: 20px;border-bottom: transparent;color: #000000;font-weight: bold;border-color: #dee2e6;  vertical-align: bottom;border: 1px solid #dee2e6;padding: .75rem;vertical-align: top;width: 30%\">Booking Code</th>" +
+            ////        "<th style=\"padding-left: 5px;background-color: #ebebeb;padding: 20px;border-bottom: transparent;color: #000000;font-weight: bold;border-color: #dee2e6;  vertical-align: bottom;border: 1px solid #dee2e6;padding: .75rem;vertical-align: top;width: 50%\">Error Message</th>" +
+            ////        "</tr>" +
+            ////        "</thead>" +
+            ////        "<tbody>" +
+            ////        "<tr>" +
+            ////        "<td style=\"padding-left: 5px;padding: .75rem;vertical-align: top;border: 1px solid #dee2e6;width: 30%\">" + All.BookingCode + "</td>" +
+            ////        "<td style=\"padding-left: 5px;padding: .75rem;vertical-align: top;border: 1px solid #dee2e6;width: 50%\">" + ErrorMsg + "</td>" +
+            ////        "<tr/>" +
+            ////        "</tbody>" +
+            ////        "</table>";
+            ////}
 
 
 
-            string footer = "<br /><br />" +
-                "<p style=\"margin: 0; padding: 10px 0 10px 0; color: #556DE5; letter-spacing: 125%; word-spacing: 150%;font-weight: bold; font-family: 'Open Sans', sans-serif\"> Warm Regards,</p>" +
-                "<p style=\"margin: 0; padding: 0px 0 10px 0; color: #556DE5; letter-spacing: 125%; word-spacing: 150%;font-weight: bold; font-family: 'Open Sans', sans-serif\"> Technical Team</p><br /></div>";
 
 
-            message2.Body = Imagebody + header + footer;
-            message2.IsBodyHtml = true;
-            System.Net.Mail.SmtpClient smtp2 = new System.Net.Mail.SmtpClient();
-            smtp2.EnableSsl = true;
-            smtp2.Port = Port;
-            smtp2.Host = Host;
-            smtp2.Credentials = new System.Net.NetworkCredential(CredentialsUserName, CredentialsPassword);
-            try
-            {
-                smtp2.Send(message2);
-            }
-            catch (Exception ex)
-            {
-                CreateLogFiles log = new CreateLogFiles();
-                log.ErrorLog("=> Confirmation Email => Zoho Error Email API => Error => Mail Block =>  msg => " + ex.Message);
+            ////string footer = "<br /><br />" +
+            ////    "<p style=\"margin: 0; padding: 10px 0 10px 0; color: #556DE5; letter-spacing: 125%; word-spacing: 150%;font-weight: bold; font-family: 'Open Sans', sans-serif\"> Warm Regards,</p>" +
+            ////    "<p style=\"margin: 0; padding: 0px 0 10px 0; color: #556DE5; letter-spacing: 125%; word-spacing: 150%;font-weight: bold; font-family: 'Open Sans', sans-serif\"> Technical Team</p><br /></div>";
 
-            }
+
+            ////message2.Body = Imagebody + header + footer;
+            ////message2.IsBodyHtml = true;
+            ////System.Net.Mail.SmtpClient smtp2 = new System.Net.Mail.SmtpClient();
+            ////smtp2.EnableSsl = true;
+            ////smtp2.Port = Port;
+            ////smtp2.Host = Host;
+            ////smtp2.Credentials = new System.Net.NetworkCredential(CredentialsUserName, CredentialsPassword);
+            ////try
+            ////{
+            ////    smtp2.Send(message2);
+            ////}
+            ////catch (Exception ex)
+            ////{
+            ////    CreateLogFiles log = new CreateLogFiles();
+            ////    log.ErrorLog("=> Confirmation Email => Zoho Error Email API => Error => Mail Block =>  msg => " + ex.Message);
+
+            ////}
 
             return Response;
         }
@@ -9969,7 +9969,7 @@ namespace ConfirmationEMailWebApi.Controllers
 
                             var Itembody = new JavaScriptSerializer().Serialize(new
                             {
-                                name = "Tariff-" + myDatass[g].BookingId + "-" + myData[k].RoomCaptured,
+                                name = "Tariff-BNo" + myData[k].reference_number + "-" + myData[k].RoomCaptured,
                                 purchase_rate = 1,
                                 hsn_or_sac = "996311",
                                 is_taxable = true,
@@ -10008,6 +10008,7 @@ namespace ConfirmationEMailWebApi.Controllers
                                 rate = myData[j].rate,
                                 quantity = myData[j].quantity,
                                 tax_id = myData[j].tax_id,
+                                //tax_id = "431410000001258078", 
                                 item_order = myData[j].RoomCaptured
                             });
                         }
@@ -10238,7 +10239,7 @@ namespace ConfirmationEMailWebApi.Controllers
 
                                 var Itembody = new JavaScriptSerializer().Serialize(new
                                 {
-                                    name = "Tariff-" + myDatass[g].BookingId + "-" + myData[k].RoomCaptured,
+                                    name = "Tariff-BNo" + myData[k].reference_number + "-" + myData[k].RoomCaptured,
                                     purchase_rate = 1,
                                     hsn_or_sac = "996311",
                                     is_taxable = true,
